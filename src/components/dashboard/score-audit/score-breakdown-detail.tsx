@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import {
   ChevronRight,
   ArrowLeft,
@@ -547,13 +548,12 @@ export default function ScoreBreakdownDetail() {
                   <div key={k} className="flex justify-between items-start gap-2">
                     <span className="text-[11px] text-slate-500 shrink-0">{k}</span>
                     <span
-                      className={`text-[11px] text-right leading-snug ${
-                        mono
+                      className={`text-[11px] text-right leading-snug ${mono
                           ? "font-mono text-slate-700"
                           : green
-                          ? "text-emerald-600 font-semibold"
-                          : "text-slate-700 font-medium"
-                      }`}
+                            ? "text-emerald-600 font-semibold"
+                            : "text-slate-700 font-medium"
+                        }`}
                     >
                       {v}
                     </span>
@@ -759,11 +759,10 @@ export default function ScoreBreakdownDetail() {
                         <td className="py-2 pr-3">
                           {row.changeDelta !== null ? (
                             <span
-                              className={`text-[12px] font-bold flex items-center gap-0.5 ${
-                                row.changeDelta < 0
+                              className={`text-[12px] font-bold flex items-center gap-0.5 ${row.changeDelta < 0
                                   ? "text-red-500"
                                   : "text-emerald-600"
-                              }`}
+                                }`}
                             >
                               {row.changeDelta < 0 && (
                                 <TrendingDown className="w-3 h-3" />
@@ -791,10 +790,13 @@ export default function ScoreBreakdownDetail() {
                   </tbody>
                 </table>
                 <div className="mt-3 flex justify-center">
-                  <button className="text-[12px] text-blue-600 hover:underline font-semibold flex items-center gap-1">
+                  <Link 
+                    href="/dashboard/audit/B09X57JWHH/history"
+                    className="text-[12px] text-blue-600 hover:underline font-semibold flex items-center gap-1"
+                  >
                     View full score history
                     <ChevronRight className="w-3.5 h-3.5" />
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -894,14 +896,12 @@ export default function ScoreBreakdownDetail() {
               </span>
               <button
                 onClick={() => setOverrideEnabled(!overrideEnabled)}
-                className={`relative w-10 h-5 rounded-full transition-colors duration-200 focus:outline-none ${
-                  overrideEnabled ? "bg-blue-600" : "bg-slate-200"
-                }`}
+                className={`relative w-10 h-5 rounded-full transition-colors duration-200 focus:outline-none ${overrideEnabled ? "bg-blue-600" : "bg-slate-200"
+                  }`}
               >
                 <span
-                  className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow-sm transition-all duration-200 ${
-                    overrideEnabled ? "left-5" : "left-0.5"
-                  }`}
+                  className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow-sm transition-all duration-200 ${overrideEnabled ? "left-5" : "left-0.5"
+                    }`}
                 />
               </button>
             </div>

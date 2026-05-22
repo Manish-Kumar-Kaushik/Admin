@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import {
   ChevronRight,
   ArrowLeft,
@@ -549,10 +548,10 @@ export default function ScoreBreakdownDetail() {
                     <span className="text-[11px] text-slate-500 shrink-0">{k}</span>
                     <span
                       className={`text-[11px] text-right leading-snug ${mono
-                          ? "font-mono text-slate-700"
-                          : green
-                            ? "text-emerald-600 font-semibold"
-                            : "text-slate-700 font-medium"
+                        ? "font-mono text-slate-700"
+                        : green
+                          ? "text-emerald-600 font-semibold"
+                          : "text-slate-700 font-medium"
                         }`}
                     >
                       {v}
@@ -760,8 +759,8 @@ export default function ScoreBreakdownDetail() {
                           {row.changeDelta !== null ? (
                             <span
                               className={`text-[12px] font-bold flex items-center gap-0.5 ${row.changeDelta < 0
-                                  ? "text-red-500"
-                                  : "text-emerald-600"
+                                ? "text-red-500"
+                                : "text-emerald-600"
                                 }`}
                             >
                               {row.changeDelta < 0 && (
@@ -790,13 +789,13 @@ export default function ScoreBreakdownDetail() {
                   </tbody>
                 </table>
                 <div className="mt-3 flex justify-center">
-                  <Link 
-                    href="/dashboard/audit/B09X57JWHH/history"
+                  <button 
+                    onClick={() => router.push('/dashboard/audit/B09X57JWHH/history')}
                     className="text-[12px] text-blue-600 hover:underline font-semibold flex items-center gap-1"
                   >
                     View full score history
                     <ChevronRight className="w-3.5 h-3.5" />
-                  </Link>
+                  </button>
                 </div>
               </div>
             </div>

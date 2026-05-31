@@ -228,7 +228,7 @@ export default function RetailerConnectors() {
   return (
     <div className="flex min-h-full flex-col bg-slate-50">
 
-      <main className="flex flex-col gap-6 p-6">
+      <main className="flex flex-col gap-6 p-4 md:p-6">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <div className="mb-2 text-xs text-slate-500">Admin <span className="mx-2 text-slate-300">/</span> Retailer Connectors</div>
@@ -242,7 +242,7 @@ export default function RetailerConnectors() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-6">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
           {metrics.map(({ Icon, ...m }) => (
             <Card key={m.label} className="p-5">
               <div className="flex items-center gap-4">
@@ -259,8 +259,8 @@ export default function RetailerConnectors() {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
-          <div className="flex flex-col gap-6 xl:col-span-2">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          <div className="flex flex-col gap-6 lg:col-span-2">
             <Card className="overflow-hidden">
               <div className="border-b border-slate-200 px-5 py-4">
                 <h2 className="text-base font-bold text-slate-950">Connector Status</h2>
@@ -320,7 +320,7 @@ export default function RetailerConnectors() {
               </div>
             </Card>
 
-            <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-5">
               <Card className="p-6 lg:col-span-3">
                 <div className="mb-6 flex items-center justify-between gap-3">
                   <h2 className="text-base font-bold text-slate-950 flex items-center gap-1.5">
@@ -336,7 +336,7 @@ export default function RetailerConnectors() {
                     </button>
                   </div>
                 </div>
-                <div className="h-[245px]">
+                <div className="h-61.25">
                   {mounted ? (
                     <ResponsiveContainer width="100%" height="100%">
                       <LineChart data={trendData} margin={{ top: 15, right: 35, left: 10, bottom: 5 }}>
@@ -355,15 +355,15 @@ export default function RetailerConnectors() {
                       </LineChart>
                     </ResponsiveContainer>
                   ) : (
-                    <div className="h-[245px] w-full bg-slate-100/50 rounded-lg animate-pulse" />
+                    <div className="h-61.25 w-full bg-slate-100/50 rounded-lg animate-pulse" />
                   )}
                 </div>
               </Card>
 
               <Card className="flex flex-col p-6 lg:col-span-2">
                 <h2 className="mb-5 text-base font-bold text-slate-950">Quick Actions</h2>
-                <div className="grid grid-cols-2 gap-4">
-                  {[
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  {[ 
                     { label: "Add Connector", sub: "Connect a new retailer", Icon: Plus, color: "bg-blue-600" },
                     { label: "Reconnect Affiliate", sub: "Re-auth affiliate links", Icon: Link2, color: "bg-emerald-600" },
                     { label: "Re-run Failed Sync", sub: "Retry failed synchronizations", Icon: RefreshCw, color: "bg-violet-600" },
@@ -387,12 +387,12 @@ export default function RetailerConnectors() {
             </div>
           </div>
 
-          <aside className="flex flex-col gap-6 xl:col-span-1">
+          <aside className="flex flex-col gap-6 lg:col-span-1">
             <Card className="p-5">
               <h2 className="mb-4 text-base font-bold text-slate-950">Retailer Health Overview <span className="text-slate-400">ⓘ</span></h2>
               <div className="space-y-4">
                 {health.map((item) => (
-                  <div key={item.name} className="grid grid-cols-[64px_1fr_46px_78px] items-center gap-3 text-[12px]">
+                  <div key={item.name} className="grid grid-cols-[64px_1fr] items-center gap-3 text-[12px] sm:grid-cols-[64px_1fr_46px_78px]">
                     <span className="font-bold text-slate-900">{item.name}</span>
                     <Progress value={item.value} className="h-2 bg-slate-200" indicatorClassName={item.color} />
                     <span className="text-right font-semibold text-slate-700">{item.value.toFixed(1)}%</span>
@@ -424,7 +424,7 @@ export default function RetailerConnectors() {
                 <h2 className="text-base font-bold text-slate-950">Rate Limit Monitor</h2>
                 <button className="text-xs font-semibold text-blue-600">View all</button>
               </div>
-              <div className="flex justify-between gap-3 border-b border-slate-200 pb-5">
+              <div className="flex flex-col gap-3 border-b border-slate-200 pb-5 sm:flex-row sm:justify-between">
                 {rateLimits.map((item) => (
                   <div key={item.name} className="min-w-0 text-center">
                     <div className="mb-2 flex h-7 items-center justify-center"><RetailerLogo name={item.name} /></div>
@@ -434,7 +434,7 @@ export default function RetailerConnectors() {
                   </div>
                 ))}
               </div>
-              <div className="mt-4 flex items-center justify-between gap-3 text-xs">
+              <div className="mt-4 flex flex-col items-start gap-3 text-xs sm:flex-row sm:items-center sm:justify-between">
                 <span className="flex items-center gap-2 font-semibold text-rose-600"><span className="h-2 w-2 animate-pulse rounded-full bg-rose-600" /> 3 alerts require attention</span>
                 <button className="font-semibold text-blue-600">View rate limit details →</button>
               </div>

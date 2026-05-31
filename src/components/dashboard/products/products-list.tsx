@@ -263,7 +263,7 @@ const columns: ColumnDef<Product>[] = [
       );
     },
     cell: ({ row }) => (
-      <div className="flex items-center gap-3 w-[250px]">
+      <div className="min-w-0 max-w-62.5 flex items-center gap-3">
         <div className="h-10 w-10 rounded-md border border-slate-200 overflow-hidden bg-white shrink-0 flex items-center justify-center">
           {/* Using a generic icon if image fails, but using provided unsplash URL */}
           <img src={row.original.image} alt={row.original.name} className="h-full w-full object-cover" />
@@ -507,7 +507,7 @@ const columns: ColumnDef<Product>[] = [
 
 const FilterDropdown = ({ label }: { label: string }) => (
   <div className="relative inline-block">
-    <select className="appearance-none bg-white border border-slate-200 text-slate-700 py-2 pl-3 pr-8 rounded-md text-sm hover:border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent min-w-[120px] cursor-pointer">
+    <select className="appearance-none bg-white border border-slate-200 text-slate-700 py-2 pl-3 pr-8 rounded-md text-sm hover:border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent min-w-30 cursor-pointer">
       <option value="">{label}</option>
       <option value="option1">Option 1</option>
       <option value="option2">Option 2</option>
@@ -536,15 +536,15 @@ export default function Products() {
   return (
     <div className="flex flex-col h-full bg-slate-50">
       {/* Header Area */}
-      <div className="px-8 py-6 flex flex-col gap-6 bg-white border-b border-slate-200 shrink-0">
-        <div className="flex items-center justify-between">
+      <div className="px-4 py-6 md:px-8 flex flex-col gap-6 bg-white border-b border-slate-200 shrink-0">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
             <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Products</h1>
             <p className="text-slate-500 mt-1 text-sm">
               Manage canonical products, retailer mappings, scores, and review status.
             </p>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
             <Button className="bg-blue-600 hover:bg-blue-700 text-white shadow-sm font-medium h-10 px-4">
               <Plus className="w-4 h-4 mr-2" />
               Add Product Manually
@@ -565,8 +565,8 @@ export default function Products() {
         </div>
 
         {/* Filters */}
-        <div className="flex flex-col gap-4">
-          <div className="relative max-w-2xl">
+        <div className="flex flex-col gap-4 md:gap-6">
+          <div className="relative max-w-2xl w-full">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <input
               type="text"
@@ -575,7 +575,7 @@ export default function Products() {
             />
           </div>
 
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex flex-wrap items-center gap-2">
               <FilterDropdown label="Category" />
               <FilterDropdown label="Retailer" />
@@ -596,10 +596,10 @@ export default function Products() {
       </div>
 
       {/* Table Area */}
-      <div className="flex-1 p-8 overflow-hidden flex flex-col">
-        <div className="bg-white rounded-xl border border-slate-200 shadow-sm flex flex-col overflow-hidden">
+      <div className="flex-1 p-4 md:p-8 overflow-visible flex flex-col">
+        <div className="bg-white rounded-xl border border-slate-200 shadow-sm flex flex-col overflow-visible">
           {/* Table Toolbar */}
-          <div className="px-4 py-3 border-b border-slate-200 flex justify-end items-center gap-3">
+          <div className="px-4 py-3 border-b border-slate-200 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
              <Button variant="outline" size="sm" className="h-8 text-slate-600 flex items-center gap-2 border-slate-200">
                <Columns3 className="w-4 h-4" />
                Columns
@@ -615,7 +615,7 @@ export default function Products() {
           </div>
 
           {/* Actual Table */}
-          <div className="flex-1 overflow-auto">
+          <div className="overflow-x-auto overflow-y-visible">
             <Table>
               <TableHeader className="bg-slate-50 sticky top-0 z-10 shadow-[0_1px_0_0_#e2e8f0]">
                 {table.getHeaderGroups().map((headerGroup) => (
@@ -662,11 +662,11 @@ export default function Products() {
           </div>
           
           {/* Pagination */}
-          <div className="px-4 py-3 border-t border-slate-200 flex items-center justify-between bg-white shrink-0">
+          <div className="px-4 py-3 border-t border-slate-200 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between bg-white shrink-0">
             <div className="text-sm text-slate-500">
               Showing <span className="font-medium text-slate-900">1-8</span> of <span className="font-medium text-slate-900">248</span> products
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
               <div className="flex items-center gap-1">
                 <Button
                   variant="outline"

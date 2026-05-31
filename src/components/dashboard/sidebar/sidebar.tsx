@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -247,9 +247,43 @@ const groups: SidebarGroup[] = [
 export default function Sidebar() {
   const pathname = usePathname();
   const { isOpen, toggle } = useSidebar();
-  const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({
-    "AI Review Queue": true, // Default open to match screenshot
+  const [openMenus, setOpenMenus] = useState<Record<string, boolean>>(() => {
+    const initialOpen: Record<string, boolean> = {
+      "AI Review Queue": true,
+    };
+
+    groups.forEach((group) => {
+      group.items.forEach((item) => {
+        if (
+          item.subItems &&
+          item.subItems.some((sub) => sub.href === pathname)
+        ) {
+          initialOpen[item.name] = true;
+        }
+      });
+    });
+
+    return initialOpen;
   });
+
+  useEffect(() => {
+    setOpenMenus((prev) => {
+      const next = { ...prev };
+
+      groups.forEach((group) => {
+        group.items.forEach((item) => {
+          if (
+            item.subItems &&
+            item.subItems.some((sub) => sub.href === pathname)
+          ) {
+            next[item.name] = true;
+          }
+        });
+      });
+
+      return next;
+    });
+  }, [pathname]);
 
   const toggleMenu = (name: string) => {
     setOpenMenus((prev) => ({ ...prev, [name]: !prev[name] }));

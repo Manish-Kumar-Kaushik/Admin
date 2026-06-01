@@ -98,16 +98,16 @@ export default function AdminOverview() {
       <div className="px-6 py-5 space-y-5">
 
         {/* ── Page Title ── */}
-        <div className="flex items-start justify-between gap-4">
-          <div>
+        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+          <div className="w-full">
             <h1 className="text-[26px] font-bold text-slate-900 tracking-tight leading-tight">Admin Overview</h1>
-            <p className="text-[13px] text-slate-500 mt-0.5">Real-time platform health, AI review operations, and actionable intelligence.</p>
+            <p className="text-[13px] text-slate-500 mt-0.5 break-words">Real-time platform health, AI review operations, and actionable intelligence.</p>
           </div>
-          <div className="flex items-center gap-2 shrink-0 mt-1">
-            <button className="flex items-center gap-1.5 h-8 px-3.5 text-[12px] font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 shadow-sm transition-colors">
+          <div className="flex items-center gap-2 shrink-0 sm:mt-1">
+            <button className="flex flex-1 sm:flex-none justify-center items-center gap-1.5 h-8 px-3.5 text-[12px] font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 shadow-sm transition-colors whitespace-nowrap">
               <RotateCw className="w-3.5 h-3.5" /> Refresh Data
             </button>
-            <button className="flex items-center gap-1.5 h-8 px-3.5 text-[12px] font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 shadow-sm transition-colors">
+            <button className="flex flex-1 sm:flex-none justify-center items-center gap-1.5 h-8 px-3.5 text-[12px] font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 shadow-sm transition-colors whitespace-nowrap">
               <Eye className="w-3.5 h-3.5" /> View Critical Queue
             </button>
           </div>

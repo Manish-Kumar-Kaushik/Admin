@@ -1,11 +1,6 @@
 "use client";
 
-import dynamic from "next/dynamic";
-
-const AdminOverview = dynamic(
-  () => import("@/components/dashboard/admin-overview"),
-  { ssr: false }
-);
+import AdminOverview from "@/components/dashboard/overview/admin-overview";
 
 export default function Home() {
   return <AdminOverview />;

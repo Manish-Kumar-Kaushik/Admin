@@ -233,7 +233,7 @@ const groups: SidebarGroup[] = [
         icon: Settings,
         subItems: [
           { name: "Admin Users", href: "/dashboard/settings/users" },
-          { name: "Roles & Permissions", href: "/dashboard/settings/roles" },
+          { name: "Roles & Permissions", href: "/dashboard/settings/roles-permissions" },
           { name: "Scoring Settings", href: "/dashboard/settings/scoring" },
           { name: "Categories", href: "/dashboard/settings/categories" },
           { name: "Feature Flags", href: "/dashboard/settings/features" },

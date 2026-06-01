@@ -584,15 +584,9 @@ export default function AIReviewQueue() {
                       </TableCell>
                       <TableCell className="py-3 text-center">
                         <div className="flex items-center justify-center gap-1">
-<<<<<<< HEAD
-                          <button className="text-slate-400 hover:text-indigo-600 p-1.5 rounded hover:bg-indigo-50 transition-colors">
-                            <Eye className="h-4 w-4" />
-                          </button>
-=======
                           <Link href={`/dashboard/ai-queue/${row.id}`} className="text-slate-400 hover:text-indigo-600 p-1.5 rounded hover:bg-indigo-50 transition-colors">
                             <Eye className="h-4 w-4" />
                           </Link>
->>>>>>> af258eda14bc52c9db8fe898ffaa3441e277c349
                           <button className="text-slate-400 hover:text-slate-800 p-1.5 rounded hover:bg-slate-100 transition-colors">
                             <MoreVertical className="h-4 w-4" />
                           </button>

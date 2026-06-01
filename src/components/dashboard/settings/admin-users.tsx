@@ -282,6 +282,8 @@ export default function AdminUsers() {
                   aria-label="Search by name or email"
                   placeholder="Search by name or email..."
                   className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-11 pr-4 text-sm text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+                  suppressHydrationWarning={true}
+                  data-form-type="other"
                 />
               </label>
             </div>

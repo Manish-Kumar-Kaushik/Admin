@@ -176,7 +176,7 @@ export default function ScoreAudit() {
               Review products with score changes, low confidence, manual overrides, and explanations needed.
             </p>
           </div>
-          <div className="flex items-center gap-2 shrink-0 xl:hidden">
+          <div className="flex items-center gap-2 shrink-0 flex-wrap justify-end">
             <button className="flex items-center gap-1.5 h-8 px-3 text-[12px] font-semibold bg-white border border-slate-200 rounded-lg text-slate-700 hover:bg-slate-50 hover:border-slate-300 shadow-sm transition-all cursor-pointer">
               <Download className="w-3.5 h-3.5 text-slate-500" /> Export Audit
             </button>
@@ -359,19 +359,6 @@ export default function ScoreAudit() {
 
         {/* Right Side: Column */}
         <div className="w-80 shrink-0 hidden xl:flex flex-col gap-4">
-          {/* Action Buttons Group (Desktop) */}
-          <div className="flex items-center gap-2">
-            <button className="flex-1 flex items-center justify-center gap-1.5 h-8 px-2 text-[11px] font-semibold bg-white border border-slate-200 rounded-lg text-slate-700 hover:bg-slate-50 hover:border-slate-300 shadow-sm transition-all cursor-pointer whitespace-nowrap">
-              <Download className="w-3.5 h-3.5 text-slate-500 shrink-0" /> Export Audit
-            </button>
-            <button className="flex-1 flex items-center justify-center gap-1.5 h-8 px-2 text-[11px] font-semibold bg-white border border-slate-200 rounded-lg text-slate-700 hover:bg-slate-50 hover:border-slate-300 shadow-sm transition-all cursor-pointer whitespace-nowrap">
-              <RefreshCw className="w-3.5 h-3.5 text-slate-500 shrink-0" /> Refresh
-            </button>
-            <button className="flex-1 flex items-center justify-center gap-1.5 h-8 px-2 text-[11px] font-semibold bg-[#0066FF] rounded-lg text-white hover:bg-blue-700 shadow-sm transition-all cursor-pointer whitespace-nowrap">
-              <Settings className="w-3.5 h-3.5 shrink-0" /> Score Rules
-            </button>
-          </div>
-
           {/* Analytics Panel */}
           <div className="bg-white border border-slate-200 rounded-xl p-4 space-y-5 shadow-sm">
             {/* Recent Score Changes */}

@@ -1,12 +1,8 @@
 "use client";
 
-import dynamic from "next/dynamic";
-
-const AIReviewQueue = dynamic(
-  () => import("@/components/dashboard/ai-review-queue/ai-review"),
-  { ssr: false }
-);
+import AIReviewQueue from "@/components/dashboard/ai-review-queue/ai-review";
 
 export default function AIReviewQueuePage() {
   return <AIReviewQueue />;
 }
+

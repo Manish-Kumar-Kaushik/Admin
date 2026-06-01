@@ -7,6 +7,7 @@ import {
   Bell,
   Calendar,
   ChevronDown,
+  HelpCircle,
 } from "lucide-react";
 import { useSidebar } from "@/components/dashboard/sidebar-context";
 
@@ -27,6 +28,7 @@ export default function Header() {
         </button>
       </div>
 
+<<<<<<< HEAD
       {/* Global Search Bar (Centered) */}
       <div className="flex-1 flex justify-center px-4">
         <div className="relative w-full max-w-[360px] md:max-w-[420px] hidden sm:block">
@@ -57,6 +59,17 @@ export default function Header() {
           <Calendar className="w-3.5 h-3.5 text-slate-400" />
           May 12 – May 18, 2024
           <ChevronDown className="w-3 h-3 text-slate-400" />
+=======
+      {/* Global Search Bar (Removed as per request) */}
+      <div className="flex-1 flex justify-center px-4"></div>
+
+      {/* Right Controls */}
+      <div className="flex-none flex items-center gap-2.5 md:gap-4">
+        {/* Help Button */}
+        <button className="hidden sm:flex items-center gap-1.5 text-slate-600 hover:text-slate-900 transition-colors font-semibold text-[14px] px-2">
+          <HelpCircle className="w-5 h-5" />
+          Help
+>>>>>>> af258eda14bc52c9db8fe898ffaa3441e277c349
         </button>
 
         {/* Notification Bell */}
@@ -71,16 +84,25 @@ export default function Header() {
         </button>
 
         {/* User Profile */}
+<<<<<<< HEAD
         <div className="flex items-center gap-2 select-none">
           <img
             src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80"
             alt="Admin Avatar"
             className="w-8 h-8 rounded-full object-cover shadow-sm border border-slate-200 cursor-pointer"
+=======
+        <div className="flex items-center gap-2 select-none cursor-pointer hover:opacity-80 transition-opacity ml-2">
+          <img
+            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80"
+            alt="Admin Avatar"
+            className="w-8 h-8 rounded-full object-cover shadow-sm border border-slate-200"
+>>>>>>> af258eda14bc52c9db8fe898ffaa3441e277c349
           />
           <div className="hidden lg:flex flex-col leading-none">
-            <span className="text-[12px] font-bold text-slate-800">Admin User</span>
-            <span className="text-[10px] text-slate-400 mt-0.5">Super Admin</span>
+            <span className="text-[13px] font-bold text-slate-800">Admin User</span>
+            <span className="text-[11px] text-slate-400 mt-1">Super Admin</span>
           </div>
+          <ChevronDown className="w-4 h-4 text-slate-400 hidden lg:block ml-1" />
         </div>
       </div>
     </header>

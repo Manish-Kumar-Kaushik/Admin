@@ -1,0 +1,46 @@
+The USER performed the following action:
+Show the contents of file /Users/manishkumarkaushik/Desktop/BuyWish/src/components/dashboard/score-audit/score-breakdown-detail.tsx from lines 1 to 38
+File Path: `file:///Users/manishkumarkaushik/Desktop/BuyWish/src/components/dashboard/score-audit/score-breakdown-detail.tsx`
+Total Lines: 741
+Total Bytes: 35691
+Showing lines 1 to 38
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+1: "use client";
+2: 
+3: import React, { useState } from "react";
+4: import { useRouter } from "next/navigation";
+5: import {
+6:   ChevronRight,
+7:   ArrowRight,
+8:   ArrowLeft,
+9:   Download,
+10:   ExternalLink,
+11:   HelpCircle,
+12:   ChevronDown,
+13:   Plus,
+14:   BarChart2,
+15:   Tag,
+16:   Star,
+17:   Users,
+18:   TrendingDown,
+19:   Shield,
+20:   AlertCircle,
+21:   Check,
+22:   PlayCircle,
+23:   BarChart,
+24:   Info,
+25: } from "lucide-react";
+26: 
+27: 
+28: // ─────────────────────────────────────────────────────────────
+29: // TYPES
+30: // ─────────────────────────────────────────────────────────────
+31: 
+32: interface ScoreComponent {
+33:   label: string;
+34:   score: number | null;
+35:   color: string;
+36:   barColor: string;
+37:   trackColor: string;
+38:   weight: number;
+

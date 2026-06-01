@@ -1,6 +1,10 @@
 "use client";
 
+<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
+=======
+import React, { useState } from "react";
+>>>>>>> af258eda14bc52c9db8fe898ffaa3441e277c349
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -96,6 +100,10 @@ const groups: SidebarGroup[] = [
         name: "Alternatives",
         icon: ArrowRightLeft,
         subItems: [
+<<<<<<< HEAD
+=======
+          { name: "Alternative Review", href: "/dashboard/alternatives/review" },
+>>>>>>> af258eda14bc52c9db8fe898ffaa3441e277c349
           { name: "Alternative Recommendations", href: "/dashboard/alternatives" },
           { name: "Comparison Review", href: "/dashboard/alternatives/compare" },
         ],
@@ -119,16 +127,26 @@ const groups: SidebarGroup[] = [
         icon: ShieldCheck,
         subItems: [
           { name: "Score Audit List", href: "/dashboard/audit" },
+<<<<<<< HEAD
           { name: "Score Rule Preview", href: "/dashboard/audit/preview" },
+=======
+          { name: "Score Rule Preview", href: "/dashboard/score-rule-preview" },
+>>>>>>> af258eda14bc52c9db8fe898ffaa3441e277c349
         ],
       },
       {
         name: "Review Intelligence",
         icon: BrainCircuit,
         subItems: [
+<<<<<<< HEAD
           { name: "Review Clusters", href: "/dashboard/intelligence/clusters" },
           { name: "Suspicious Review Patterns", href: "/dashboard/intelligence/suspicious" },
           { name: "Pros / Cons Review", href: "/dashboard/intelligence/pros-cons" },
+=======
+          { name: "Review Clusters", href: "/dashboard/review-intelligence/clusters" },
+          { name: "Suspicious Review Patterns", href: "/dashboard/review-intelligence/suspicious" },
+          { name: "Pros / Cons Review", href: "/dashboard/review-intelligence/pros-cons" },
+>>>>>>> af258eda14bc52c9db8fe898ffaa3441e277c349
         ],
       },
       {
@@ -233,7 +251,11 @@ const groups: SidebarGroup[] = [
         icon: Settings,
         subItems: [
           { name: "Admin Users", href: "/dashboard/settings/users" },
+<<<<<<< HEAD
           { name: "Roles & Permissions", href: "/dashboard/settings/roles-permissions" },
+=======
+          { name: "Roles & Permissions", href: "/dashboard/settings/roles" },
+>>>>>>> af258eda14bc52c9db8fe898ffaa3441e277c349
           { name: "Scoring Settings", href: "/dashboard/settings/scoring" },
           { name: "Categories", href: "/dashboard/settings/categories" },
           { name: "Feature Flags", href: "/dashboard/settings/features" },
@@ -247,6 +269,7 @@ const groups: SidebarGroup[] = [
 export default function Sidebar() {
   const pathname = usePathname();
   const { isOpen, toggle } = useSidebar();
+<<<<<<< HEAD
   const [openMenus, setOpenMenus] = useState<Record<string, boolean>>(() => {
     const initialOpen: Record<string, boolean> = {
       "AI Review Queue": true,
@@ -285,6 +308,12 @@ export default function Sidebar() {
     });
   }, [pathname]);
 
+=======
+  const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({
+    "AI Review Queue": true, // Default open to match screenshot
+  });
+
+>>>>>>> af258eda14bc52c9db8fe898ffaa3441e277c349
   const toggleMenu = (name: string) => {
     setOpenMenus((prev) => ({ ...prev, [name]: !prev[name] }));
   };

@@ -263,7 +263,7 @@ const columns: ColumnDef<Product>[] = [
       );
     },
     cell: ({ row }) => (
-      <div className="min-w-0 max-w-62.5 flex items-center gap-3">
+      <div className="flex items-center gap-3 min-w-0 max-w-40 sm:max-w-55">
         <div className="h-10 w-10 rounded-md border border-slate-200 overflow-hidden bg-white shrink-0 flex items-center justify-center">
           {/* Using a generic icon if image fails, but using provided unsplash URL */}
           <img src={row.original.image} alt={row.original.name} className="h-full w-full object-cover" />
@@ -507,7 +507,7 @@ const columns: ColumnDef<Product>[] = [
 
 const FilterDropdown = ({ label }: { label: string }) => (
   <div className="relative inline-block">
-    <select className="appearance-none bg-white border border-slate-200 text-slate-700 py-2 pl-3 pr-8 rounded-md text-sm hover:border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent min-w-30 cursor-pointer">
+    <select className="appearance-none bg-white border border-slate-200 text-slate-700 py-2 pl-3 pr-8 rounded-md text-sm hover:border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent min-w-[120px] cursor-pointer">
       <option value="">{label}</option>
       <option value="option1">Option 1</option>
       <option value="option2">Option 2</option>
@@ -536,8 +536,8 @@ export default function Products() {
   return (
     <div className="flex flex-col h-full bg-slate-50">
       {/* Header Area */}
-      <div className="px-4 py-6 md:px-8 flex flex-col gap-6 bg-white border-b border-slate-200 shrink-0">
-        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      <div className="px-4 sm:px-8 py-6 flex flex-col gap-6 bg-white border-b border-slate-200 shrink-0">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div>
             <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Products</h1>
             <p className="text-slate-500 mt-1 text-sm">
@@ -565,8 +565,8 @@ export default function Products() {
         </div>
 
         {/* Filters */}
-        <div className="flex flex-col gap-4 md:gap-6">
-          <div className="relative max-w-2xl w-full">
+        <div className="flex flex-col gap-4">
+          <div className="relative max-w-2xl">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <input
               type="text"
@@ -575,7 +575,7 @@ export default function Products() {
             />
           </div>
 
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex flex-wrap items-center gap-2">
               <FilterDropdown label="Category" />
               <FilterDropdown label="Retailer" />
@@ -596,10 +596,10 @@ export default function Products() {
       </div>
 
       {/* Table Area */}
-      <div className="flex-1 p-4 md:p-8 overflow-visible flex flex-col">
-        <div className="bg-white rounded-xl border border-slate-200 shadow-sm flex flex-col overflow-visible">
+      <div className="flex-1 p-4 sm:p-8 overflow-hidden flex flex-col">
+        <div className="bg-white rounded-xl border border-slate-200 shadow-sm flex flex-col overflow-hidden">
           {/* Table Toolbar */}
-          <div className="px-4 py-3 border-b border-slate-200 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="px-4 py-3 border-b border-slate-200 flex justify-end items-center gap-3">
              <Button variant="outline" size="sm" className="h-8 text-slate-600 flex items-center gap-2 border-slate-200">
                <Columns3 className="w-4 h-4" />
                Columns
@@ -615,14 +615,25 @@ export default function Products() {
           </div>
 
           {/* Actual Table */}
-          <div className="overflow-x-auto overflow-y-visible">
+          <div className="flex-1 overflow-x-auto">
             <Table>
               <TableHeader className="bg-slate-50 sticky top-0 z-10 shadow-[0_1px_0_0_#e2e8f0]">
                 {table.getHeaderGroups().map((headerGroup) => (
                   <TableRow key={headerGroup.id} className="border-b-0 hover:bg-transparent">
                     {headerGroup.headers.map((header) => {
+                      // hide less-important columns on very small screens
+                      const hideOnXs = [
+                        "brand",
+                        "category",
+                        "retailers",
+                        "trust",
+                        "lastUpdated",
+                        "price",
+                        "status",
+                      ];
+                      const hideClass = hideOnXs.includes(header.id) ? "hidden sm:table-cell" : "";
                       return (
-                        <TableHead key={header.id} className="py-3 whitespace-nowrap">
+                        <TableHead key={header.id} className={`py-3 whitespace-nowrap ${hideClass}`}>
                           {header.isPlaceholder
                             ? null
                             : flexRender(
@@ -643,11 +654,23 @@ export default function Products() {
                       data-state={row.getIsSelected() && "selected"}
                       className="border-b border-slate-100 hover:bg-slate-50/80 transition-colors group"
                     >
-                      {row.getVisibleCells().map((cell) => (
-                        <TableCell key={cell.id} className="py-3">
-                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                        </TableCell>
-                      ))}
+                      {row.getVisibleCells().map((cell) => {
+                        const hideOnXsCell = [
+                          "brand",
+                          "category",
+                          "retailers",
+                          "trust",
+                          "lastUpdated",
+                          "price",
+                          "status",
+                        ];
+                        const hideClass = hideOnXsCell.includes(cell.column.id) ? "hidden sm:table-cell" : "";
+                        return (
+                          <TableCell key={cell.id} className={`py-3 ${hideClass}`}>
+                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                          </TableCell>
+                        );
+                      })}
                     </TableRow>
                   ))
                 ) : (
@@ -662,11 +685,11 @@ export default function Products() {
           </div>
           
           {/* Pagination */}
-          <div className="px-4 py-3 border-t border-slate-200 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between bg-white shrink-0">
-            <div className="text-sm text-slate-500">
+          <div className="px-4 py-3 border-t border-slate-200 flex flex-col lg:flex-row items-center justify-between gap-4 bg-white shrink-0">
+            <div className="text-sm text-slate-500 text-center lg:text-left">
               Showing <span className="font-medium text-slate-900">1-8</span> of <span className="font-medium text-slate-900">248</span> products
             </div>
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <div className="flex flex-col sm:flex-row items-center gap-4">
               <div className="flex items-center gap-1">
                 <Button
                   variant="outline"

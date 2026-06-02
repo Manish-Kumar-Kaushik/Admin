@@ -42,16 +42,16 @@ const METRICS = [
     value: "94",
     trend: "18.2% vs last 7 days",
     trendUp: true,
-    icon: <XCircle className="w-5 h-5 text-rose-600" />,
-    bg: "bg-rose-50",
-    iconBg: "bg-white border-rose-100",
+    icon: <XCircle className="w-6 h-6 text-rose-600" />,
+    bg: "bg-white",
+    iconBg: "bg-rose-50 border-rose-100",
   },
   {
     title: "Pending Rework",
     value: "41",
     trend: "43.6% of rejected",
     trendUp: true,
-    icon: <Edit3 className="w-5 h-5 text-amber-600" />,
+    icon: <Edit3 className="w-6 h-6 text-amber-600" />,
     bg: "bg-white",
     iconBg: "bg-amber-50 border-amber-100",
   },
@@ -60,7 +60,7 @@ const METRICS = [
     value: "14",
     trend: "7.7% vs yesterday",
     trendUp: true,
-    icon: <Calendar className="w-5 h-5 text-rose-600" />,
+    icon: <Calendar className="w-6 h-6 text-rose-600" />,
     bg: "bg-white",
     iconBg: "bg-rose-50 border-rose-100",
   },
@@ -69,7 +69,7 @@ const METRICS = [
     value: "22",
     trend: "23.4% of rejected",
     trendUp: false,
-    icon: <AlertTriangle className="w-5 h-5 text-amber-600" />,
+    icon: <AlertTriangle className="w-6 h-6 text-amber-600" />,
     bg: "bg-white",
     iconBg: "bg-amber-50 border-amber-100",
   },
@@ -78,7 +78,7 @@ const METRICS = [
     value: "2h 38m",
     trend: "18m vs last 7 days",
     trendUp: true,
-    icon: <Clock className="w-5 h-5 text-indigo-600" />,
+    icon: <Clock className="w-6 h-6 text-indigo-600" />,
     bg: "bg-white",
     iconBg: "bg-indigo-50 border-indigo-100",
   },
@@ -224,15 +224,15 @@ export default function RejectedVerdicts() {
   ];
 
   return (
-    <div className="w-full min-h-screen bg-slate-50 font-sans overflow-x-hidden p-4 sm:p-6 lg:p-8 space-y-6">
+    <div className="flex flex-col flex-grow min-h-screen bg-slate-50 font-sans min-w-0 p-3 sm:p-4 lg:p-6 space-y-4 sm:space-y-6">
 
       {/* Header */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-[24px] sm:text-[28px] font-bold text-slate-950 tracking-tight">Rejected Verdicts</h1>
-          <p className="text-[14px] sm:text-[15px] text-slate-500 mt-1">Review rejected AI verdicts and why they were rejected.</p>
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 min-w-0">
+        <div className="min-w-0">
+          <h1 className="text-2xl sm:text-[28px] font-bold text-slate-950 tracking-tight">Rejected Verdicts</h1>
+          <p className="text-[13px] sm:text-[15px] text-slate-500 mt-1">Review rejected AI verdicts and why they were rejected.</p>
         </div>
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3">
           <button className="flex items-center gap-2 h-10 px-4 bg-white border border-slate-200 rounded-lg text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors shadow-sm">
             <Download className="w-4 h-4" /> Export CSV
           </button>
@@ -246,16 +246,16 @@ export default function RejectedVerdicts() {
       </div>
 
       {/* Metrics Row */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-4">
         {METRICS.map((metric, idx) => (
-          <Card key={idx} className={`p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between h-[120px] ${metric.bg}`}>
-            <div className="flex justify-between items-start">
-              <div className={`w-10 h-10 rounded-full border flex items-center justify-center ${metric.iconBg}`}>
+          <div key={idx} className={`p-4 xl:p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between h-[130px] ${metric.bg}`}>
+            <div className="flex justify-start items-center sm:items-start gap-3">
+              <div className={`w-12 h-12 rounded-full border flex items-center justify-center shrink-0 ${metric.iconBg}`}>
                 {metric.icon}
               </div>
-              <div className="text-right">
-                <p className="text-[13px] font-semibold text-slate-600 mb-1">{metric.title}</p>
-                <h3 className="text-2xl font-black text-slate-900 leading-none tracking-tight">{metric.value}</h3>
+              <div className="flex-1 text-center sm:text-left sm:pl-3">
+                <p className="text-[12px] xl:text-[13px] font-semibold text-slate-600 mb-2 sm:mb-1 leading-tight">{metric.title}</p>
+                <h3 className="text-2xl font-black text-slate-900 leading-none tracking-tight mt-6 sm:mt-0">{metric.value}</h3>
               </div>
             </div>
             <div className="flex items-center gap-1.5 mt-auto">
@@ -266,13 +266,13 @@ export default function RejectedVerdicts() {
                 {metric.trend.substring(metric.trend.indexOf(" ") + 1)}
               </span>
             </div>
-          </Card>
+          </div>
         ))}
       </div>
 
       {/* Filters Row */}
-      <div className="flex flex-wrap items-center gap-4 bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-        <div className="flex-1 min-w-[200px]">
+      <div className="flex flex-wrap items-center gap-3 sm:gap-4 bg-white p-3 sm:p-4 rounded-xl border border-slate-200 shadow-sm">
+        <div className="flex-1 min-w-[140px] sm:min-w-[200px]">
           <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">Search</label>
           <div className="relative">
             <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -284,7 +284,7 @@ export default function RejectedVerdicts() {
           </div>
         </div>
 
-        <div className="w-[160px]">
+        <div className="w-[48%] sm:w-[160px] flex-grow sm:flex-grow-0">
           <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">Reject Reason</label>
           <button className="w-full h-9 px-3 flex items-center justify-between text-[13px] border border-slate-200 rounded-md bg-white hover:bg-slate-50">
             <span className="truncate">All</span>
@@ -292,7 +292,7 @@ export default function RejectedVerdicts() {
           </button>
         </div>
 
-        <div className="w-[160px]">
+        <div className="w-[48%] sm:w-[160px] flex-grow sm:flex-grow-0">
           <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">Current Status</label>
           <button className="w-full h-9 px-3 flex items-center justify-between text-[13px] border border-slate-200 rounded-md bg-white hover:bg-slate-50">
             <span className="truncate">All</span>
@@ -300,7 +300,7 @@ export default function RejectedVerdicts() {
           </button>
         </div>
 
-        <div className="w-[160px]">
+        <div className="w-[48%] sm:w-[160px] flex-grow sm:flex-grow-0">
           <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">Rejected By</label>
           <button className="w-full h-9 px-3 flex items-center justify-between text-[13px] border border-slate-200 rounded-md bg-white hover:bg-slate-50">
             <span className="truncate">All</span>
@@ -308,7 +308,7 @@ export default function RejectedVerdicts() {
           </button>
         </div>
 
-        <div className="w-[200px]">
+        <div className="w-full sm:w-[200px] flex-grow sm:flex-grow-0">
           <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">Date Range</label>
           <button className="w-full h-9 px-3 flex items-center justify-between text-[13px] border border-slate-200 rounded-md bg-white hover:bg-slate-50">
             <div className="flex items-center gap-2 truncate">
@@ -319,7 +319,7 @@ export default function RejectedVerdicts() {
           </button>
         </div>
 
-        <div className="w-[140px]">
+        <div className="w-[48%] sm:w-[140px] flex-grow sm:flex-grow-0">
           <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">Category</label>
           <button className="w-full h-9 px-3 flex items-center justify-between text-[13px] border border-slate-200 rounded-md bg-white hover:bg-slate-50">
             <span className="truncate">All</span>
@@ -327,8 +327,8 @@ export default function RejectedVerdicts() {
           </button>
         </div>
 
-        <div className="w-[120px]">
-          <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5 opacity-0">More Filters</label>
+        <div className="w-[48%] sm:w-[120px] flex-grow sm:flex-grow-0">
+          <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5 opacity-0 hidden sm:block">More Filters</label>
           <button className="w-full h-9 flex items-center justify-center gap-1.5 text-[13px] font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-md transition-colors">
             <Plus className="w-4 h-4" /> Add Filter
           </button>
@@ -336,7 +336,7 @@ export default function RejectedVerdicts() {
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-6 border-b border-slate-200">
+      <div className="flex items-center gap-4 sm:gap-6 border-b border-slate-200 overflow-x-auto whitespace-nowrap">
         {TABS.map((tab) => (
           <button
             key={tab.label}
@@ -351,23 +351,23 @@ export default function RejectedVerdicts() {
         ))}
       </div>
 
-      <div className="flex justify-between items-center text-[12px] text-slate-500">
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-[12px] text-slate-500">
         <span>Showing 1 to 10 of 94 results</span>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-4">
           <button className="flex items-center gap-1.5 px-3 py-1.5 border border-slate-200 bg-white rounded text-[12px] font-semibold text-slate-700 hover:bg-slate-50">
             <SlidersHorizontal className="w-3.5 h-3.5" /> Columns <ChevronDown className="w-3.5 h-3.5 ml-1" />
           </button>
           <button className="flex items-center gap-1.5 px-3 py-1.5 border border-slate-200 bg-white rounded text-[12px] font-semibold text-slate-700 hover:bg-slate-50">
             20 per page <ChevronDown className="w-3.5 h-3.5 ml-1" />
           </button>
-          <div className="flex items-center border border-slate-200 bg-white rounded">
-            <button className="p-1.5 hover:bg-slate-50 border-r border-slate-200"><ChevronDown className="w-4 h-4 rotate-90 text-slate-400" /></button>
-            <button className="px-3 py-1 text-[12px] font-bold bg-blue-600 text-white">1</button>
-            <button className="px-3 py-1 text-[12px] font-semibold text-slate-600 hover:bg-slate-50">2</button>
-            <button className="px-3 py-1 text-[12px] font-semibold text-slate-600 hover:bg-slate-50">3</button>
-            <button className="px-3 py-1 text-[12px] font-semibold text-slate-600 hover:bg-slate-50">4</button>
-            <button className="px-3 py-1 text-[12px] font-semibold text-slate-600 hover:bg-slate-50">5</button>
-            <button className="p-1.5 hover:bg-slate-50 border-l border-slate-200"><ChevronDown className="w-4 h-4 -rotate-90 text-slate-400" /></button>
+          <div className="flex items-center border border-slate-200 bg-white rounded overflow-x-auto">
+            <button className="p-1.5 hover:bg-slate-50 border-r border-slate-200 shrink-0"><ChevronDown className="w-4 h-4 rotate-90 text-slate-400" /></button>
+            <button className="px-3 py-1 text-[12px] font-bold bg-blue-600 text-white shrink-0">1</button>
+            <button className="px-3 py-1 text-[12px] font-semibold text-slate-600 hover:bg-slate-50 shrink-0">2</button>
+            <button className="px-3 py-1 text-[12px] font-semibold text-slate-600 hover:bg-slate-50 shrink-0">3</button>
+            <button className="px-3 py-1 text-[12px] font-semibold text-slate-600 hover:bg-slate-50 shrink-0 hidden sm:block">4</button>
+            <button className="px-3 py-1 text-[12px] font-semibold text-slate-600 hover:bg-slate-50 shrink-0 hidden sm:block">5</button>
+            <button className="p-1.5 hover:bg-slate-50 border-l border-slate-200 shrink-0"><ChevronDown className="w-4 h-4 -rotate-90 text-slate-400" /></button>
           </div>
         </div>
       </div>

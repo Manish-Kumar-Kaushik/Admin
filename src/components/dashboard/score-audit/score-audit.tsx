@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import {
@@ -97,37 +97,60 @@ function StatCard({ icon, label, value, trend, trendLabel, iconBg }: {
   const isUp = trend.startsWith("+");
   const displayTrend = trend.replace("+", "").replace("-", "");
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-4 flex items-start gap-3 shadow-sm hover:shadow-md transition-shadow">
-      <div className={cn("w-10 h-10 rounded-full flex items-center justify-center shrink-0", iconBg)}>
-        {icon}
+    <div className="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+      {/* Mobile: compact wrap row — icon | label: value | trend | date */}
+      <div className="flex sm:hidden items-center gap-2 px-3 py-2.5 overflow-hidden">
+        <div className={cn("w-6 h-6 rounded-full flex items-center justify-center shrink-0", iconBg)}>
+          <span className="scale-75 flex">{icon}</span>
+        </div>
+        <div className="flex flex-1 items-center gap-1.5 min-w-0 flex-wrap sm:flex-nowrap">
+          <span className="text-[11px] font-semibold text-slate-600 leading-tight whitespace-nowrap">{label}:</span>
+          <span className="text-[13px] font-bold text-slate-800 whitespace-nowrap">{value}</span>
+          <span className={cn("text-[10px] font-bold whitespace-nowrap ml-auto", isUp ? "text-emerald-600" : "text-rose-500")}>
+            {isUp ? "▲" : "▼"}{displayTrend}
+          </span>
+          <span className="text-[10px] text-slate-400 whitespace-nowrap">{trendLabel}</span>
+        </div>
       </div>
-      <div className="min-w-0">
-        <p className="text-[12px] text-slate-500 font-semibold">{label}</p>
-        <p className="text-2xl font-bold text-slate-800 leading-tight mt-0.5">{value}</p>
-        <p className={cn("text-[11px] mt-1 font-semibold flex items-center gap-0.5", isUp ? "text-emerald-600" : "text-rose-500")}>
-          <span>{isUp ? "▲" : "▼"}</span>
-          <span>{displayTrend}</span>
-          <span className="text-slate-400 font-normal ml-0.5">{trendLabel}</span>
-        </p>
+      {/* Desktop (sm+): fully left-aligned card */}
+      <div className="hidden sm:flex flex-col p-4 w-full min-w-0">
+        <div className="flex items-center gap-2.5 mb-2">
+          <div className={cn("w-8 h-8 rounded-full flex items-center justify-center shrink-0", iconBg)}>
+            <span className="scale-75 flex">{icon}</span>
+          </div>
+          <p className="text-[12px] text-slate-500 font-semibold truncate flex-1">{label}</p>
+        </div>
+        <p className="text-2xl font-bold text-slate-800 leading-tight">{value}</p>
+        <div className={cn("text-[11px] mt-1.5 font-semibold flex items-center gap-1 whitespace-nowrap overflow-hidden text-ellipsis", isUp ? "text-emerald-600" : "text-rose-500")}>
+          <span className="flex items-center gap-0.5 shrink-0">
+            <span>{isUp ? "▲" : "▼"}</span>
+            <span>{displayTrend}</span>
+          </span>
+          <span className="text-slate-400 font-normal truncate">{trendLabel}</span>
+        </div>
       </div>
     </div>
   );
 }
 
+
 // ─── Donut Chart (SVG) ────────────────────────────────────────────────────────
 
-function DonutChart({ segments, size = 80 }: { segments: { value: number; color: string }[]; size?: number }) {
+function DonutChart({ segments, size = 80, mounted = true }: { segments: { value: number; color: string }[]; size?: number; mounted?: boolean }) {
   const r = 30, cx = 40, cy = 40, circ = 2 * Math.PI * r;
   let offset = 0;
   const total = segments.reduce((a, b) => a + b.value, 0);
   return (
-    <svg width={size} height={size} viewBox="0 0 80 80">
+    <svg width={size} height={size} viewBox="0 0 80 80" className="transform -rotate-90">
+      <circle cx={cx} cy={cy} r={r} fill="none" stroke="#f1f5f9" strokeWidth="14" />
       {segments.map((seg, i) => {
         const dash = (seg.value / total) * circ;
+        const currentDash = mounted ? dash : 0;
         const el = (
           <circle key={i} cx={cx} cy={cy} r={r} fill="none" stroke={seg.color}
-            strokeWidth="14" strokeDasharray={`${dash} ${circ - dash}`}
-            strokeDashoffset={-offset} transform="rotate(-90 40 40)" />
+            strokeWidth="14" strokeDasharray={`${currentDash} ${circ}`}
+            strokeDashoffset={-offset}
+            className="transition-all duration-1000 ease-out" />
         );
         offset += dash;
         return el;
@@ -143,7 +166,13 @@ export default function ScoreAudit() {
   const [activeTab, setActiveTab] = useState<Tab>("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [mounted, setMounted] = useState(false);
   const perPage = 10;
+
+  useEffect(() => {
+    const timer = setTimeout(() => setMounted(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
 
   const tabs: Tab[] = ["All", "Score Changed", "Low Confidence", "Manual Override", "Needs Explanation"];
 
@@ -158,25 +187,25 @@ export default function ScoreAudit() {
   });
 
   return (
-    <div className="flex flex-col min-h-full bg-[#F8F9FA]">
+    <div className="w-full min-h-full bg-[#F8F9FA] overflow-x-hidden">
       {/* ── Top Header Section (Full Width) ── */}
-      <div className="px-6 pt-5 pb-0">
+      <div className="w-full px-4 md:px-6 pt-5 pb-0">
         {/* Breadcrumb row */}
-        <nav className="flex items-center gap-1.5 text-[12px] text-slate-500 mb-2">
+        <nav className="flex items-center gap-1.5 text-[11px] sm:text-[12px] text-slate-500 mb-2">
           <span className="hover:text-blue-600 cursor-pointer">Home</span>
           <ChevronRight className="w-3 h-3 text-slate-400" />
           <span className="text-slate-800 font-medium">Score Audit</span>
         </nav>
 
         {/* Title and Action Buttons Row */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <h1 className="text-2xl font-bold text-slate-800 leading-tight">Score Audit</h1>
-            <p className="text-[13px] text-slate-500 mt-0.5">
+            <h1 className="text-xl sm:text-2xl font-bold text-slate-800 leading-tight">Score Audit</h1>
+            <p className="text-xs sm:text-[13px] text-slate-500 mt-0.5">
               Review products with score changes, low confidence, manual overrides, and explanations needed.
             </p>
           </div>
-          <div className="flex items-center gap-2 shrink-0 flex-wrap justify-end">
+          <div className="flex items-center gap-2 flex-wrap">
             <button className="flex items-center gap-1.5 h-8 px-3 text-[12px] font-semibold bg-white border border-slate-200 rounded-lg text-slate-700 hover:bg-slate-50 hover:border-slate-300 shadow-sm transition-all cursor-pointer">
               <Download className="w-3.5 h-3.5 text-slate-500" /> Export Audit
             </button>
@@ -191,11 +220,11 @@ export default function ScoreAudit() {
       </div>
 
       {/* ── Split Layout Grid ── */}
-      <div className="flex flex-1 gap-6 px-6 pb-6 min-h-0 mt-5">
+      <div className="flex flex-col xl:flex-row flex-1 gap-6 px-4 md:px-6 pb-6 mt-5">
         {/* Left Side: Stats, Tabs, Filters, Table */}
         <div className="flex-1 min-w-0">
           {/* Stat Cards */}
-          <div className="grid grid-cols-5 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3">
             <StatCard icon={<ShoppingBag className="w-5 h-5 text-white" />} label="Products Audited" value={248} trend="+18%" trendLabel="vs May 5 – May 11" iconBg="bg-[#0066FF]" />
             <StatCard icon={<TrendingUp className="w-5 h-5 text-white" />} label="Score Changed" value={42} trend="+22%" trendLabel="vs May 5 – May 11" iconBg="bg-[#22C55E]" />
             <StatCard icon={<AlertTriangle className="w-5 h-5 text-white" />} label="Low Confidence" value={18} trend="-10%" trendLabel="vs May 5 – May 11" iconBg="bg-[#F59E0B]" />
@@ -204,10 +233,10 @@ export default function ScoreAudit() {
           </div>
 
           {/* Tabs */}
-          <div className="flex items-center gap-0 mt-5 border-b border-slate-200">
+          <div className="flex items-center gap-0 mt-5 border-b border-slate-200 overflow-x-auto whitespace-nowrap pb-0">
             {tabs.map(tab => (
               <button key={tab} onClick={() => setActiveTab(tab)}
-                className={`px-4 py-2 text-[13px] font-medium border-b-2 transition-all -mb-px whitespace-nowrap cursor-pointer ${activeTab === tab ? "border-blue-600 text-blue-600" : "border-transparent text-slate-500 hover:text-slate-800"}`}>
+                className={`px-3 sm:px-4 py-2 text-[11px] sm:text-[13px] font-medium border-b-2 transition-all -mb-px whitespace-nowrap cursor-pointer ${activeTab === tab ? "border-blue-600 text-blue-600" : "border-transparent text-slate-500 hover:text-slate-800"}`}>
                 {tab}
               </button>
             ))}
@@ -326,10 +355,10 @@ export default function ScoreAudit() {
             </div>
 
             {/* Pagination */}
-            <div className="flex items-center justify-between px-4 py-3 border-t border-slate-100 bg-white">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between px-4 py-3 gap-3 border-t border-slate-100 bg-white">
               <span className="text-[12px] text-slate-500">Showing 1 to {Math.min(perPage, filtered.length)} of 248 results</span>
-              <div className="flex items-center gap-1">
-                <select className="h-7 px-2 text-[12px] border border-slate-200 rounded bg-white text-slate-700 focus:outline-none mr-2">
+              <div className="flex flex-wrap items-center gap-1.5 w-full sm:w-auto">
+                <select className="h-7 px-2 text-[12px] border border-slate-200 rounded bg-white text-slate-700 focus:outline-none sm:mr-2">
                   <option>10 per page</option>
                   <option>25 per page</option>
                   <option>50 per page</option>
@@ -357,8 +386,8 @@ export default function ScoreAudit() {
           </div>
         </div>
 
-        {/* Right Side: Column */}
-        <div className="w-80 shrink-0 hidden xl:flex flex-col gap-4">
+        {/* Right Side: Column — hidden below xl, full-width on xl+ */}
+        <div className="w-full xl:w-72 shrink-0 xl:flex flex-col gap-4 hidden xl:block">
           {/* Analytics Panel */}
           <div className="bg-white border border-slate-200 rounded-xl p-4 space-y-5 shadow-sm">
             {/* Recent Score Changes */}
@@ -402,7 +431,7 @@ export default function ScoreAudit() {
                 { value: 142, color: "#22C55E" },
                 { value: 72, color: "#F59E0B" },
                 { value: 34, color: "#EF4444" },
-              ]} size={80} />
+              ]} size={80} mounted={mounted} />
               <div className="space-y-1.5 flex-1">
                 {[
                   { label: "High", count: 142, pct: 57, color: "bg-emerald-500" },
@@ -437,7 +466,7 @@ export default function ScoreAudit() {
                     <span className="text-slate-400 font-normal shrink-0 ml-1">{v.count} ({v.pct}%)</span>
                   </div>
                   <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                    <div className={`h-full rounded-full ${v.color}`} style={{ width: `${v.pct}%` }} />
+                    <div className={`h-full rounded-full ${v.color} transition-all duration-1000 ease-out`} style={{ width: mounted ? `${v.pct}%` : "0%" }} />
                   </div>
                 </div>
               ))}
@@ -455,7 +484,7 @@ export default function ScoreAudit() {
                 { value: 17, color: "#F59E0B" },
                 { value: 9, color: "#8B5CF6" },
                 { value: 34, color: "#06B6D4" },
-              ]} size={80} />
+              ]} size={80} mounted={mounted} />
               <div className="space-y-1.5 flex-1">
                 {[
                   { label: "Score Changed", count: 42, pct: 40, color: "bg-blue-500" },

@@ -44,9 +44,9 @@ export default function ProductView() {
   ];
 
   return (
-    <div className="flex flex-col h-full bg-slate-50 overflow-y-auto">
+    <div className="flex flex-col flex-grow min-h-screen bg-slate-50 min-w-0">
       {/* Top Breadcrumb & Actions */}
-      <div className="px-6 py-4 flex flex-col xl:flex-row xl:items-center justify-between gap-4 shrink-0">
+      <div className="px-3 sm:px-4 lg:px-6 py-4 sm:py-6 flex flex-col xl:flex-row xl:items-center justify-between gap-4 shrink-0 min-w-0">
         <div className="text-sm text-slate-500 flex items-center flex-wrap gap-2">
           <Link href="/dashboard" className="hover:text-slate-900 transition-colors">Admin</Link>
           <span>/</span>
@@ -79,10 +79,10 @@ export default function ProductView() {
       </div>
 
       {/* Main Container */}
-      <div className="px-6 pb-6 flex flex-col gap-6">
+      <div className="px-3 sm:px-4 lg:px-6 pb-6 flex flex-col gap-4 sm:gap-6 min-w-0">
         {/* Header Card */}
-        <Card className="p-6">
-          <div className="flex flex-col xl:flex-row justify-between items-start gap-8">
+        <Card className="p-4 sm:p-6 min-w-0 overflow-hidden">
+          <div className="flex flex-col xl:flex-row justify-between items-start gap-6 sm:gap-8">
             <div className="flex flex-col sm:flex-row gap-6 w-full xl:w-auto">
               <div className="w-full sm:w-40 h-48 sm:h-40 rounded-lg border border-slate-200 p-2 bg-white flex items-center justify-center shrink-0">
                 <img
@@ -157,8 +157,8 @@ export default function ProductView() {
                 </div>
               </div>
               {/* Right Column - Score */}
-              <div className="p-6 w-36 sm:w-44 flex flex-col justify-center items-center text-center shrink-0">
-                <div className="text-[10px] font-bold text-slate-500 mb-3 uppercase tracking-widest">AI Buy Score</div>
+              <div className="p-4 sm:p-6 w-32 sm:w-44 flex flex-col justify-center items-center text-center shrink-0">
+                <div className="text-[10px] font-bold text-slate-500 mb-2 sm:mb-3 uppercase tracking-widest">AI Buy Score</div>
                 <div className="flex items-baseline gap-1">
                   <span className="text-4xl sm:text-5xl font-bold text-amber-500 tracking-tight leading-none">76</span>
                   <span className="text-slate-400 font-medium text-sm">/100</span>
@@ -194,7 +194,7 @@ export default function ProductView() {
         </Card>
 
         {/* Row 1: 4 columns */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {/* Product Summary */}
           <Card>
             <CardHeader className="pb-3 border-b border-slate-100 flex flex-row items-center gap-2 px-5 py-4">
@@ -310,7 +310,7 @@ export default function ProductView() {
         </div>
 
         {/* Row 2: 4 columns */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {/* Current Best Offer */}
           <Card>
             <CardHeader className="pb-3 border-b border-slate-100 flex flex-row items-center gap-2 px-5 py-4">
@@ -318,18 +318,18 @@ export default function ProductView() {
               <CardTitle className="text-sm font-semibold">Current Best Offer</CardTitle>
             </CardHeader>
             <CardContent className="p-5 pt-4">
-              <div className="flex flex-col sm:flex-row justify-between items-start gap-4 sm:gap-0 mb-6">
-                <div>
+              <div className="flex flex-col sm:flex-row justify-between items-center sm:items-start text-center sm:text-left gap-5 sm:gap-0 mb-6">
+                <div className="flex flex-col items-center sm:items-start">
                   <div className="text-xs text-slate-500 font-medium mb-1">Best Retailer</div>
-                  <div className="text-2xl font-bold tracking-tight text-slate-900 flex items-center gap-1">
+                  <div className="text-2xl font-bold tracking-tight text-slate-900 flex items-center justify-center sm:justify-start gap-1">
                     <span className="text-amber-500">amazon</span>
                   </div>
                 </div>
-                <div>
+                <div className="flex flex-col items-center sm:items-start">
                   <div className="text-xs text-slate-500 font-medium mb-1">Price</div>
                   <div className="text-2xl font-bold text-slate-900">$299<span className="text-sm text-slate-500 align-super">00</span></div>
                 </div>
-                <div>
+                <div className="flex flex-col items-center sm:items-start">
                   <div className="text-xs text-slate-500 font-medium mb-1">Stock</div>
                   <div className="text-sm font-semibold text-green-600">In Stock</div>
                   <div className="text-xs text-slate-500 mt-1">Shipping <span className="text-green-600 font-medium">FREE</span></div>

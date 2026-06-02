@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils"
 function Progress({ className, value = 0, indicatorClassName, ...props }: React.ComponentProps<"div"> & { value?: number; indicatorClassName?: string }) {
   return (
     <div
-      className={cn("relative h-2 w-full overflow-hidden rounded-full bg-slate-100", className)}
+      className={cn("relative h-1.5 sm:h-2 w-full overflow-hidden rounded-full bg-slate-100", className)}
       {...props}
     >
       <div

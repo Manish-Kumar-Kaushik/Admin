@@ -94,8 +94,8 @@ export default function ClusterDetails() {
   const router = useRouter();
 
   return (
-    <div className="w-full h-full bg-slate-50 font-sans p-3 sm:p-4 text-slate-900">
-      <div className="w-full mx-auto flex flex-col xl:flex-row gap-3">
+    <div className="w-full min-h-full bg-slate-50 font-sans text-slate-900">
+      <div className="w-full flex flex-col xl:flex-row gap-3 px-2 py-3 sm:p-4">
         
         {/* ======================= LEFT MAIN COLUMN ======================= */}
         <div className="flex-1 flex flex-col gap-3 min-w-0">
@@ -219,8 +219,8 @@ export default function ClusterDetails() {
                 <h3 className="text-[13px] sm:text-[14px] lg:text-[15px] font-bold text-slate-900">Positive Theme Clusters</h3>
                 <span className="px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 text-[9px] sm:text-[10px] font-bold border border-emerald-100">Top Themes</span>
               </div>
-              <div className="flex-1 overflow-x-auto">
-                <table className="w-full text-left text-[11px] sm:text-[12px] lg:text-[13px]">
+              <div className="flex-1 overflow-x-auto w-full">
+                <table className="w-full text-left text-[11px] sm:text-[12px] lg:text-[13px] min-w-max">
                   <thead>
                     <tr className="border-b border-slate-100 text-slate-500 whitespace-nowrap">
                       <th className="pb-2 font-medium">Theme</th>
@@ -256,8 +256,8 @@ export default function ClusterDetails() {
                 <h3 className="text-[13px] sm:text-[14px] lg:text-[15px] font-bold text-slate-900">Complaint Clusters</h3>
                 <span className="px-1.5 py-0.5 rounded bg-rose-50 text-rose-700 text-[9px] sm:text-[10px] font-bold border border-rose-100">Top Issues</span>
               </div>
-              <div className="flex-1 overflow-x-auto">
-                <table className="w-full text-left text-[12px]">
+              <div className="flex-1 overflow-x-auto w-full">
+                <table className="w-full text-left text-[12px] min-w-max">
                   <thead>
                     <tr className="border-b border-slate-100 text-slate-500 whitespace-nowrap">
                       <th className="pb-2 font-medium">Theme</th>

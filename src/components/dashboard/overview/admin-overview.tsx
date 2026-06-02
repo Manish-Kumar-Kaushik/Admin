@@ -116,83 +116,95 @@ export default function AdminOverview() {
         {/* ── 6 Stat Cards ── */}
         <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-3">
           {/* Card: Today's Searches */}
-          <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex items-start justify-between mb-3">
-              <span className="text-[11px] font-semibold text-slate-500 leading-snug max-w-[80px]">Today's Searches</span>
-              <div className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
-                <Search className="w-4 h-4 text-blue-600" />
+          <div className="bg-white border border-slate-200 rounded-xl p-3 sm:p-4 xl:p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between h-[110px] sm:h-[130px]">
+            <div className="flex justify-start items-center gap-2 sm:gap-3">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
+                <Search className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" />
+              </div>
+              <div className="flex-1 text-left">
+                <span className="text-[10px] sm:text-[12px] xl:text-[13px] font-semibold text-slate-600 leading-tight block mb-1">Today's Searches</span>
+                <div className="text-xl sm:text-2xl font-black text-slate-900 leading-none mt-1">28,651</div>
               </div>
             </div>
-            <div className="text-[28px] font-bold text-slate-900 leading-none">28,651</div>
-            <div className="mt-2 text-[11px] text-slate-500">
+            <div className="mt-auto text-[10px] sm:text-[11px] text-slate-500">
               <span className="text-emerald-600 font-semibold">↑ 14.6%</span> vs last 7 days
             </div>
           </div>
 
           {/* Card: AI Reviews Pending */}
-          <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex items-start justify-between mb-3">
-              <span className="text-[11px] font-semibold text-slate-500 leading-snug max-w-[80px]">AI Reviews Pending</span>
-              <div className="w-8 h-8 rounded-full bg-orange-50 flex items-center justify-center shrink-0">
-                <Bot className="w-4 h-4 text-orange-500" />
+          <div className="bg-white border border-slate-200 rounded-xl p-3 sm:p-4 xl:p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between h-[110px] sm:h-[130px]">
+            <div className="flex justify-start items-center gap-2 sm:gap-3">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-orange-50 flex items-center justify-center shrink-0">
+                <Bot className="w-5 h-5 sm:w-6 sm:h-6 text-orange-500" />
+              </div>
+              <div className="flex-1 text-left">
+                <span className="text-[10px] sm:text-[12px] xl:text-[13px] font-semibold text-slate-600 leading-tight block mb-1">AI Reviews Pending</span>
+                <div className="text-xl sm:text-2xl font-black text-slate-900 leading-none mt-1">186</div>
               </div>
             </div>
-            <div className="text-[28px] font-bold text-slate-900 leading-none">186</div>
-            <div className="mt-2 text-[11px] text-slate-500">
+            <div className="mt-auto text-[10px] sm:text-[11px] text-slate-500">
               <span className="text-amber-600 font-semibold">31 high-</span><span className="text-amber-600 font-semibold underline decoration-amber-400">priority</span>
             </div>
           </div>
 
           {/* Card: Low Confidence Verdicts */}
-          <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex items-start justify-between mb-3">
-              <span className="text-[11px] font-semibold text-slate-500 leading-snug max-w-[80px]">Low Confidence Verdicts</span>
-              <div className="w-8 h-8 rounded-full bg-rose-50 flex items-center justify-center shrink-0">
-                <ShieldAlert className="w-4 h-4 text-rose-500" />
+          <div className="bg-white border border-slate-200 rounded-xl p-3 sm:p-4 xl:p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between h-[110px] sm:h-[130px]">
+            <div className="flex justify-start items-center gap-2 sm:gap-3">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-rose-50 flex items-center justify-center shrink-0">
+                <ShieldAlert className="w-5 h-5 sm:w-6 sm:h-6 text-rose-500" />
+              </div>
+              <div className="flex-1 text-left">
+                <span className="text-[10px] sm:text-[12px] xl:text-[13px] font-semibold text-slate-600 leading-tight block mb-1">Low Confidence</span>
+                <div className="text-xl sm:text-2xl font-black text-slate-900 leading-none mt-1">42</div>
               </div>
             </div>
-            <div className="text-[28px] font-bold text-slate-900 leading-none">42</div>
-            <div className="mt-2 text-[11px] text-rose-600 font-semibold">Needs review</div>
+            <div className="mt-auto text-[10px] sm:text-[11px] text-rose-600 font-semibold">Needs review</div>
           </div>
 
           {/* Card: Connector Errors */}
-          <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex items-start justify-between mb-3">
-              <span className="text-[11px] font-semibold text-slate-500 leading-snug max-w-[80px]">Connector Errors</span>
-              <div className="w-8 h-8 rounded-full bg-orange-50 flex items-center justify-center shrink-0">
-                <Zap className="w-4 h-4 text-orange-500" />
+          <div className="bg-white border border-slate-200 rounded-xl p-3 sm:p-4 xl:p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between h-[110px] sm:h-[130px]">
+            <div className="flex justify-start items-center gap-2 sm:gap-3">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-orange-50 flex items-center justify-center shrink-0">
+                <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-orange-500" />
+              </div>
+              <div className="flex-1 text-left">
+                <span className="text-[10px] sm:text-[12px] xl:text-[13px] font-semibold text-slate-600 leading-tight block mb-1">Connector Errors</span>
+                <div className="text-xl sm:text-2xl font-black text-slate-900 leading-none mt-1">9</div>
               </div>
             </div>
-            <div className="text-[28px] font-bold text-slate-900 leading-none">9</div>
-            <div className="mt-2 text-[11px] text-slate-500">
+            <div className="mt-auto text-[10px] sm:text-[11px] text-slate-500">
               <span className="text-orange-600 font-semibold">3</span> needing attention
             </div>
           </div>
 
           {/* Card: Affiliate Clicks */}
-          <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex items-start justify-between mb-3">
-              <span className="text-[11px] font-semibold text-slate-500 leading-snug max-w-[80px]">Affiliate Clicks</span>
-              <div className="w-8 h-8 rounded-full bg-emerald-50 flex items-center justify-center shrink-0">
-                <MousePointerClick className="w-4 h-4 text-emerald-600" />
+          <div className="bg-white border border-slate-200 rounded-xl p-3 sm:p-4 xl:p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between h-[110px] sm:h-[130px]">
+            <div className="flex justify-start items-center gap-2 sm:gap-3">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-emerald-50 flex items-center justify-center shrink-0">
+                <MousePointerClick className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-600" />
+              </div>
+              <div className="flex-1 text-left">
+                <span className="text-[10px] sm:text-[12px] xl:text-[13px] font-semibold text-slate-600 leading-tight block mb-1">Affiliate Clicks</span>
+                <div className="text-xl sm:text-2xl font-black text-slate-900 leading-none mt-1">5,318</div>
               </div>
             </div>
-            <div className="text-[28px] font-bold text-slate-900 leading-none">5,318</div>
-            <div className="mt-2 text-[11px] text-slate-500">
+            <div className="mt-auto text-[10px] sm:text-[11px] text-slate-500">
               <span className="text-emerald-600 font-semibold">↑ 11.2%</span> vs last 7 days
             </div>
           </div>
 
           {/* Card: User Reports */}
-          <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex items-start justify-between mb-3">
-              <span className="text-[11px] font-semibold text-slate-500 leading-snug max-w-[80px]">User Reports</span>
-              <div className="w-8 h-8 rounded-full bg-purple-50 flex items-center justify-center shrink-0">
-                <Flag className="w-4 h-4 text-purple-600" />
+          <div className="bg-white border border-slate-200 rounded-xl p-3 sm:p-4 xl:p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between h-[110px] sm:h-[130px]">
+            <div className="flex justify-start items-center gap-2 sm:gap-3">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-purple-50 flex items-center justify-center shrink-0">
+                <Flag className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600" />
+              </div>
+              <div className="flex-1 text-left">
+                <span className="text-[10px] sm:text-[12px] xl:text-[13px] font-semibold text-slate-600 leading-tight block mb-1">User Reports</span>
+                <div className="text-xl sm:text-2xl font-black text-slate-900 leading-none mt-1">37</div>
               </div>
             </div>
-            <div className="text-[28px] font-bold text-slate-900 leading-none">37</div>
-            <div className="mt-2 text-[11px] text-slate-500">
+            <div className="mt-auto text-[10px] sm:text-[11px] text-slate-500">
               <span className="text-purple-600 font-semibold">8</span> safety concerns
             </div>
           </div>
@@ -204,13 +216,13 @@ export default function AdminOverview() {
           {/* Critical Action Queue */}
           <div className="lg:col-span-2 bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
             {/* Header */}
-            <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-100">
-              <div className="flex items-center gap-2">
-                <span className="text-[14px] font-bold text-slate-900">Critical Action Queue</span>
-                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-50 text-rose-600 border border-rose-200">High Priority</span>
-                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600 border border-slate-200">Unassigned</span>
+            <div className="flex items-center justify-between px-3 py-3 sm:px-5 sm:py-3.5 border-b border-slate-100">
+              <div className="flex flex-wrap sm:flex-nowrap items-center gap-1.5 sm:gap-2">
+                <span className="text-[11px] sm:text-[14px] font-bold text-slate-900 leading-none">Critical Action Queue</span>
+                <span className="px-1.5 py-0.5 sm:px-2 rounded text-[9px] sm:text-[10px] font-bold bg-rose-50 text-rose-600 border border-rose-200 leading-none mt-0.5 sm:mt-0">High Priority</span>
+                <span className="px-1.5 py-0.5 sm:px-2 rounded text-[9px] sm:text-[10px] font-bold bg-slate-100 text-slate-600 border border-slate-200 leading-none mt-0.5 sm:mt-0">Unassigned</span>
               </div>
-              <button className="text-[12px] font-medium text-blue-600 hover:text-blue-700 transition-colors">View all</button>
+              <button className="text-[10px] sm:text-[12px] font-medium text-blue-600 hover:text-blue-700 transition-colors ml-2 shrink-0">View all</button>
             </div>
 
             {/* Table */}

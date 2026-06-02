@@ -13,7 +13,7 @@ function Badge({ className, variant = "default", ...props }: React.ComponentProp
   return (
     <span
       data-slot="badge"
-      className={cn("inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold", variants[variant], className)}
+      className={cn("inline-flex items-center rounded-full px-2 sm:px-2.5 py-0.5 sm:py-1 text-xs font-semibold", variants[variant], className)}
       {...props}
     />
   )

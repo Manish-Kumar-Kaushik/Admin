@@ -126,9 +126,9 @@ const groups: SidebarGroup[] = [
         name: "Review Intelligence",
         icon: BrainCircuit,
         subItems: [
-          { name: "Review Clusters", href: "/dashboard/intelligence/clusters" },
-          { name: "Suspicious Review Patterns", href: "/dashboard/intelligence/suspicious" },
-          { name: "Pros / Cons Review", href: "/dashboard/intelligence/pros-cons" },
+          { name: "Review Clusters", href: "/dashboard/review-intelligence/clusters" },
+          { name: "Suspicious Review Patterns", href: "/dashboard/review-intelligence/suspicious" },
+          { name: "Pros / Cons Review", href: "/dashboard/review-intelligence/pros-cons" },
         ],
       },
       {
@@ -232,6 +232,7 @@ const groups: SidebarGroup[] = [
         name: "Settings",
         icon: Settings,
         subItems: [
+          { name: "Notification Center", href: "/dashboard/settings/notifications" },
           { name: "Admin Users", href: "/dashboard/settings/users" },
           { name: "Roles & Permissions", href: "/dashboard/settings/roles-permissions" },
           { name: "Scoring Settings", href: "/dashboard/settings/scoring" },

@@ -247,33 +247,33 @@ export default function ApiLogs() {
   };
 
   return (
-    <div className="w-full h-full bg-slate-50 font-sans p-8 overflow-y-auto">
-      <div className="max-w-[1400px] mx-auto space-y-6">
+    <div className="w-full h-full bg-slate-50 font-sans overflow-y-auto overflow-x-hidden">
+      <div className="w-full p-4 md:p-6 space-y-6">
         
         {/* Breadcrumb */}
-        <div className="flex items-center text-[13px] font-medium text-slate-500 mb-2">
+        <div className="flex items-center text-xs sm:text-[13px] font-medium text-slate-500 mb-2">
           <Link href="/dashboard/connectors" className="hover:text-slate-900 transition-colors">Retailer Connectors</Link>
-          <ChevronRight className="w-3.5 h-3.5 mx-1" />
+          <ChevronRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 mx-1" />
           <span className="text-slate-900">API Logs</span>
         </div>
 
         {/* Header Section */}
-        <div className="flex justify-between items-start">
+        <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-slate-950 tracking-tight">API Logs</h1>
-            <p className="text-sm text-slate-500 mt-1">View and monitor all API requests made to retailer connectors.</p>
+            <h1 className="text-lg sm:text-2xl font-bold text-slate-950 tracking-tight">API Logs</h1>
+            <p className="text-xs sm:text-sm text-slate-500 mt-1">View and monitor all API requests made to retailer connectors.</p>
           </div>
-          <div className="flex items-center gap-3">
-            <button className="flex items-center gap-2 h-10 px-4 bg-white border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors shadow-sm">
-              <FileText className="w-4 h-4 text-slate-500" />
+          <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+            <button className="flex items-center gap-1.5 sm:gap-2 h-9 sm:h-10 px-3 sm:px-4 bg-white border border-slate-200 rounded-lg text-xs sm:text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors shadow-sm">
+              <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-500" />
               Export Logs
             </button>
-            <button className="flex items-center gap-2 h-10 px-4 bg-white border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors shadow-sm">
-              <RefreshCcw className="w-4 h-4 text-slate-500" />
+            <button className="flex items-center gap-1.5 sm:gap-2 h-9 sm:h-10 px-3 sm:px-4 bg-white border border-slate-200 rounded-lg text-xs sm:text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors shadow-sm">
+              <RefreshCcw className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-500" />
               Refresh
             </button>
-            <button className="flex items-center gap-2 h-10 px-4 bg-blue-600 rounded-lg text-sm font-semibold text-white hover:bg-blue-700 transition-colors shadow-sm">
-              <XCircle className="w-4 h-4" />
+            <button className="flex items-center gap-1.5 sm:gap-2 h-9 sm:h-10 px-3 sm:px-4 bg-blue-600 rounded-lg text-xs sm:text-sm font-semibold text-white hover:bg-blue-700 transition-colors shadow-sm">
+              <XCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               Clear Filters
             </button>
           </div>
@@ -283,98 +283,98 @@ export default function ApiLogs() {
         <Card className="bg-white border-slate-200 rounded-xl shadow-sm p-5">
           <div className="flex flex-col gap-5">
             {/* Top Row Dropdowns */}
-            <div className="grid grid-cols-5 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
               <div className="flex flex-col gap-1.5">
-                <label className="text-[11px] font-bold text-slate-500 uppercase">Retailer</label>
+                <label className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase">Retailer</label>
                 <div className="relative">
-                  <select className="w-full h-9 pl-3 pr-8 appearance-none bg-white border border-slate-200 rounded-lg text-[13px] font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 cursor-pointer">
+                  <select className="w-full h-8 sm:h-9 pl-2 sm:pl-3 pr-7 appearance-none bg-white border border-slate-200 rounded-lg text-xs sm:text-[13px] font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 cursor-pointer">
                     <option>All Retailers</option>
                   </select>
-                  <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                  <ChevronDown className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 w-3 h-3 sm:w-4 sm:h-4 text-slate-400 pointer-events-none" />
                 </div>
               </div>
               
               <div className="flex flex-col gap-1.5">
-                <label className="text-[11px] font-bold text-slate-500 uppercase">Status</label>
+                <label className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase">Status</label>
                 <div className="relative">
-                  <select className="w-full h-9 pl-3 pr-8 appearance-none bg-white border border-slate-200 rounded-lg text-[13px] font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 cursor-pointer">
+                  <select className="w-full h-8 sm:h-9 pl-2 sm:pl-3 pr-7 appearance-none bg-white border border-slate-200 rounded-lg text-xs sm:text-[13px] font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 cursor-pointer">
                     <option>All Statuses</option>
                   </select>
-                  <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                  <ChevronDown className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 w-3 h-3 sm:w-4 sm:h-4 text-slate-400 pointer-events-none" />
                 </div>
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label className="text-[11px] font-bold text-slate-500 uppercase">Request Type</label>
+                <label className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase">Request Type</label>
                 <div className="relative">
-                  <select className="w-full h-9 pl-3 pr-8 appearance-none bg-white border border-slate-200 rounded-lg text-[13px] font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 cursor-pointer">
+                  <select className="w-full h-8 sm:h-9 pl-2 sm:pl-3 pr-7 appearance-none bg-white border border-slate-200 rounded-lg text-xs sm:text-[13px] font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 cursor-pointer">
                     <option>All Types</option>
                   </select>
-                  <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                  <ChevronDown className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 w-3 h-3 sm:w-4 sm:h-4 text-slate-400 pointer-events-none" />
                 </div>
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label className="text-[11px] font-bold text-slate-500 uppercase">Error Code</label>
+                <label className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase">Error Code</label>
                 <div className="relative">
-                  <select className="w-full h-9 pl-3 pr-8 appearance-none bg-white border border-slate-200 rounded-lg text-[13px] font-medium text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 cursor-pointer">
+                  <select className="w-full h-8 sm:h-9 pl-2 sm:pl-3 pr-7 appearance-none bg-white border border-slate-200 rounded-lg text-[11px] sm:text-[13px] font-medium text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 cursor-pointer">
                     <option>Select error code</option>
                   </select>
-                  <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                  <ChevronDown className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 w-3 h-3 sm:w-4 sm:h-4 text-slate-400 pointer-events-none" />
                 </div>
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label className="text-[11px] font-bold text-slate-500 uppercase">Time Range</label>
+                <label className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase">Time Range</label>
                 <div className="relative">
-                  <div className="w-full flex items-center justify-between h-9 px-3 bg-white border border-slate-200 rounded-lg text-[13px] font-medium text-slate-900 cursor-pointer hover:bg-slate-50">
+                  <div className="w-full flex items-center justify-between h-8 sm:h-9 px-2 sm:px-3 bg-white border border-slate-200 rounded-lg text-xs sm:text-[13px] font-medium text-slate-900 cursor-pointer hover:bg-slate-50">
                     <span>May 17, 2024 - May 18, 2024</span>
-                    <Calendar className="w-4 h-4 text-slate-400" />
+                    <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-400" />
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Bottom Row Filters */}
-            <div className="grid grid-cols-5 gap-4 items-end">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
               <div className="flex flex-col gap-1.5 col-span-2">
-                <label className="text-[11px] font-bold text-slate-500 uppercase">Search</label>
+                <label className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase">Search</label>
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                  <Search className="absolute left-2.5 sm:left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-400 pointer-events-none" />
                   <input
                     type="text"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     placeholder="Search by product, query, SKU, ASIN..."
-                    className="w-full h-9 pl-9 pr-4 bg-white border border-slate-200 rounded-lg text-[13px] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                    className="w-full h-8 sm:h-9 pl-8 sm:pl-9 pr-4 bg-white border border-slate-200 rounded-lg text-xs sm:text-[13px] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
                   />
                 </div>
               </div>
               
               <div className="flex flex-col gap-1.5 col-span-1">
-                <label className="text-[11px] font-bold text-slate-500 uppercase">Slow Requests</label>
+                <label className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase">Slow Requests</label>
                 <div className="relative">
-                  <select className="w-full h-9 pl-3 pr-8 appearance-none bg-white border border-slate-200 rounded-lg text-[13px] font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 cursor-pointer">
+                  <select className="w-full h-8 sm:h-9 pl-2 sm:pl-3 pr-7 appearance-none bg-white border border-slate-200 rounded-lg text-xs sm:text-[13px] font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 cursor-pointer">
                     <option>All</option>
                   </select>
-                  <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                  <ChevronDown className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 w-3 h-3 sm:w-4 sm:h-4 text-slate-400 pointer-events-none" />
                 </div>
               </div>
 
               <div className="flex flex-col gap-1.5 col-span-1">
-                <label className="text-[11px] font-bold text-slate-500 uppercase">Retry Count</label>
+                <label className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase">Retry Count</label>
                 <div className="relative">
-                  <select className="w-full h-9 pl-3 pr-8 appearance-none bg-white border border-slate-200 rounded-lg text-[13px] font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 cursor-pointer">
+                  <select className="w-full h-8 sm:h-9 pl-2 sm:pl-3 pr-7 appearance-none bg-white border border-slate-200 rounded-lg text-xs sm:text-[13px] font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 cursor-pointer">
                     <option>All</option>
                   </select>
-                  <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                  <ChevronDown className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 w-3 h-3 sm:w-4 sm:h-4 text-slate-400 pointer-events-none" />
                 </div>
               </div>
               
               <div className="flex flex-col gap-1.5 col-span-1">
-                <label className="text-[11px] font-bold text-slate-500 uppercase">More Filters</label>
-                <button className="w-full h-9 px-4 bg-white border border-slate-200 rounded-lg text-[13px] font-semibold text-slate-700 hover:bg-slate-50 transition-colors flex items-center justify-center gap-1.5">
-                  <span className="text-lg leading-none mb-0.5">+</span> Add Filter
+                <label className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase">More Filters</label>
+                <button className="w-full h-8 sm:h-9 px-3 sm:px-4 bg-white border border-slate-200 rounded-lg text-xs sm:text-[13px] font-semibold text-slate-700 hover:bg-slate-50 transition-colors flex items-center justify-center gap-1.5">
+                  <span className="text-base sm:text-lg leading-none mb-0.5">+</span> Add Filter
                 </button>
               </div>
             </div>
@@ -382,18 +382,18 @@ export default function ApiLogs() {
         </Card>
 
         {/* Metrics Grid */}
-        <div className="grid grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
           {METRICS.map((metric) => (
-            <Card key={metric.id} className="bg-white border-slate-200 rounded-xl shadow-sm p-4 flex items-center gap-4">
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${metric.bgColor}`}>
+            <Card key={metric.id} className="bg-white border-slate-200 rounded-xl shadow-sm p-3 sm:p-4 flex items-center gap-3 sm:gap-4">
+              <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center shrink-0 ${metric.bgColor}`}>
                 {metric.icon}
               </div>
-              <div className="flex flex-col">
-                <span className="text-[12px] font-bold text-slate-500">{metric.label}</span>
-                <div className="flex items-baseline gap-1.5">
-                  <span className={`text-xl font-bold ${metric.valueColor || "text-slate-900"}`}>{metric.value}</span>
+              <div className="flex flex-col min-w-0">
+                <span className="text-[10px] sm:text-[12px] font-bold text-slate-500 leading-tight truncate">{metric.label}</span>
+                <div className="flex items-baseline gap-1">
+                  <span className={`text-sm sm:text-xl font-bold ${metric.valueColor || "text-slate-900"}`}>{metric.value}</span>
                   {metric.subtext && (
-                    <span className={`text-xs font-semibold ${metric.subtextColor || "text-slate-500"}`}>{metric.subtext}</span>
+                    <span className={`text-[10px] sm:text-xs font-semibold ${metric.subtextColor || "text-slate-500"}`}>{metric.subtext}</span>
                   )}
                 </div>
               </div>
@@ -403,22 +403,22 @@ export default function ApiLogs() {
 
         {/* Table Section */}
         <div className="flex flex-col space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="text-sm text-slate-600 font-medium">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div className="text-[10px] sm:text-sm text-slate-600 font-medium">
               Showing <span className="font-bold text-slate-900">1 to 20</span> of <span className="font-bold text-slate-900">48,623</span> results
             </div>
             
-            <div className="flex items-center gap-3">
-              <button className="flex items-center gap-2 h-9 px-3 bg-white border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors">
-                <Settings2 className="w-4 h-4 text-slate-500" />
-                Columns <ChevronDown className="w-3.5 h-3.5 text-slate-500" />
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+              <button className="flex items-center gap-1.5 h-8 sm:h-9 px-2.5 sm:px-3 bg-white border border-slate-200 rounded-lg text-[11px] sm:text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors">
+                <Settings2 className="w-3.5 h-3.5 text-slate-500" />
+                Columns <ChevronDown className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-slate-500" />
               </button>
-              <button className="flex items-center gap-2 h-9 px-3 bg-white border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors">
-                20 per page <ChevronDown className="w-3.5 h-3.5 text-slate-500" />
+              <button className="flex items-center gap-1.5 h-8 sm:h-9 px-2.5 sm:px-3 bg-white border border-slate-200 rounded-lg text-[11px] sm:text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors">
+                20 per page <ChevronDown className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-slate-500" />
               </button>
               
               {/* Pagination */}
-              <div className="flex items-center gap-1 ml-2">
+              <div className="flex items-center gap-1">
                 <button className="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 text-slate-400 bg-white cursor-not-allowed">
                   <ChevronLeft className="w-4 h-4" />
                 </button>
@@ -443,82 +443,84 @@ export default function ApiLogs() {
           </div>
 
           <Card className="bg-white border-slate-200 rounded-xl shadow-sm overflow-hidden">
-            <Table>
-              <TableHeader className="bg-slate-50/50">
-                <TableRow className="hover:bg-transparent">
-                  <TableHead className="text-[11px] font-bold text-slate-500 uppercase h-11 cursor-pointer select-none">
-                    <div className="flex items-center gap-1">
-                      Time
-                      <div className="flex flex-col">
-                        <ChevronDown className="w-2.5 h-2.5 rotate-180 -mb-1 text-slate-300" />
-                        <ChevronDown className="w-2.5 h-2.5 text-slate-500" />
-                      </div>
-                    </div>
-                  </TableHead>
-                  <TableHead className="text-[11px] font-bold text-slate-500 uppercase h-11">Retailer</TableHead>
-                  <TableHead className="text-[11px] font-bold text-slate-500 uppercase h-11">Request Type</TableHead>
-                  <TableHead className="text-[11px] font-bold text-slate-500 uppercase h-11">Product / Query</TableHead>
-                  <TableHead className="text-[11px] font-bold text-slate-500 uppercase h-11">Status</TableHead>
-                  <TableHead className="text-[11px] font-bold text-slate-500 uppercase h-11">Response Time</TableHead>
-                  <TableHead className="text-[11px] font-bold text-slate-500 uppercase h-11">Error Code</TableHead>
-                  <TableHead className="text-[11px] font-bold text-slate-500 uppercase h-11">Retry Count</TableHead>
-                  <TableHead className="text-[11px] font-bold text-slate-500 uppercase h-11">Trace ID</TableHead>
-                  <TableHead className="text-[11px] font-bold text-slate-500 uppercase h-11 text-center">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {LOGS_DATA.map((row, idx) => (
-                  <TableRow key={idx} className="hover:bg-slate-50/50 transition-colors">
-                    <TableCell className="py-4 text-[13px] font-semibold text-slate-900 whitespace-nowrap">
-                      {row.time}
-                    </TableCell>
-                    <TableCell className="py-4">
-                      <div className="flex items-center gap-2.5">
-                        <div className={`w-5 h-5 rounded flex items-center justify-center font-bold text-xs ${row.retailerIconColor} ${row.retailerIconTextColor || "text-white"}`}>
-                          {row.retailerIconText}
+            <div className="w-full overflow-x-auto">
+              <Table>
+                <TableHeader className="bg-slate-50/50">
+                  <TableRow className="hover:bg-transparent">
+                    <TableHead className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase h-9 sm:h-11 cursor-pointer select-none whitespace-nowrap">
+                      <div className="flex items-center gap-1">
+                        Time
+                        <div className="flex flex-col">
+                          <ChevronDown className="w-2.5 h-2.5 rotate-180 -mb-1 text-slate-300" />
+                          <ChevronDown className="w-2.5 h-2.5 text-slate-500" />
                         </div>
-                        <span className="text-[13px] font-semibold text-slate-900">{row.retailer}</span>
                       </div>
-                    </TableCell>
-                    <TableCell className="py-4 text-[13px] font-medium text-slate-900 whitespace-nowrap">
-                      {row.requestType}
-                    </TableCell>
-                    <TableCell className="py-4 text-[13px] text-slate-600 font-medium">
-                      {row.productQuery}
-                    </TableCell>
-                    <TableCell className="py-4 whitespace-nowrap">
-                      {getStatusBadge(row.statusCode, row.status)}
-                    </TableCell>
-                    <TableCell className="py-4 text-[13px] font-semibold text-slate-900">
-                      {row.responseTime}
-                    </TableCell>
-                    <TableCell className="py-4 text-[13px] text-slate-600 font-medium">
-                      {row.errorCode}
-                    </TableCell>
-                    <TableCell className="py-4 text-[13px] text-slate-600 font-medium text-center">
-                      {row.retryCount}
-                    </TableCell>
-                    <TableCell className="py-4 text-[13px] text-slate-500 font-mono">
-                      {row.id}
-                    </TableCell>
-                    <TableCell className="py-4">
-                      <div className="flex items-center justify-center">
-                        <button className="w-8 h-8 rounded-lg flex items-center justify-center border border-slate-200 text-slate-400 hover:border-slate-300 hover:text-slate-600 transition-colors">
-                          <Eye className="w-4 h-4" />
-                        </button>
-                      </div>
-                    </TableCell>
+                    </TableHead>
+                    <TableHead className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase h-9 sm:h-11 whitespace-nowrap">Retailer</TableHead>
+                    <TableHead className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase h-9 sm:h-11 whitespace-nowrap">Request Type</TableHead>
+                    <TableHead className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase h-9 sm:h-11 whitespace-nowrap">Product / Query</TableHead>
+                    <TableHead className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase h-9 sm:h-11 whitespace-nowrap">Status</TableHead>
+                    <TableHead className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase h-9 sm:h-11 whitespace-nowrap">Response Time</TableHead>
+                    <TableHead className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase h-9 sm:h-11 whitespace-nowrap">Error Code</TableHead>
+                    <TableHead className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase h-9 sm:h-11 whitespace-nowrap">Retry Count</TableHead>
+                    <TableHead className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase h-9 sm:h-11 whitespace-nowrap">Trace ID</TableHead>
+                    <TableHead className="text-[9px] sm:text-[11px] font-bold text-slate-500 uppercase h-9 sm:h-11 text-center whitespace-nowrap">Actions</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHeader>
+                <TableBody>
+                  {LOGS_DATA.map((row, idx) => (
+                    <TableRow key={idx} className="hover:bg-slate-50/50 transition-colors">
+                      <TableCell className="py-2 sm:py-4 text-[10px] sm:text-[13px] font-semibold text-slate-900 whitespace-nowrap">
+                        {row.time}
+                      </TableCell>
+                      <TableCell className="py-2.5 sm:py-4">
+                        <div className="flex items-center gap-1.5 sm:gap-2.5">
+                          <div className={`w-4 h-4 sm:w-5 sm:h-5 rounded flex items-center justify-center font-bold text-[9px] sm:text-xs ${row.retailerIconColor} ${row.retailerIconTextColor || "text-white"}`}>
+                            {row.retailerIconText}
+                          </div>
+                          <span className="text-[10px] sm:text-[13px] font-semibold text-slate-900 whitespace-nowrap">{row.retailer}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="py-2.5 sm:py-4 text-[10px] sm:text-[13px] font-medium text-slate-900 whitespace-nowrap">
+                        {row.requestType}
+                      </TableCell>
+                      <TableCell className="py-2.5 sm:py-4 text-[10px] sm:text-[13px] text-slate-600 font-medium whitespace-nowrap">
+                        {row.productQuery}
+                      </TableCell>
+                      <TableCell className="py-2.5 sm:py-4 whitespace-nowrap">
+                        {getStatusBadge(row.statusCode, row.status)}
+                      </TableCell>
+                      <TableCell className="py-2 sm:py-4 text-[10px] sm:text-[13px] font-semibold text-slate-900 whitespace-nowrap">
+                        {row.responseTime}
+                      </TableCell>
+                      <TableCell className="py-2.5 sm:py-4 text-[10px] sm:text-[13px] text-slate-600 font-medium whitespace-nowrap">
+                        {row.errorCode}
+                      </TableCell>
+                      <TableCell className="py-2.5 sm:py-4 text-[10px] sm:text-[13px] text-slate-600 font-medium text-center whitespace-nowrap">
+                        {row.retryCount}
+                      </TableCell>
+                      <TableCell className="py-2.5 sm:py-4 text-[10px] sm:text-[13px] text-slate-500 font-mono whitespace-nowrap">
+                        {row.id}
+                      </TableCell>
+                      <TableCell className="py-2.5 sm:py-4">
+                        <div className="flex items-center justify-center">
+                          <button className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center border border-slate-200 text-slate-400 hover:border-slate-300 hover:text-slate-600 transition-colors">
+                            <Eye className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                          </button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
           </Card>
 
           {/* Bottom Bar */}
-          <div className="flex items-center justify-between pt-2">
-            <span className="text-[13px] font-medium text-slate-500">Note: Logs are stored for 90 days</span>
-            <button className="flex items-center gap-2 h-9 px-4 bg-white border border-slate-200 rounded-lg text-sm font-bold text-slate-800 hover:bg-slate-50 transition-colors shadow-sm">
-              View Log Details <ExternalLink className="w-3.5 h-3.5 text-slate-500" />
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 pt-2">
+            <span className="text-[10px] sm:text-[13px] font-medium text-slate-500">Note: Logs are stored for 90 days</span>
+            <button className="flex items-center gap-1.5 sm:gap-2 h-8 sm:h-9 px-3 sm:px-4 bg-white border border-slate-200 rounded-lg text-[11px] sm:text-sm font-bold text-slate-800 hover:bg-slate-50 transition-colors shadow-sm">
+              View Log Details <ExternalLink className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-slate-500" />
             </button>
           </div>
 

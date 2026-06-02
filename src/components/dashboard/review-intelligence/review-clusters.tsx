@@ -240,8 +240,8 @@ export default function ReviewClusters() {
   const tabs = ["Review Clusters", "Suspicious Patterns", "Complaint Trends", "Source Quality"];
 
   return (
-    <div className="w-full h-full bg-slate-50 font-sans p-3 sm:p-4 text-slate-900">
-      <div className="w-full mx-auto space-y-4">
+    <div className="w-full min-h-full bg-slate-50 font-sans text-slate-900">
+      <div className="w-full space-y-4 px-2 py-3 sm:p-4">
         
         {/* ── HEADER ── */}
         <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
@@ -348,9 +348,9 @@ export default function ReviewClusters() {
         </div>
 
         {/* ── MAIN DATA TABLE ── */}
-        <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden flex flex-col w-full overflow-x-auto">
-          <div className="overflow-x-auto custom-scrollbar w-full">
-            <table className="w-full text-left border-collapse min-w-[1200px]">
+        <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden w-full">
+          <div className="overflow-x-auto w-full">
+            <table className="w-full text-left border-collapse min-w-max">
               <thead>
                 <tr className="border-b border-slate-200 bg-slate-50/50">
                   <th className="py-3 px-4 text-[12px] font-semibold text-slate-500 whitespace-nowrap">Product</th>
@@ -464,15 +464,15 @@ export default function ReviewClusters() {
 
           {/* TABLE FOOTER / PAGINATION */}
           <div className="border-t border-slate-200 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-50/50">
-            <span className="text-[13px] text-slate-500 font-medium">Showing 1 to 20 of 24,681 results</span>
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
+            <span className="text-[13px] text-slate-500 font-medium shrink-0">Showing 1 to 20 of 24,681 results</span>
+            <div className="flex flex-wrap items-center gap-4 w-full sm:w-auto">
+              <div className="flex items-center gap-2 shrink-0">
                 <select className="h-8 pl-3 pr-8 text-[12px] font-medium bg-white border border-slate-200 rounded-md text-slate-700 appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all cursor-pointer">
                   <option>20 per page</option>
                   <option>50 per page</option>
                 </select>
               </div>
-              <div className="flex items-center gap-1">
+              <div className="flex flex-wrap items-center gap-1 justify-center sm:justify-start w-full sm:w-auto mt-2 sm:mt-0">
                 <button className="w-8 h-8 flex items-center justify-center rounded-md border border-slate-200 bg-white text-slate-400 hover:text-slate-600 hover:bg-slate-50 transition-colors">
                   <ChevronLeft className="w-4 h-4" />
                 </button>
@@ -496,9 +496,9 @@ export default function ReviewClusters() {
             <h3 className="text-[13px] font-bold text-slate-900">Review Trust Score Factors</h3>
             <a href="#" className="text-[12px] font-semibold text-indigo-600 hover:underline">Learn more</a>
           </div>
-          <div className="flex items-center gap-6 overflow-x-auto custom-scrollbar pb-2">
+          <div className="flex flex-col sm:flex-row sm:overflow-x-auto sm:flex-nowrap items-start sm:items-center gap-4 sm:gap-6 pb-2 custom-scrollbar">
             {FACTORS_DATA.map((factor, i) => (
-              <div key={i} className="flex flex-col gap-1 shrink-0">
+              <div key={i} className="flex flex-col gap-1 w-full sm:w-auto shrink-0">
                 <div className="flex items-center gap-1.5">
                   {factor.icon}
                   <span className="text-[12px] font-semibold text-slate-700">{factor.title}</span>

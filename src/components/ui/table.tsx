@@ -3,7 +3,7 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 
 function Table({ className, ...props }: React.ComponentProps<"table">) {
-  return <table className={cn("w-full caption-bottom text-sm", className)} {...props} />
+  return <table className={cn("w-full caption-bottom text-xs sm:text-sm", className)} {...props} />
 }
 
 function TableHeader({ className, ...props }: React.ComponentProps<"thead">) {
@@ -19,11 +19,11 @@ function TableRow({ className, ...props }: React.ComponentProps<"tr">) {
 }
 
 function TableHead({ className, ...props }: React.ComponentProps<"th">) {
-  return <th className={cn("h-10 px-3 text-left align-middle text-xs font-semibold uppercase tracking-wide text-slate-600", className)} {...props} />
+  return <th className={cn("h-8 sm:h-10 px-2 sm:px-3 text-left align-middle text-xs font-semibold uppercase tracking-wide text-slate-600", className)} {...props} />
 }
 
 function TableCell({ className, ...props }: React.ComponentProps<"td">) {
-  return <td className={cn("px-3 py-3 align-middle text-sm text-slate-700", className)} {...props} />
+  return <td className={cn("px-2 sm:px-3 py-2 sm:py-3 align-middle text-xs sm:text-sm text-slate-700", className)} {...props} />
 }
 
 export { Table, TableHeader, TableBody, TableRow, TableHead, TableCell }

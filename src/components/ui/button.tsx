@@ -15,13 +15,13 @@ const Button = React.forwardRef<
     destructive: "bg-red-600 text-white hover:bg-red-700",
   }
   const sizes = {
-    default: "h-8 px-4 py-2 text-sm",
-    xs: "h-6 px-3 text-xs",
-    sm: "h-7 px-3 text-sm",
-    lg: "h-10 px-6 text-base",
-    icon: "h-8 w-8",
-    "icon-sm": "h-6 w-6",
-    "icon-lg": "h-10 w-10",
+    default: "h-7 sm:h-8 px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm",
+    xs: "h-5 sm:h-6 px-2 sm:px-3 text-xs",
+    sm: "h-6 sm:h-7 px-2 sm:px-3 text-xs sm:text-sm",
+    lg: "h-9 sm:h-10 px-4 sm:px-6 text-sm sm:text-base",
+    icon: "h-7 sm:h-8 w-7 sm:w-8",
+    "icon-sm": "h-5 sm:h-6 w-5 sm:w-6",
+    "icon-lg": "h-9 sm:h-10 w-9 sm:w-10",
   }
 
   return (

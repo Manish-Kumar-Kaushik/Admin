@@ -231,8 +231,8 @@ export default function AIReviewQueue() {
   };
 
   return (
-    <div className="flex min-h-full flex-col bg-slate-50 font-sans">
-      <main className="flex flex-col gap-6 p-6">
+    <div className="flex flex-col flex-grow min-h-screen bg-slate-50 font-sans min-w-0">
+      <main className="flex flex-col gap-4 sm:gap-6 p-3 sm:p-4 lg:p-6 min-w-0">
         {/* Header */}
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>

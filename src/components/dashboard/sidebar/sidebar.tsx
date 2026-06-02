@@ -126,9 +126,9 @@ const groups: SidebarGroup[] = [
         name: "Review Intelligence",
         icon: BrainCircuit,
         subItems: [
-          { name: "Review Clusters", href: "/dashboard/intelligence/clusters" },
-          { name: "Suspicious Review Patterns", href: "/dashboard/intelligence/suspicious" },
-          { name: "Pros / Cons Review", href: "/dashboard/intelligence/pros-cons" },
+          { name: "Review Clusters", href: "/dashboard/review-intelligence/clusters" },
+          { name: "Suspicious Review Patterns", href: "/dashboard/review-intelligence/suspicious" },
+          { name: "Pros / Cons Review", href: "/dashboard/review-intelligence/pros-cons" },
         ],
       },
       {

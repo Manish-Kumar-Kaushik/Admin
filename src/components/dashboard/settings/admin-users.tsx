@@ -226,16 +226,29 @@ const users: UserRow[] = [
 
 export default function AdminUsers() {
   return (
-    <div className="bg-slate-50 min-h-screen w-full max-w-full overflow-x-hidden">
-      <div className="w-full max-w-full px-4 sm:px-6 py-5 space-y-5">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="min-w-0">
-            <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-slate-900">
-              Admin Users
-            </h1>
-            <p className="mt-1 sm:mt-2 max-w-2xl text-sm leading-6 text-slate-500">
-              Manage administrator accounts, roles, and access.
-            </p>
+    <div className="flex flex-col flex-grow min-h-screen bg-[#F8FAFC] px-3 py-4 sm:px-4 sm:py-6 lg:px-6 min-w-0">
+      <div className="mx-auto max-w-365 space-y-6">
+        <section className="rounded-xl border border-slate-200/80 bg-white p-6 shadow-sm">
+          <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
+            <div className="min-w-0">
+              <p className="text-sm font-medium text-slate-500">
+                Admin
+                <span className="px-2 text-slate-300">›</span>
+                Settings
+                <span className="px-2 text-slate-300">›</span>
+                Admin Users
+              </p>
+              <h1 className="mt-3 text-3xl font-semibold tracking-tight text-slate-900">
+                Admin Users
+              </h1>
+              <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-500">
+                Manage administrator accounts, roles, and access.
+              </p>
+            </div>
+            <button className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#4F46E5] px-4 py-2 text-sm font-semibold text-white shadow-sm shadow-[#4F46E5]/10 transition hover:bg-[#4338ca]">
+              <Plus className="h-4 w-4" />
+              Invite Admin
+            </button>
           </div>
           <button className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-2xl bg-[#4F46E5] px-4 py-2.5 sm:py-2 text-sm font-semibold text-white shadow-sm shadow-[#4F46E5]/10 transition hover:bg-[#4338ca]">
             <Plus className="h-4 w-4" />

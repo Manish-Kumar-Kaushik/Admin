@@ -249,38 +249,35 @@ export default function ProductMapping() {
   return (
     <div className="flex flex-col h-full overflow-hidden bg-slate-50">
       {/* ── Page Header ────────────────────────────────────────────────────── */}
-      <div className="px-6 pt-5 pb-3 shrink-0">
+      <div className="px-3 sm:px-4 md:px-6 pt-3 sm:pt-4 md:pt-5 pb-2 sm:pb-2.5 md:pb-3 shrink-0">
         {/* Breadcrumb */}
-        <nav className="flex items-center gap-1.5 text-[11px] text-slate-500 mb-2">
-          <Link href="/dashboard" className="hover:text-slate-800 transition-colors font-medium">Admin</Link>
+        <nav className="flex items-center gap-1 sm:gap-1.5 text-xs sm:text-sm text-slate-500 mb-2 overflow-x-auto pb-1">
+          <Link href="/dashboard" className="hover:text-slate-800 transition-colors font-medium whitespace-nowrap">Admin</Link>
           <span className="text-slate-300">/</span>
-          <Link href="/dashboard/products" className="hover:text-slate-800 transition-colors font-medium">Products</Link>
+          <Link href="/dashboard/products" className="hover:text-slate-800 transition-colors font-medium whitespace-nowrap">Products</Link>
           <span className="text-slate-300">/</span>
-          <span className="text-slate-700 cursor-pointer hover:text-slate-900 transition-colors font-medium">Sony WH-1000XM5</span>
+          <span className="text-slate-700 cursor-pointer hover:text-slate-900 transition-colors font-medium whitespace-nowrap">Sony WH-1000XM5</span>
           <span className="text-slate-300">/</span>
-          <span className="text-slate-900 font-semibold">Mappings</span>
+          <span className="text-slate-900 font-semibold whitespace-nowrap">Mappings</span>
         </nav>
 
         {/* Title row */}
-        <div className="flex items-center justify-between gap-4">
-          <div>
-            <h1 className="text-2xl font-bold text-slate-900 tracking-tight leading-none">Product Mapping</h1>
-            <p className="text-[13px] text-slate-500 mt-1.5">
-              Review retailer mappings, match confidence, and canonical product relationships.
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 sm:gap-3 md:gap-4">
+          <div className="min-w-0">
+            <h1 className="text-lg sm:text-2xl md:text-3xl font-bold text-slate-900 tracking-tight leading-none">Product Mapping</h1>
+            <p className="text-xs sm:text-sm md:text-base text-slate-500 mt-1 md:mt-1.5">
+              Review retailer mappings, match confidence, and relationships.
             </p>
           </div>
-          <div className="flex items-center gap-3 shrink-0">
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white shadow-sm flex items-center gap-2 h-9 px-4 text-xs font-semibold transition-all">
-              <Plus className="w-3.5 h-3.5" />
-              Add Manual Mapping
+          <div className="flex flex-col xs:flex-row flex-wrap items-center gap-2 sm:gap-2.5 md:gap-3 shrink-0">
+            <Button className="bg-blue-600 hover:bg-blue-700 text-white shadow-sm flex items-center gap-1.5 sm:gap-2 h-8 sm:h-9 px-3 sm:px-4 text-xs font-semibold transition-all w-full xs:w-auto">
+              <Plus className="w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0" />
+              <span className="hidden sm:inline">Add Manual</span>
+              <span className="sm:hidden">Add</span>
             </Button>
-            <Button variant="outline" className="h-9 px-3.5 text-xs font-semibold flex items-center gap-1.5 shadow-sm bg-white hover:bg-slate-50 transition-all text-slate-700">
-              <RefreshCw className="w-3.5 h-3.5 text-slate-400" />
-              Refresh Mappings
-            </Button>
-            <Button variant="outline" className="h-9 px-3.5 text-xs font-semibold flex items-center gap-1.5 shadow-sm bg-white hover:bg-slate-50 transition-all text-slate-700">
-              <FileText className="w-3.5 h-3.5 text-slate-400" />
-              View Mapping Rules
+            <Button variant="outline" className="h-8 sm:h-9 px-2.5 sm:px-3.5 text-xs font-semibold flex items-center gap-1 sm:gap-1.5 shadow-sm bg-white hover:bg-slate-50 transition-all text-slate-700 w-full xs:w-auto">
+              <RefreshCw className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-slate-400 shrink-0" />
+              <span className="hidden sm:inline">Refresh</span>
             </Button>
           </div>
         </div>
@@ -288,11 +285,11 @@ export default function ProductMapping() {
 
       {/* ── Main content ───────────────────────────────────────────────────── */}
       {/* Tighter padding and gap to ensure it fits the viewport without scrolling */}
-      <div className="px-6 pb-6 flex flex-col gap-4 flex-1 min-h-0 overflow-hidden">
+      <div className="px-3 sm:px-4 md:px-6 pb-3 sm:pb-4 md:pb-6 flex flex-col gap-3 sm:gap-3.5 md:gap-4 flex-1 min-h-0 overflow-hidden">
         {/* ── Product Header Card ─────────────────────────────────────────── */}
-        <Card className="rounded-xl border-slate-200 shadow-sm p-6 bg-white flex shrink-0 gap-8 items-stretch">
+        <Card className="rounded-lg sm:rounded-xl border-slate-200 shadow-sm p-3 sm:p-4 md:p-6 bg-white flex flex-col lg:flex-row shrink-0 gap-4 sm:gap-6 md:gap-8 items-stretch">
           {/* Product image */}
-          <div className="w-[140px] h-[140px] rounded-xl border border-slate-100 bg-white flex items-center justify-center shrink-0 overflow-hidden p-2 shadow-sm">
+          <div className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-40 lg:h-40 rounded-lg sm:rounded-xl border border-slate-100 bg-white flex items-center justify-center shrink-0 overflow-hidden p-2 shadow-sm mx-auto lg:mx-0">
             <img
               src="https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=300&q=80"
               alt="Sony WH-1000XM5"
@@ -301,90 +298,90 @@ export default function ProductMapping() {
           </div>
 
           {/* Product meta */}
-          <div className="flex-1 flex flex-col justify-center min-w-0 pr-4">
-            <h2 className="text-[19px] font-bold text-slate-900 mb-6 tracking-tight leading-none">
+          <div className="flex-1 flex flex-col justify-center min-w-0 lg:pr-4">
+            <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-slate-900 mb-3 md:mb-4 lg:mb-6 tracking-tight leading-snug">
               Sony WH-1000XM5 Wireless Headphones
             </h2>
 
             {/* Brand / Model / Category row */}
-            <div className="flex items-center gap-8 mb-6">
-              <div className="flex flex-col gap-1.5">
-                <div className="text-[11px] text-slate-500 font-medium">Brand</div>
-                <div className="text-[13px] font-bold text-slate-900 leading-none">Sony</div>
+            <div className="flex flex-col xs:flex-row flex-wrap items-start xs:items-center gap-3 sm:gap-4 md:gap-6 lg:gap-8 mb-4 md:mb-6">
+              <div className="flex flex-col gap-0.5 sm:gap-1">
+                <div className="text-xs sm:text-sm text-slate-500 font-medium">Brand</div>
+                <div className="text-xs sm:text-sm md:text-base font-bold text-slate-900 leading-none">Sony</div>
               </div>
-              <div className="w-px h-7 bg-slate-200" />
-              <div className="flex flex-col gap-1.5">
-                <div className="text-[11px] text-slate-500 font-medium">Model</div>
-                <div className="text-[13px] font-bold text-slate-900 leading-none">WH-1000XM5</div>
+              <div className="hidden xs:block w-px h-6 sm:h-7 bg-slate-200" />
+              <div className="flex flex-col gap-0.5 sm:gap-1">
+                <div className="text-xs sm:text-sm text-slate-500 font-medium">Model</div>
+                <div className="text-xs sm:text-sm md:text-base font-bold text-slate-900 leading-none">WH-1000XM5</div>
               </div>
-              <div className="w-px h-7 bg-slate-200" />
-              <div className="flex flex-col gap-1.5">
-                <div className="text-[11px] text-slate-500 font-medium">Category</div>
-                <div className="text-[13px] font-bold text-slate-900 leading-none">Electronics &gt; Headphones</div>
+              <div className="hidden xs:block w-px h-6 sm:h-7 bg-slate-200" />
+              <div className="flex flex-col gap-0.5 sm:gap-1 flex-1 xs:flex-none">
+                <div className="text-xs sm:text-sm text-slate-500 font-medium">Category</div>
+                <div className="text-xs sm:text-sm md:text-base font-bold text-slate-900 leading-none truncate">Electronics &gt; Headphones</div>
               </div>
             </div>
 
             {/* Canonical ID */}
-            <div className="flex flex-col gap-1.5">
-              <span className="text-[11px] text-slate-500 font-medium">Canonical Product ID</span>
+            <div className="flex flex-col gap-0.5 sm:gap-1">
+              <span className="text-xs sm:text-sm text-slate-500 font-medium">Canonical Product ID</span>
               <div className="flex items-center gap-2 cursor-pointer group w-fit">
-                <span className="text-[13px] font-bold text-slate-900 tracking-wide">PRD-001482</span>
-                <Copy className="w-3.5 h-3.5 text-slate-400 group-hover:text-slate-600 transition-colors" />
+                <span className="text-xs sm:text-sm md:text-base font-bold text-slate-900 tracking-wide">PRD-001482</span>
+                <Copy className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-slate-400 group-hover:text-slate-600 transition-colors shrink-0" />
               </div>
             </div>
           </div>
 
           {/* ── Right info block — exact match to screenshot ── */}
-          <div className="flex flex-col w-[440px] shrink-0 justify-center">
+          <div className="flex flex-col w-full lg:w-96 shrink-0 justify-center">
             {/* Top row */}
-            <div className="flex border-b border-slate-200 pb-4 mb-4">
+            <div className="flex flex-col sm:flex-row border-b border-slate-200 pb-3 md:pb-4 mb-3 md:mb-4 gap-3 md:gap-0">
               {/* Status */}
-              <div className="flex-[0.8] flex flex-col justify-start border-r border-slate-200 pr-4">
-                <span className="text-[11px] text-slate-500 font-medium mb-2">Status</span>
+              <div className="flex-[0.8] flex flex-col justify-start sm:border-r border-slate-200 sm:pr-3 md:pr-4">
+                <span className="text-xs sm:text-sm text-slate-500 font-medium mb-1 sm:mb-2">Status</span>
                 <div>
-                  <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md shadow-sm">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                  <span className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md shadow-sm">
+                    <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-emerald-500" />
                     Active
                   </span>
                 </div>
               </div>
               {/* AI Verdict */}
-              <div className="flex-1 flex flex-col justify-start border-r border-slate-200 px-4">
-                <span className="text-[11px] text-slate-500 font-medium mb-2">AI Verdict</span>
+              <div className="flex-1 flex flex-col justify-start sm:border-r border-slate-200 sm:px-3 md:px-4">
+                <span className="text-xs sm:text-sm text-slate-500 font-medium mb-1 sm:mb-2">AI Verdict</span>
                 <div>
-                  <span className="inline-flex text-[11px] font-semibold text-orange-700 bg-orange-50 border border-orange-200 px-4 py-0.5 rounded-md shadow-sm">
+                  <span className="inline-flex text-xs sm:text-sm font-semibold text-orange-700 bg-orange-50 border border-orange-200 px-2 md:px-4 py-0.5 rounded-md shadow-sm">
                     Wait
                   </span>
                 </div>
               </div>
               {/* AI Buy Score */}
-              <div className="flex-1 flex flex-col justify-start pl-4">
-                <span className="text-[11px] text-slate-500 font-medium mb-1.5">AI Buy Score</span>
+              <div className="flex-1 flex flex-col justify-start sm:pl-3 md:pl-4">
+                <span className="text-xs sm:text-sm text-slate-500 font-medium mb-0.5 sm:mb-1">AI Buy Score</span>
                 <div className="flex items-baseline gap-0.5 leading-none">
-                  <span className="text-[28px] font-bold text-orange-500 leading-none tracking-tighter">76</span>
-                  <span className="text-[13px] font-bold text-slate-500 ml-0.5">/100</span>
+                  <span className="text-xl sm:text-2xl md:text-3xl font-bold text-orange-500 leading-none tracking-tighter">76</span>
+                  <span className="text-xs sm:text-sm md:text-base font-bold text-slate-500 ml-0.5">/100</span>
                 </div>
               </div>
             </div>
 
             {/* Bottom row */}
-            <div className="flex items-center">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 md:gap-0">
               {/* Confidence Score */}
-              <div className="flex-[0.8] flex flex-col justify-start pr-4">
-                <span className="text-[11px] text-slate-500 font-medium mb-2">Confidence Score</span>
+              <div className="flex-[0.8] flex flex-col justify-start sm:pr-3 md:pr-4">
+                <span className="text-xs sm:text-sm text-slate-500 font-medium mb-1 sm:mb-2">Confidence Score</span>
                 <div>
-                  <span className="inline-flex text-[11px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md shadow-sm">
+                  <span className="inline-flex text-xs sm:text-sm font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md shadow-sm">
                     High
                   </span>
                 </div>
               </div>
               {/* Retailer listings */}
-              <div className="flex-[2] flex flex-col justify-start items-end pl-4">
-                <div className="text-[11px] font-bold text-slate-700 leading-tight">
-                  4 mapped retailer listings <span className="text-slate-400 ml-0.5">•</span>
+              <div className="flex-1 flex flex-col justify-start items-start sm:items-end sm:pl-3 md:pl-4">
+                <div className="text-xs sm:text-sm font-bold text-slate-700 leading-tight">
+                  4 mapped retailer listings <span className="text-slate-400 ml-0.5 hidden sm:inline">•</span>
                 </div>
-                <div className="flex items-center gap-1 mt-1 text-[11px] text-slate-500 font-medium">
-                  <RefreshCw className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                <div className="flex items-center gap-0.5 sm:gap-1 mt-0.5 sm:mt-1 text-xs sm:text-sm text-slate-500 font-medium">
+                  <RefreshCw className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-slate-400 shrink-0" />
                   last refreshed 12 min ago
                 </div>
               </div>
@@ -393,7 +390,7 @@ export default function ProductMapping() {
         </Card>
 
         {/* ── Two-column layout: table + sidebar ─────────────────────────── */}
-        <div className="flex gap-4 items-stretch flex-1 min-h-0">
+        <div className="flex flex-col lg:flex-row gap-3 sm:gap-3.5 md:gap-4 items-stretch flex-1 min-h-0 overflow-y-auto lg:overflow-visible">
           {/* ── Retailer Mappings Table ──────────────────────────────────── */}
           <Card className="flex flex-col flex-1 min-w-0 min-h-0 bg-white border-slate-200 rounded-xl shadow-sm overflow-hidden">
             {/* Card header */}
@@ -402,7 +399,7 @@ export default function ProductMapping() {
             </div>
 
             {/* Toolbar */}
-            <div className="px-4 py-2 border-b border-slate-200 flex items-center gap-2.5 bg-slate-50/50 shrink-0">
+            <div className="px-4 py-2 border-b border-slate-200 flex flex-col md:flex-row md:items-center gap-2.5 bg-slate-50/50 shrink-0">
               {/* Search input */}
               <div className="relative flex-1 max-w-[280px]">
                 <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400 pointer-events-none" />
@@ -414,7 +411,7 @@ export default function ProductMapping() {
               </div>
 
               {/* Filter dropdowns */}
-              <div className="flex items-center gap-1.5 ml-auto">
+              <div className="flex flex-wrap items-center gap-1.5 md:ml-auto mt-2 md:mt-0">
                 {["Retailer", "Match Type", "Confidence", "Status"].map((f) => (
                   <button
                     key={f}
@@ -432,7 +429,7 @@ export default function ProductMapping() {
             </div>
 
             {/* Table */}
-            <div className="flex-1 overflow-y-auto">
+            <div className="flex-1 overflow-x-auto overflow-y-auto">
               <Table>
                 <TableHeader className="sticky top-0 bg-slate-50 z-10 shadow-sm">
                   <TableRow className="border-b border-slate-200 hover:bg-slate-50">

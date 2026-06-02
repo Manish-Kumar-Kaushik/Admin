@@ -59,15 +59,8 @@ export default function AiReviewDetail() {
   }, []);
 
   return (
-    <div className="w-full h-full bg-slate-50 font-sans overflow-y-auto">
-      {/* 
-        NOTE: 
-        The global Header and Sidebar are assumed to be wrapping this component. 
-        We only render the page-specific Top Navigation if it needs a custom breadcrumb, 
-        but matching the screenshot, there is a breadcrumb in the top left.
-        To avoid duplicating the global header, we just place it in the content area padding.
-      */}
-      <div className="p-8 max-w-[1600px] mx-auto space-y-6">
+    <div className="min-h-screen bg-slate-50 font-sans p-2 sm:p-4 lg:p-6 overflow-x-hidden">
+      <div className="w-full max-w-none mx-auto space-y-6">
 
         {/* Breadcrumbs */}
         <div className="flex items-center justify-between">

@@ -178,7 +178,7 @@ function Card({ children, className = "" }: { children: React.ReactNode; classNa
 const renderCustomLegend = (props: any) => {
   const { payload } = props;
   return (
-    <div className="flex items-center justify-center gap-6 text-[13px] font-bold text-slate-600 mb-4 mt-1">
+    <div className="flex flex-wrap items-center justify-center gap-4 text-[10px] sm:text-[13px] font-bold text-slate-600 mb-4 mt-1">
       {payload.map((entry: any, index: number) => (
         <div key={`item-${index}`} className="flex items-center gap-2">
           <div className="relative flex items-center justify-center w-6 h-3 shrink-0">
@@ -322,41 +322,43 @@ export default function RetailerConnectors() {
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-5">
               <Card className="p-6 lg:col-span-3">
-                <div className="mb-6 flex items-center justify-between gap-3">
+                <div className="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                   <h2 className="text-base font-bold text-slate-950 flex items-center gap-1.5">
                     API Performance Trend
                     <span className="inline-flex items-center justify-center h-4 w-4 rounded-full border border-slate-350 text-[10px] font-medium text-slate-400 select-none cursor-help leading-none">i</span>
                   </h2>
-                  <div className="flex gap-2">
-                    <button className="flex h-10 items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 text-[13px] font-bold text-slate-700 hover:bg-slate-50 hover:border-slate-300 shadow-sm transition-colors">
+                  <div className="flex flex-wrap gap-2 w-full sm:w-auto">
+                    <button className="flex h-10 flex-1 sm:flex-none items-center justify-center sm:justify-start gap-2 rounded-lg border border-slate-200 bg-white px-3 sm:px-4 text-[11px] sm:text-[13px] font-bold text-slate-700 hover:bg-slate-50 hover:border-slate-300 shadow-sm transition-colors whitespace-nowrap">
                       Last 7 days <ChevronDown className="h-3.5 w-3.5 text-slate-500" />
                     </button>
-                    <button className="flex h-10 items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 text-[13px] font-bold text-slate-700 hover:bg-slate-50 hover:border-slate-300 shadow-sm transition-colors">
+                    <button className="flex h-10 flex-1 sm:flex-none items-center justify-center sm:justify-start gap-2 rounded-lg border border-slate-200 bg-white px-3 sm:px-4 text-[11px] sm:text-[13px] font-bold text-slate-700 hover:bg-slate-50 hover:border-slate-300 shadow-sm transition-colors whitespace-nowrap">
                       Daily <ChevronDown className="h-3.5 w-3.5 text-slate-500" />
                     </button>
                   </div>
                 </div>
-                <div className="h-61.25">
-                  {mounted ? (
-                    <ResponsiveContainer width="100%" height="100%">
-                      <LineChart data={trendData} margin={{ top: 15, right: 35, left: 10, bottom: 5 }}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
-                        <XAxis dataKey="date" tickLine={false} axisLine={false} tick={{ fontSize: 10, fill: "#64748b", fontWeight: 500 }} padding={{ left: 35, right: 35 }} />
-                        <YAxis yAxisId="left" tickLine={false} axisLine={false} tick={{ fontSize: 10, fill: "#64748b", fontWeight: 500 }} tickMargin={8} domain={[0, 3000]} ticks={[0, 750, 1500, 2250, 3000]} tickFormatter={(v) => v === 3000 ? "3k" : v === 2250 ? "2.25k" : v === 1500 ? "1.5k" : String(v)} width={40} />
-                        <YAxis yAxisId="right" orientation="right" tickLine={false} axisLine={false} tick={{ fontSize: 10, fill: "#64748b", fontWeight: 500 }} tickMargin={12} domain={[0, 4]} ticks={[0, 1, 2, 3, 4]} tickFormatter={(v) => `${v}%`} width={35} />
-                        <Tooltip content={<CustomTooltip />} />
-                        <Legend content={renderCustomLegend} verticalAlign="top" />
-                        <Line yAxisId="left" name="Avg Response Time (ms)" type="linear" dataKey="plotResponse" stroke="#2563eb" strokeWidth={2} dot={{ r: 3, fill: "#2563eb", stroke: "#2563eb" }} activeDot={{ r: 4 }}>
-                          <LabelList dataKey="response" position="top" style={{ fill: '#2563eb', fontSize: 10, fontWeight: 'bold' }} offset={8} />
-                        </Line>
-                        <Line yAxisId="right" name="Error Rate (%)" type="linear" dataKey="plotError" stroke="#ef4444" strokeWidth={2} dot={{ r: 3, fill: "#ef4444", stroke: "#ef4444" }} activeDot={{ r: 4 }}>
-                          <LabelList dataKey="error" position="bottom" style={{ fill: '#ef4444', fontSize: 10, fontWeight: 'bold' }} offset={8} formatter={(v: any) => `${v}%`} />
-                        </Line>
-                      </LineChart>
-                    </ResponsiveContainer>
-                  ) : (
-                    <div className="h-61.25 w-full bg-slate-100/50 rounded-lg animate-pulse" />
-                  )}
+                <div className="w-full overflow-x-auto pb-4">
+                  <div className="h-[280px] min-w-[550px] w-full">
+                    {mounted ? (
+                      <ResponsiveContainer width="100%" height="100%">
+                        <LineChart data={trendData} margin={{ top: 15, right: 35, left: 10, bottom: 5 }}>
+                          <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
+                          <XAxis dataKey="date" tickLine={false} axisLine={false} tick={{ fontSize: 9, fill: "#64748b", fontWeight: 500 }} padding={{ left: 35, right: 35 }} />
+                          <YAxis yAxisId="left" tickLine={false} axisLine={false} tick={{ fontSize: 9, fill: "#64748b", fontWeight: 500 }} tickMargin={8} domain={[0, 3000]} ticks={[0, 750, 1500, 2250, 3000]} tickFormatter={(v) => v === 3000 ? "3k" : v === 2250 ? "2.25k" : v === 1500 ? "1.5k" : String(v)} width={35} />
+                          <YAxis yAxisId="right" orientation="right" tickLine={false} axisLine={false} tick={{ fontSize: 9, fill: "#64748b", fontWeight: 500 }} tickMargin={12} domain={[0, 4]} ticks={[0, 1, 2, 3, 4]} tickFormatter={(v) => `${v}%`} width={30} />
+                          <Tooltip content={<CustomTooltip />} />
+                          <Legend content={renderCustomLegend} verticalAlign="top" />
+                          <Line yAxisId="left" name="Avg Response Time (ms)" type="linear" dataKey="plotResponse" stroke="#2563eb" strokeWidth={2} dot={{ r: 3, fill: "#2563eb", stroke: "#2563eb" }} activeDot={{ r: 4 }}>
+                            <LabelList dataKey="response" position="top" style={{ fill: '#2563eb', fontSize: 9, fontWeight: 'bold' }} offset={8} />
+                          </Line>
+                          <Line yAxisId="right" name="Error Rate (%)" type="linear" dataKey="plotError" stroke="#ef4444" strokeWidth={2} dot={{ r: 3, fill: "#ef4444", stroke: "#ef4444" }} activeDot={{ r: 4 }}>
+                            <LabelList dataKey="error" position="bottom" style={{ fill: '#ef4444', fontSize: 9, fontWeight: 'bold' }} offset={8} formatter={(v: any) => `${v}%`} />
+                          </Line>
+                        </LineChart>
+                      </ResponsiveContainer>
+                    ) : (
+                      <div className="h-full w-full bg-slate-100/50 rounded-lg animate-pulse" />
+                    )}
+                  </div>
                 </div>
               </Card>
 

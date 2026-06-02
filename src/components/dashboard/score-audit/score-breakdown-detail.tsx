@@ -1,10 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
   ChevronRight,
-  ArrowRight,
   ArrowLeft,
   Download,
   ExternalLink,
@@ -229,25 +228,73 @@ function StatusBadge({ status }: { status: "Fresh" | "Stale" | "OK" }) {
 // ─────────────────────────────────────────────────────────────
 
 function RadialScore({ score }: { score: number }) {
-  const r = 70;
-  const cx = 90;
-  const cy = 90;
+  const r = 52;
+  const cx = 68;
+  const cy = 68;
   const circ = 2 * Math.PI * r;
   const filled = (score / 100) * circ;
-  const gap = 0;
+
+  const [animFilled, setAnimFilled] = useState(0);
+
+  useEffect(() => {
+    const t = setTimeout(() => setAnimFilled(filled), 150);
+    return () => clearTimeout(t);
+  }, [filled]);
 
   return (
-    <svg width="180" height="180" viewBox="0 0 180 180">
+    <svg width="136" height="136" viewBox="0 0 136 136">
       <defs>
         <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#2563eb" />
-          <stop offset="100%" stopColor="#3b82f6" />
+          <stop offset="0%" stopColor="#3b82f6" />
+          <stop offset="60%" stopColor="#06b6d4" />
+          <stop offset="100%" stopColor="#10b981" />
         </linearGradient>
       </defs>
-      <circle cx={cx} cy={cy} r={r} fill="none" stroke="#e2e8f0" strokeWidth="16" />
-      <circle cx={cx} cy={cy} r={r} fill="none" stroke="url(#ringGrad)" strokeWidth="16" strokeLinecap="round" strokeDasharray={`${filled - gap} ${circ - filled + gap}`} transform="rotate(-90 90 90)" />
-      <text x={cx} y={cy + 4} textAnchor="middle" fontSize="48" fontWeight="800" fill="#0f172a" fontFamily="Inter, sans-serif">{score}</text>
-      <text x={cx} y={cy + 28} textAnchor="middle" fontSize="16" fontWeight="600" fill="#64748b" fontFamily="Inter, sans-serif">/100</text>
+      {/* Track */}
+      <circle
+        cx={cx}
+        cy={cy}
+        r={r}
+        fill="none"
+        stroke="#e2e8f0"
+        strokeWidth="11"
+      />
+      {/* Animated Progress */}
+      <circle
+        cx={cx}
+        cy={cy}
+        r={r}
+        fill="none"
+        stroke="url(#ringGrad)"
+        strokeWidth="11"
+        strokeLinecap="round"
+        strokeDasharray={`${animFilled} ${circ - animFilled}`}
+        transform="rotate(-90 68 68)"
+        style={{ transition: "stroke-dasharray 1.2s cubic-bezier(0.4, 0, 0.2, 1)" }}
+      />
+      {/* Score number */}
+      <text
+        x={cx}
+        y={cy - 5}
+        textAnchor="middle"
+        fontSize="30"
+        fontWeight="800"
+        fill="#1e293b"
+        fontFamily="Inter, sans-serif"
+      >
+        {score}
+      </text>
+      {/* /100 */}
+      <text
+        x={cx}
+        y={cy + 16}
+        textAnchor="middle"
+        fontSize="13"
+        fill="#94a3b8"
+        fontFamily="Inter, sans-serif"
+      >
+        /100
+      </text>
     </svg>
   );
 }
@@ -257,16 +304,15 @@ function RadialScore({ score }: { score: number }) {
 // ─────────────────────────────────────────────────────────────
 
 function ScoreSparkline() {
-  const data = [76, 76, 84, 83, 82, 88, 88, 76, 72, 78, 77, 75, 76, 76, 65, 65];
-  const W = 320;
-  const H = 140;
-  const padLeft = 24;
-  const padRight = 10;
+  const data = [86, 85, 84, 83, 82, 82, 80, 79, 78, 77, 76, 76];
+  const W = 220;
+  const H = 90;
+  const padX = 8;
   const padY = 10;
-  const minVal = 0;
-  const maxVal = 100;
+  const minVal = 70;
+  const maxVal = 92;
 
-  const toX = (i: number) => padLeft + (i / (data.length - 1)) * (W - padLeft - padRight);
+  const toX = (i: number) => padX + (i / (data.length - 1)) * (W - padX * 2);
   const toY = (v: number) =>
     H - padY - ((v - minVal) / (maxVal - minVal)) * (H - padY * 2);
 
@@ -275,63 +321,47 @@ function ScoreSparkline() {
   const area = `${toX(0)},${areaBase} ${pts} ${toX(data.length - 1)},${areaBase}`;
 
   return (
-    <div className="w-full">
-      <svg width="100%" viewBox={`0 0 ${W} ${H}`} className="overflow-visible">
-        <defs>
-          <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.1" />
-            <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.0" />
-          </linearGradient>
-        </defs>
-        {/* Horizontal Grid lines and Y-axis labels */}
-        {[100, 75, 50, 25, 0].map((v) => (
-          <g key={v}>
-            <text
-              x={0}
-              y={toY(v) + 4}
-              fontSize="11"
-              fill="#64748b"
-              fontFamily="Inter, sans-serif"
-              fontWeight="500"
-            >
-              {v}
-            </text>
-            <line
-              x1={padLeft}
-              y1={toY(v)}
-              x2={W - padRight}
-              y2={toY(v)}
-              stroke="#f1f5f9"
-              strokeWidth="1.5"
-            />
-          </g>
-        ))}
-        {/* Area fill */}
-        <polygon points={area} fill="url(#areaGrad)" />
-        {/* Line */}
-        <polyline
-          points={pts}
-          fill="none"
-          stroke="#3b82f6"
-          strokeWidth="2.5"
-          strokeLinejoin="round"
-          strokeLinecap="round"
-        />
-        {/* Last dot */}
-        <circle
-          cx={toX(data.length - 1)}
-          cy={toY(data[data.length - 1])}
-          r="4.5"
-          fill="#3b82f6"
-        />
-      </svg>
-      <div className="flex justify-between text-[11px] text-slate-500 font-medium mt-3" style={{ paddingLeft: padLeft, paddingRight: padRight }}>
-        <span>Apr 19</span>
-        <span>Apr 29</span>
-        <span>May 9</span>
-        <span>May 18</span>
-      </div>
-    </div>
+    <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`}>
+      <defs>
+        <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.18" />
+          <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.01" />
+        </linearGradient>
+      </defs>
+      {/* Y-axis labels */}
+      {[100, 75, 50, 25].map((v) => (
+        <text
+          key={v}
+          x={0}
+          y={toY(v) + 4}
+          fontSize="9"
+          fill="#94a3b8"
+          fontFamily="Inter, sans-serif"
+        >
+          {v}
+        </text>
+      ))}
+      {/* Area fill */}
+      <polygon points={area} fill="url(#areaGrad)" />
+      {/* Line */}
+      <polyline
+        points={pts}
+        fill="none"
+        stroke="#3b82f6"
+        strokeWidth="2"
+        strokeLinejoin="round"
+        strokeLinecap="round"
+      />
+      {/* Last dot */}
+      <circle
+        cx={toX(data.length - 1)}
+        cy={toY(data[data.length - 1])}
+        r="4"
+        fill="#3b82f6"
+        stroke="white"
+        strokeWidth="2"
+      />
+    </svg>
   );
 }
 
@@ -345,398 +375,659 @@ export default function ScoreBreakdownDetail() {
   const [newScore, setNewScore] = useState("");
   const [reason, setReason] = useState("");
   const [adminNote, setAdminNote] = useState("");
+  const [barsVisible, setBarsVisible] = useState(false);
+
+  useEffect(() => {
+    const t = setTimeout(() => setBarsVisible(true), 120);
+    return () => clearTimeout(t);
+  }, []);
 
   return (
-    <div className="w-full min-h-screen bg-slate-50 font-sans px-2 sm:px-3 py-6 space-y-6">
+    <div className="flex flex-col lg:flex-row w-full bg-[#f8fafc]">
+      {/* ════════════════════════════════════════════
+          MAIN AREA
+      ════════════════════════════════════════════ */}
+      <div className="flex-1 min-w-0">
+        <div className="w-full px-3 sm:px-5 py-3">
 
-      {/* ── Breadcrumb + Actions ── */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <nav className="flex items-center gap-2 text-[13px]">
-          <button onClick={() => router.push("/dashboard/audit")} className="text-blue-600 hover:underline font-semibold">Home</button>
-          <span className="text-slate-300">/</span>
-          <button onClick={() => router.push("/dashboard/audit")} className="text-blue-600 hover:underline font-semibold">Score Audit</button>
-          <span className="text-slate-300">/</span>
-          <span className="text-slate-500">Sony WH-1000XM5</span>
-        </nav>
-        <div className="flex items-center gap-3">
-          <button onClick={() => router.push("/dashboard/audit")} className="flex items-center gap-1.5 h-9 px-4 text-[13px] font-semibold bg-white border border-slate-200 rounded-lg text-slate-700 hover:bg-slate-50 shadow-sm transition-all">
-            <ArrowLeft className="w-4 h-4" /> Back to Score Audit
-          </button>
-          <button className="flex items-center gap-1.5 h-9 px-4 text-[13px] font-semibold bg-white border border-slate-200 rounded-lg text-slate-700 hover:bg-slate-50 shadow-sm transition-all">
-            <Download className="w-4 h-4" /> Export <ChevronDown className="w-3.5 h-3.5 text-slate-400 ml-1" />
-          </button>
-        </div>
-      </div>
-
-      {/* ── Page Title ── */}
-      <div>
-        <h1 className="text-[28px] font-bold text-slate-900 tracking-tight leading-tight">Score Breakdown Detail</h1>
-        <p className="text-[15px] text-slate-500 mt-1">Review score components, evidence, version history, and manual overrides.</p>
-      </div>
-
-      {/* ── Product Hero Card ── */}
-      <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-6">
-        <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-6">
-          {/* Image & Title */}
-          <div className="flex items-center gap-6">
-            <div className="w-24 h-24 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center p-2 shrink-0">
-              <img src="https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=100&q=80" alt="Sony WH-1000XM5" className="w-full h-full object-contain" />
-            </div>
-            <div>
-              <div className="flex items-start gap-2">
-                <h2 className="text-[20px] font-bold text-slate-900 leading-tight">Sony WH-1000XM5 Wireless Headphones</h2>
-                <ExternalLink className="w-4 h-4 text-blue-500 mt-1 shrink-0 cursor-pointer" />
-              </div>
-              <div className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-1.5 mt-3">
-                <span className="text-[13px] text-slate-500 font-medium">Category</span>
-                <span className="text-[13px] text-slate-700">Electronics &gt; Headphones</span>
-                <span className="text-[13px] text-slate-500 font-medium">ASIN</span>
-                <span className="text-[13px] font-mono text-slate-700 font-medium">B09XS7JWHH</span>
-              </div>
+          {/* ── Breadcrumb + Actions ── */}
+          <div className="flex items-center justify-between mb-1">
+            <nav className="flex items-center gap-1 text-[12px]">
+              <button
+                onClick={() => router.push("/dashboard/audit")}
+                className="text-blue-600 hover:underline font-medium"
+              >
+                Home
+              </button>
+              <ChevronRight className="w-3 h-3 text-slate-400" />
+              <button
+                onClick={() => router.push("/dashboard/audit")}
+                className="text-blue-600 hover:underline font-medium"
+              >
+                Score Audit
+              </button>
+              <ChevronRight className="w-3 h-3 text-slate-400" />
+              <span className="text-slate-500">Sony WH-1000XM5</span>
+            </nav>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => router.push("/dashboard/audit")}
+                className="flex items-center gap-1.5 h-8 px-3 text-[12px] font-medium bg-white border border-slate-200 rounded-lg text-slate-700 hover:bg-slate-50 shadow-sm transition-all"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                Back to Score Audit
+              </button>
+              <button className="flex items-center gap-1.5 h-8 px-3 text-[12px] font-semibold bg-white border border-slate-200 rounded-lg text-slate-700 hover:bg-slate-50 shadow-sm transition-all">
+                <Download className="w-3.5 h-3.5" />
+                Export
+                <ChevronDown className="w-3 h-3 text-slate-400" />
+              </button>
             </div>
           </div>
 
-          {/* Metrics Row */}
-          <div className="w-full xl:w-auto xl:ml-auto">
-            <div className="flex flex-wrap sm:flex-nowrap items-center justify-start xl:justify-end divide-x divide-slate-200 shrink-0">
-              <div className="pr-4 xl:pr-5 text-center shrink-0">
-                <p className="text-[11px] text-slate-500 font-bold uppercase tracking-wide mb-2">AI Verdict</p>
-                <span className="inline-flex items-center justify-center px-4 py-1 rounded-full bg-white border border-amber-400 text-amber-600 text-[14px] font-bold">Wait</span>
-              </div>
-              <div className="px-4 xl:px-5 text-center shrink-0">
-                <p className="text-[11px] text-slate-500 font-bold uppercase tracking-wide mb-1">Overall AI Buy Score</p>
-                <div className="flex items-baseline justify-center gap-1">
-                  <span className="text-[40px] font-extrabold text-blue-600 leading-none">76</span>
-                  <span className="text-[15px] text-slate-400 font-semibold">/100</span>
-                </div>
-              </div>
-              <div className="px-4 xl:px-5 text-center shrink-0">
-                <p className="text-[11px] text-slate-500 font-bold uppercase tracking-wide mb-2">Confidence</p>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[13px] font-bold">
-                  <BarChart2 className="w-4 h-4" /> High
-                </span>
-              </div>
-              <div className="px-6 xl:px-8 text-left shrink-0">
-                <p className="text-[11px] text-slate-500 font-bold uppercase tracking-wide mb-1.5">Score Version</p>
-                <span className="inline-block px-2.5 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-100 text-[13px] font-mono font-bold">electronics-v1.2</span>
-              </div>
-              <div className="pl-6 xl:pl-8 text-left shrink-0">
-                <p className="text-[11px] text-slate-500 font-bold uppercase tracking-wide mb-1.5">Last Updated</p>
-                <p className="text-[13px] text-slate-800 font-bold whitespace-nowrap">May 18, 2024, 9:23 AM</p>
-                <p className="text-[11px] text-slate-500 whitespace-nowrap">by Scoring Engine</p>
-              </div>
-            </div>
+          {/* ── Page Title ── */}
+          <div className="mb-4">
+            <h1 className="text-[22px] font-bold text-slate-800 leading-tight">
+              Score Breakdown Detail
+            </h1>
+            <p className="text-[13px] text-slate-500 mt-0.5">
+              Review score components, evidence, version history, and manual
+              overrides.
+            </p>
           </div>
-        </div>
-      </div>
 
-      {/* ── 3-Column Grid Layout ── */}
-      <div className="grid grid-cols-1 xl:grid-cols-[1fr_320px] gap-3 items-start w-full min-w-0">
+          {/* ── Product Hero Card ── */}
+          <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-4 mb-2">
+            <div className="flex items-center gap-4 flex-wrap">
+              {/* Product Image */}
+              <div className="w-[72px] h-[72px] rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center shrink-0 text-4xl">
+                🎧
+              </div>
 
-        {/* LEFT & MIDDLE COMBINED */}
-        <div className="w-full space-y-6 min-w-0">
-          <div className="grid grid-cols-1 xl:grid-cols-[250px_1fr] gap-3 items-start w-full min-w-0">
-
-            {/* LEFT COLUMN */}
-            <div className="w-full space-y-6 min-w-0">
-              {/* Overall Score */}
-              <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-6 flex flex-col items-center">
-                <div className="self-start mb-5">
-                  <h3 className="text-[15px] font-bold text-slate-900">Overall AI Buy Score</h3>
+              {/* Product Info */}
+              <div className="flex-1 min-w-[200px]">
+                <div className="flex items-start gap-1.5">
+                  <h2 className="text-[15px] font-bold text-slate-800 leading-snug">
+                    Sony WH-1000XM5 Wireless Headphones
+                  </h2>
+                  <ExternalLink className="w-3.5 h-3.5 text-blue-500 mt-0.5 shrink-0 cursor-pointer" />
                 </div>
-                <RadialScore score={76} />
-                <div className="mt-4 mb-6">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-[12px] font-bold">
-                    <BarChart2 className="w-3.5 h-3.5" /> High Confidence
+                <p className="text-[12px] text-slate-500 mt-0.5">
+                  Electronics &gt; Headphones
+                </p>
+                <div className="flex items-center gap-1.5 mt-1">
+                  <span className="text-[11px] text-slate-400 font-medium">
+                    ASIN
+                  </span>
+                  <span className="text-[11px] font-mono bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded">
+                    B09X57JWHH
                   </span>
                 </div>
-                {/* Meta */}
-                <div className="w-full space-y-3">
-                  {[
-                    { k: "Model", v: "electronics-v1.2", mono: true },
-                    { k: "Calculated", v: "May 18, 2024, 9:23 AM" },
-                    { k: "Category", v: "Electronics" },
-                    { k: "Data Freshness", v: "Up to date", green: true },
-                  ].map((item) => (
-                    <div key={item.k} className="flex justify-between items-start gap-4">
-                      <span className="text-[12px] text-slate-500 font-medium flex items-center gap-1.5 shrink-0">
-                        {item.k === "Model" && <Tag className="w-3.5 h-3.5" />}
-                        {item.k === "Calculated" && <BarChart className="w-3.5 h-3.5" />}
-                        {item.k === "Category" && <Tag className="w-3.5 h-3.5" />}
-                        {item.k === "Data Freshness" && <Check className="w-3.5 h-3.5" />}
-                        {item.k}
-                      </span>
-                      <span className={`text-[12px] text-right ${item.mono ? 'font-mono text-slate-700' : item.green ? 'text-emerald-600 font-bold' : 'text-slate-900 font-medium'}`}>
-                        {item.v}
-                      </span>
-                    </div>
-                  ))}
+              </div>
+
+              {/* KPI strip */}
+              <div className="flex flex-wrap sm:flex-nowrap items-center gap-4 sm:gap-0 sm:divide-x divide-slate-100 lg:ml-auto w-full lg:w-auto justify-center mt-4 lg:mt-0">
+                {/* AI Verdict */}
+                <div className="px-4 text-center">
+                  <p className="text-[10px] text-slate-400 uppercase tracking-wide font-semibold mb-1.5">
+                    AI Verdict
+                  </p>
+                  <span className="inline-block px-3 py-1 rounded-full bg-amber-100 text-amber-700 border border-amber-200 text-[12px] font-bold">
+                    Wait
+                  </span>
                 </div>
-                <div className="w-full flex justify-center mt-6 pt-5 border-t border-slate-100">
-                  <button className="text-[13px] text-blue-600 hover:underline font-semibold flex items-center gap-1.5">
-                    <Info className="w-4 h-4" /> View score explanation
-                  </button>
+
+                {/* Overall Score */}
+                <div className="px-4 text-center">
+                  <p className="text-[10px] text-slate-400 uppercase tracking-wide font-semibold mb-0.5">
+                    Overall AI Buy Score
+                  </p>
+                  <div className="flex items-baseline gap-1 justify-center">
+                    <span className="text-[32px] font-extrabold text-slate-800 leading-none">
+                      76
+                    </span>
+                    <span className="text-[14px] text-slate-400 font-medium">
+                      /100
+                    </span>
+                  </div>
+                </div>
+
+                {/* Confidence */}
+                <div className="px-4 text-center">
+                  <p className="text-[10px] text-slate-400 uppercase tracking-wide font-semibold mb-1.5">
+                    Confidence
+                  </p>
+                  <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[12px] font-semibold">
+                    <BarChart2 className="w-3 h-3" />
+                    High
+                  </span>
+                </div>
+
+                {/* Version + Updated */}
+                <div className="px-4 space-y-1.5">
+                  <div>
+                    <p className="text-[10px] text-slate-400 uppercase tracking-wide font-semibold mb-0.5">
+                      Score Version
+                    </p>
+                    <span className="inline-block px-2 py-0.5 rounded-md bg-blue-50 border border-blue-100 text-blue-700 text-[11px] font-mono font-semibold">
+                      electronics-v1.2
+                    </span>
+                  </div>
+                  <div>
+                    <p className="text-[10px] text-slate-400 uppercase tracking-wide font-semibold mb-0.5">
+                      Last Updated
+                    </p>
+                    <p className="text-[12px] text-slate-700 font-semibold">
+                      May 18, 2024, 9:23 AM
+                    </p>
+                    <p className="text-[10px] text-slate-400">
+                      by Scoring Engine
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
+          </div>
 
-            {/* MIDDLE COLUMN */}
-            <div className="w-full space-y-6 min-w-0">
-              {/* Score Components */}
-              <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-6">
-                <div className="flex items-center gap-1.5 mb-5">
-                  <h3 className="text-[15px] font-bold text-slate-900">Score Components</h3>
-                  <HelpCircle className="w-4 h-4 text-slate-400" />
+          {/* ── Score Overview Row ── */}
+          <div className="grid grid-cols-12 gap-4 mb-2">
+
+            {/* LEFT: Overall Radial + Meta */}
+            <div className="col-span-12 lg:col-span-3 bg-white border border-slate-200 rounded-xl shadow-sm p-4 flex flex-col items-center">
+              <div className="self-start mb-3">
+                <span className="text-[13px] font-bold text-slate-800">
+                  Overall AI Buy Score
+                </span>
+              </div>
+
+              <RadialScore score={76} />
+
+              <div className="mt-2 mb-4">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-[11px] font-semibold">
+                  <BarChart2 className="w-3 h-3" />
+                  High Confidence
+                </span>
+              </div>
+
+              {/* Meta KVs */}
+              <div className="w-full border-t border-slate-100 pt-3 space-y-2">
+                {[
+                  { k: "Model", v: "electronics-v1.2", mono: true },
+                  { k: "Calculated", v: "May 18, 2024, 9:23 AM", mono: false },
+                  { k: "Category", v: "Electronics", mono: false },
+                  { k: "Data Freshness", v: "Up to date", green: true },
+                ].map(({ k, v, mono, green }) => (
+                  <div key={k} className="flex justify-between items-start gap-2">
+                    <span className="text-[11px] text-slate-500 shrink-0">{k}</span>
+                    <span
+                      className={`text-[11px] text-right leading-snug ${mono
+                        ? "font-mono text-slate-700"
+                        : green
+                          ? "text-emerald-600 font-semibold"
+                          : "text-slate-700 font-medium"
+                        }`}
+                    >
+                      {v}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <button className="mt-3 text-[11px] text-blue-600 hover:underline font-medium flex items-center gap-1">
+                <Info className="w-3 h-3" />
+                View score-explanation
+              </button>
+            </div>
+
+            {/* RIGHT: Score Components + Weight + Evidence */}
+            <div className="col-span-12 lg:col-span-9 bg-white border border-slate-200 rounded-xl shadow-sm p-4 flex flex-col gap-4">
+
+              {/* Score Components Grid */}
+              <div>
+                <div className="flex items-center gap-1.5 mb-3">
+                  <span className="text-[13px] font-bold text-slate-800">
+                    Score Components
+                  </span>
+                  <HelpCircle className="w-3.5 h-3.5 text-slate-400" />
                 </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-4">
+                <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
                   {SCORE_COMPONENTS.map((c) => (
-                    <div key={c.label} className="flex flex-col border border-slate-200 rounded-xl p-4 justify-between h-full bg-white">
-                      <div>
-                        <p className="text-[13px] text-slate-700 font-bold leading-tight mb-3 min-h-[36px]">{c.label}</p>
-                        {c.score === null ? (
-                          <div className="flex items-baseline gap-1 mb-4">
-                            <span className="text-[36px] font-black text-slate-300 leading-none tracking-tight">N/A</span>
-                          </div>
-                        ) : (
-                          <div className="flex items-baseline gap-1 mb-4">
-                            <span className={`text-[36px] font-black leading-none tracking-tight ${c.color}`}>{c.score}</span>
-                            <span className="text-[14px] text-slate-400 font-bold">/100</span>
-                          </div>
-                        )}
-                      </div>
-                      <div className="mt-auto">
-                        <div className={`w-full h-1.5 ${c.trackColor} rounded-full overflow-hidden mb-2.5`}>
-                          <div className={`h-full rounded-full ${c.barColor} transition-all`} style={{ width: c.score === null ? "0%" : `${c.score}%` }} />
+                    <div key={c.label} className="flex flex-col items-center text-center">
+                      <p className="text-[10px] text-slate-500 font-medium leading-tight mb-2 min-h-[28px] flex items-center justify-center">
+                        {c.label}
+                      </p>
+                      {c.score === null ? (
+                        <div className="flex items-baseline gap-0.5 mb-2">
+                          <span className="text-[22px] font-extrabold text-slate-400">
+                            N/A
+                          </span>
                         </div>
-                        <p className="text-[12px] text-slate-500 font-semibold">{c.weightLabel}</p>
+                      ) : (
+                        <div className="flex items-baseline gap-0.5 mb-2">
+                          <span className={`text-[22px] font-extrabold ${c.color}`}>
+                            {c.score}
+                          </span>
+                          <span className="text-[11px] text-slate-400">/100</span>
+                        </div>
+                      )}
+                      {/* Progress bar */}
+                      <div className={`w-full h-1.5 ${c.trackColor} rounded-full overflow-hidden`}>
+                        <div
+                          className={`h-full rounded-full ${c.barColor}`}
+                          style={{ 
+                            width: barsVisible ? (c.score === null ? "0%" : `${c.score}%`) : "0%",
+                            transition: "width 1.1s cubic-bezier(0.4,0,0.2,1)"
+                          }}
+                        />
                       </div>
+                      <p className="text-[10px] text-slate-400 mt-1">
+                        {c.weightLabel}
+                      </p>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Weight Breakdown & Input Evidence */}
-              <div className="grid grid-cols-1 xl:grid-cols-[300px_1fr] gap-4 min-w-0">
+              {/* Divider */}
+              <div className="border-t border-slate-100" />
+
+              {/* Weight + Evidence side-by-side */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+
                 {/* Weight Breakdown */}
-                <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-5">
-                  <div className="flex items-center gap-1.5 mb-4">
-                    <h3 className="text-[15px] font-bold text-slate-900">Weight Breakdown</h3>
-                    <HelpCircle className="w-4 h-4 text-slate-400" />
+                <div>
+                  <div className="flex items-center gap-1.5 mb-2">
+                    <span className="text-[12px] font-bold text-slate-800">
+                      Weight Breakdown
+                    </span>
+                    <HelpCircle className="w-3 h-3 text-slate-400" />
                   </div>
-                  <div className="flex items-center justify-between text-[12px] text-slate-500 font-semibold mb-3 border-b border-slate-100 pb-2">
-                    <span>Category: Electronics</span>
-                    <span>Total 100%</span>
+                  <div className="flex items-center justify-between text-[10px] text-slate-500 mb-2">
+                    <span className="font-semibold">Category: Electronics</span>
+                    <span className="font-semibold">Total 100%</span>
                   </div>
-                  <div className="space-y-3">
+                  <div className="space-y-2.5">
                     {WEIGHT_ROWS.map((row) => (
-                      <div key={row.label} className="flex items-center justify-between gap-2">
-                        <span className="text-[12px] text-slate-600 font-medium whitespace-nowrap">{row.label}</span>
-                        <div className="flex-1 h-2.5 bg-slate-100 rounded-full overflow-hidden min-w-[30px] max-w-[60px] ml-auto">
-                          <div className={`h-full rounded-full ${row.barColor}`} style={{ width: `${row.pct * 2}%` }} />
+                      <div key={row.label}>
+                        <div className="flex justify-between text-[11px] mb-1">
+                          <span className="text-slate-600">{row.label}</span>
+                          <span className="text-slate-500 font-semibold">
+                            {row.pct}%
+                          </span>
                         </div>
-                        <span className="text-[12px] text-slate-500 font-semibold text-right shrink-0 w-[28px]">{row.pct}%</span>
+                        <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+                          <div
+                            className={`h-full rounded-full ${row.barColor}`}
+                            style={{ 
+                              width: barsVisible ? `${row.pct * 2}%` : "0%",
+                              transition: "width 1.2s cubic-bezier(0.4,0,0.2,1)"
+                            }}
+                          />
+                        </div>
                       </div>
                     ))}
                   </div>
                 </div>
 
                 {/* Input Evidence */}
-                <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-6">
-                  <div className="flex items-center gap-1.5 mb-4">
-                    <h3 className="text-[15px] font-bold text-slate-900">Input Evidence</h3>
-                    <HelpCircle className="w-4 h-4 text-slate-400" />
+                <div>
+                  <div className="flex items-center gap-1.5 mb-2">
+                    <span className="text-[12px] font-bold text-slate-800">
+                      Input Evidence
+                    </span>
+                    <HelpCircle className="w-3 h-3 text-slate-400" />
                   </div>
-                  <div className="w-full overflow-x-auto custom-scrollbar pb-2 -mb-2">
-                    <div className="min-w-[400px]">
-                      <div className="grid grid-cols-[1fr_60px_80px_130px] gap-3 pb-2 border-b border-slate-100 mb-2 min-w-0">
-                        {["Source", "Items", "Status", "Last Updated"].map((h) => (
-                          <span key={h} className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">{h}</span>
-                        ))}
-                      </div>
-                      <div className="space-y-1">
-                        {EVIDENCE_ROWS.map((e) => (
-                          <div key={e.source} className="grid grid-cols-[1fr_60px_80px_130px] gap-3 items-center py-1.5 px-1 rounded-lg hover:bg-slate-50 cursor-pointer group transition-colors min-w-0">
-                            <div className="flex items-center gap-2 min-w-0">
-                              {e.icon}
-                              <span className="text-[12px] text-slate-700 font-medium truncate">{e.source}</span>
-                            </div>
-                            <span className="text-[12px] text-slate-600 font-medium">{e.items}</span>
-                            <div>
-                              <StatusBadge status={e.status} />
-                            </div>
-                            <span className="text-[11px] text-slate-500 font-mono whitespace-nowrap text-right">{e.lastUpdated}</span>
-                          </div>
-                        ))}
-                      </div>
+                  <div className="space-y-0.5">
+                    {/* Header */}
+                    <div className="grid grid-cols-[1fr_48px_64px_auto] gap-1 px-1 pb-1 border-b border-slate-100">
+                      {["Source", "Items", "Status", "Last Updated"].map((h) => (
+                        <span
+                          key={h}
+                          className="text-[9px] font-bold text-slate-400 uppercase tracking-wide"
+                        >
+                          {h}
+                        </span>
+                      ))}
                     </div>
+                    {EVIDENCE_ROWS.map((e) => (
+                      <div
+                        key={e.source}
+                        className="grid grid-cols-[1fr_48px_64px_auto] gap-1 items-center px-1 py-1 rounded hover:bg-slate-50 cursor-pointer group"
+                      >
+                        <div className="flex items-center gap-1.5 min-w-0">
+                          {e.icon}
+                          <span className="text-[11px] text-slate-700 font-medium truncate">
+                            {e.source}
+                          </span>
+                        </div>
+                        <span className="text-[11px] text-slate-500 text-right pr-2">
+                          {e.items}
+                        </span>
+                        <div>
+                          <StatusBadge status={e.status} />
+                        </div>
+                        <span className="text-[10px] text-slate-400 whitespace-nowrap text-right">
+                          {e.lastUpdated}
+                        </span>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* COMBINED SCORE HISTORY CARD */}
-          <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-6 overflow-hidden">
-            <div className="flex items-center gap-1.5 mb-6">
-              <h3 className="text-[15px] font-bold text-slate-900">Score History</h3>
-              <Info className="w-4 h-4 text-slate-400" />
+          {/* ── Score History ── */}
+          <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-4 mb-2">
+            <div className="flex items-center gap-1.5 mb-4">
+              <span className="text-[13px] font-bold text-slate-800">
+                Score History
+              </span>
+              <HelpCircle className="w-3.5 h-3.5 text-slate-400" />
             </div>
 
-            <div className="grid grid-cols-1 xl:grid-cols-[280px_1fr] gap-6 items-start min-w-0">
-              {/* Graph on the left */}
-              <div className="w-full flex flex-col">
+            <div className="grid grid-cols-12 gap-5">
+              {/* Sparkline */}
+              <div className="col-span-12 md:col-span-4">
                 <ScoreSparkline />
+                <div className="flex justify-between text-[10px] text-slate-400 mt-1 px-2">
+                  <span>Apr 19</span>
+                  <span>Apr 29</span>
+                  <span>May 9</span>
+                  <span>May 18</span>
+                </div>
               </div>
 
-              {/* Table on the right */}
-              <div className="w-full overflow-x-auto">
-                <table className="w-full text-left border-collapse">
+              {/* History Table */}
+              <div className="col-span-12 md:col-span-8 overflow-x-auto">
+                <table className="w-full">
                   <thead>
                     <tr className="border-b border-slate-100">
-                      {["Version", "Score", "Change", "Reason", "Model", "Updated By", "Updated At"].map((h) => (
-                        <th key={h} className="pb-3 text-[12px] font-medium text-slate-500 whitespace-nowrap pr-8">
+                      {[
+                        "Version",
+                        "Score",
+                        "Change",
+                        "Reason",
+                        "Model",
+                        "Updated By",
+                        "Updated At",
+                      ].map((h) => (
+                        <th
+                          key={h}
+                          className="pb-2 text-left text-[10px] font-bold text-slate-500 uppercase tracking-wide pr-3 whitespace-nowrap"
+                        >
                           {h}
                         </th>
                       ))}
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100">
+                  <tbody>
                     {HISTORY_ROWS.map((row, i) => (
-                      <tr key={i} className="hover:bg-slate-50 transition-colors border-b border-slate-100">
-                        <td className="py-4 pr-8">
-                          <span className="text-[13px] font-bold text-slate-900 whitespace-nowrap">
+                      <tr
+                        key={i}
+                        className="border-b border-slate-50 hover:bg-slate-50 transition-colors"
+                      >
+                        <td className="py-2 pr-3">
+                          <span className="inline-block font-mono text-blue-700 bg-blue-50 border border-blue-100 px-1.5 py-0.5 rounded text-[10px] whitespace-nowrap font-semibold">
                             {row.version}
                           </span>
                         </td>
-                        <td className="py-4 pr-8 text-[13px] font-bold text-slate-900">{row.score}</td>
-                        <td className="py-4 pr-8">
+                        <td className="py-2 pr-3 text-[13px] font-bold text-slate-800">
+                          {row.score}
+                        </td>
+                        <td className="py-2 pr-3">
                           {row.changeDelta !== null ? (
-                            <span className={`text-[13px] font-bold flex items-center gap-1 ${row.changeDelta < 0 ? "text-red-500" : "text-emerald-600"}`}>
-                              {row.changeDelta < 0 && <TrendingDown className="w-3.5 h-3.5" />}
+                            <span
+                              className={`text-[12px] font-bold flex items-center gap-0.5 ${row.changeDelta < 0
+                                ? "text-red-500"
+                                : "text-emerald-600"
+                                }`}
+                            >
+                              {row.changeDelta < 0 && (
+                                <TrendingDown className="w-3 h-3" />
+                              )}
                               {row.change}
                             </span>
                           ) : (
-                            <span className="text-slate-400 text-[13px]">—</span>
+                            <span className="text-slate-400 text-[12px]">—</span>
                           )}
                         </td>
-                        <td className="py-4 pr-8 text-[13px] text-slate-600 whitespace-nowrap">{row.reason}</td>
-                        <td className="py-4 pr-8 text-[13px] font-mono text-slate-500">{row.model}</td>
-                        <td className="py-4 pr-8 text-[13px] text-slate-600 whitespace-nowrap">{row.updatedBy}</td>
-                        <td className="py-4 text-[13px] text-slate-500 whitespace-nowrap">{row.updatedAt}</td>
+                        <td className="py-2 pr-3 text-[11px] text-slate-600 max-w-[180px]">
+                          {row.reason}
+                        </td>
+                        <td className="py-2 pr-3 text-[11px] font-mono text-slate-500">
+                          {row.model}
+                        </td>
+                        <td className="py-2 pr-3 text-[11px] text-slate-600 whitespace-nowrap">
+                          {row.updatedBy}
+                        </td>
+                        <td className="py-2 text-[11px] text-slate-400 whitespace-nowrap">
+                          {row.updatedAt}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
+                <div className="mt-3 flex justify-center">
+                  <button 
+                    onClick={() => router.push('/dashboard/audit/B09X57JWHH/history')}
+                    className="text-[12px] text-blue-600 hover:underline font-semibold flex items-center gap-1"
+                  >
+                    View full score history
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
               </div>
             </div>
-
-            {/* View Full History Link */}
-            <div className="mt-8 flex justify-center border-t border-slate-100 pt-5">
-              <button onClick={() => router.push('/dashboard/audit/B09X57JWHH/history')} className="text-[13px] text-blue-600 hover:underline font-semibold flex items-center gap-1.5">
-                View full score history <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
           </div>
+
+        </div>
+      </div>
+
+      {/* ════════════════════════════════════════════
+          RIGHT PANEL
+      ════════════════════════════════════════════ */}
+      <div className="w-full lg:w-[340px] xl:w-[380px] shrink-0 lg:border-l border-t lg:border-t-0 border-slate-200 bg-slate-50 flex flex-col p-4 gap-4">
+
+        {/* ── Card 1: Current Verdict Summary ── */}
+        <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+          <h3 className="text-[11px] font-bold text-slate-700 uppercase tracking-widest mb-3">
+            Current Verdict Summary
+          </h3>
+
+          {/* Wait banner */}
+          <div className="flex items-center gap-2 mb-3 p-2 bg-amber-50 border border-amber-100 rounded-lg">
+            <span className="inline-block px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 border border-amber-200 text-[11px] font-bold">
+              Wait
+            </span>
+            <span className="text-[11px] text-slate-500 leading-tight">
+              Not enough confidence for Buy/Don&apos;t Buy.
+            </span>
+          </div>
+
+          {/* Why Wait */}
+          <div className="mb-3">
+            <p className="text-[11px] font-bold text-slate-700 mb-1.5">
+              Why Wait?
+            </p>
+            <ul className="space-y-1.5">
+              {[
+                "Price is above 90-day average",
+                "Mixed expert opinions",
+                "Slight decline in Review Trust Score",
+              ].map((item) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-1.5 text-[11px] text-slate-600"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400 mt-1 shrink-0" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* What needs to improve */}
+          <div className="mb-2">
+            <p className="text-[11px] font-bold text-slate-700 mb-1.5">
+              What needs to improve?
+            </p>
+            <ul className="space-y-1.5">
+              {[
+                "Lower price or better promotions",
+                "More positive expert reviews",
+                "Increase high-trust review volume",
+              ].map((item) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-1.5 text-[11px] text-slate-600"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-1 shrink-0" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <button className="mt-1 text-[11px] text-blue-600 hover:underline font-semibold flex items-center gap-0.5">
+            View full explanation
+            <ChevronRight className="w-3 h-3" />
+          </button>
         </div>
 
-        {/* RIGHT COLUMN */}
-        <div className="w-full space-y-6 min-w-0">
-          {/* Current Verdict Summary */}
-          <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-4">
-            <h3 className="text-[15px] font-bold text-slate-900 mb-4">Current Verdict Summary</h3>
-            <div className="flex items-center gap-3 mb-5 p-3 bg-amber-50 border border-amber-100 rounded-lg">
-              <span className="inline-block px-3 py-1 rounded border-2 border-amber-300 bg-white text-amber-600 text-[12px] font-bold">Wait</span>
-              <span className="text-[13px] text-slate-600 font-medium">Not enough confidence for Buy/Don't Buy.</span>
-            </div>
-            <div className="mb-5">
-              <p className="text-[13px] font-bold text-slate-900 mb-2">Why Wait?</p>
-              <ul className="space-y-2">
-                {["Price is above 90-day average", "Mixed expert opinions", "Slight decline in Review Trust Score"].map((item) => (
-                  <li key={item} className="flex items-start gap-2 text-[13px] text-slate-600">
-                    <span className="w-1.5 h-1.5 rounded-full bg-slate-400 mt-1.5 shrink-0" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="mb-5">
-              <p className="text-[13px] font-bold text-slate-900 mb-2">What needs to improve?</p>
-              <ul className="space-y-2">
-                {["Lower price or better promotions", "More positive expert reviews", "Increase high-trust review volume"].map((item) => (
-                  <li key={item} className="flex items-start gap-2 text-[13px] text-slate-600">
-                    <span className="w-1.5 h-1.5 rounded-full bg-slate-400 mt-1.5 shrink-0" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <button className="text-[13px] text-blue-600 hover:underline font-semibold flex items-center gap-1">
-              View full explanation <ChevronRight className="w-4 h-4" />
+        {/* ── Card 2: Manual Override ── */}
+        <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+          <div className="flex items-center gap-1.5 mb-3">
+            <h3 className="text-[11px] font-bold text-slate-700 uppercase tracking-widest">
+              Manual Override
+            </h3>
+            <HelpCircle className="w-3.5 h-3.5 text-slate-400" />
+          </div>
+
+          {/* Toggle row */}
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-[12px] text-slate-600 font-medium">
+              Override score?
+            </span>
+            <button
+              onClick={() => setOverrideEnabled(!overrideEnabled)}
+              className={`relative w-10 h-5 rounded-full transition-colors duration-200 focus:outline-none ${overrideEnabled ? "bg-blue-600" : "bg-slate-200"
+                }`}
+            >
+              <span
+                className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow-sm transition-all duration-200 ${overrideEnabled ? "left-5" : "left-0.5"
+                  }`}
+              />
             </button>
           </div>
 
-          {/* Manual Override */}
-          <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-4">
-            <div className="flex items-center gap-1.5 mb-4">
-              <h3 className="text-[15px] font-bold text-slate-900">Manual Override</h3>
-              <HelpCircle className="w-4 h-4 text-slate-400" />
+          {/* Override fields — shown only when toggle ON */}
+          <div
+            className={`overflow-hidden transition-all duration-300 ${
+              overrideEnabled ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0 pointer-events-none"
+            }`}
+          >
+            {/* New Score */}
+            <div className="mb-2">
+              <label className="block text-[11px] text-slate-500 font-medium mb-1">
+                New score (0–100)
+              </label>
+              <input
+                type="number"
+                min={0}
+                max={100}
+                value={newScore}
+                onChange={(e) => setNewScore(e.target.value)}
+                placeholder="Enter new score..."
+                className="w-full h-8 px-2.5 text-[12px] border border-slate-200 rounded-lg bg-white text-slate-800 placeholder:text-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 transition-all"
+              />
             </div>
-            <div className="flex items-center justify-between mb-5">
-              <span className="text-[13px] text-slate-700 font-medium">Override score?</span>
-              <button
-                onClick={() => setOverrideEnabled(!overrideEnabled)}
-                className={`relative w-11 h-6 rounded-full transition-colors duration-200 focus:outline-none ${overrideEnabled ? "bg-blue-600" : "bg-slate-200"}`}
-              >
-                <span className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow-sm transition-all duration-200 ${overrideEnabled ? "left-6" : "left-1"}`} />
+
+            {/* Reason */}
+            <div className="mb-3">
+              <label className="block text-[11px] text-slate-500 font-medium mb-1">
+                Reason
+              </label>
+              <textarea
+                value={reason}
+                onChange={(e) => setReason(e.target.value)}
+                placeholder="Explain why you're overriding this score..."
+                rows={3}
+                maxLength={500}
+                className="w-full px-2.5 py-2 text-[12px] border border-slate-200 rounded-lg bg-white text-slate-800 placeholder:text-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 resize-none transition-all"
+              />
+              <div className="text-right text-[10px] text-slate-400 mt-0.5">
+                {reason.length} / 500
+              </div>
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="flex gap-2">
+              <button className="flex-1 h-8 text-[12px] font-bold bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-1 shadow-sm">
+                <Check className="w-3.5 h-3.5" />
+                Save Override
+              </button>
+              <button className="flex-1 h-8 text-[12px] font-bold bg-red-50 text-red-600 border border-red-200 rounded-lg hover:bg-red-100 transition-colors flex items-center justify-center gap-1">
+                <AlertCircle className="w-3.5 h-3.5" />
+                Remove Override
               </button>
             </div>
-            <div className={`transition-opacity duration-200 ${!overrideEnabled ? "opacity-50 pointer-events-none" : ""}`}>
-              <div className="mb-4">
-                <label className="block text-[13px] text-slate-700 font-medium mb-1.5">New score (0–100)</label>
-                <input disabled={!overrideEnabled} type="number" min="0" max="100" value={newScore} onChange={(e) => setNewScore(e.target.value)} placeholder="Enter new score" className="w-full h-10 px-3 text-[13px] border border-slate-200 rounded-lg bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all disabled:bg-slate-50" />
-              </div>
-              <div className="mb-5">
-                <label className="block text-[13px] text-slate-700 font-medium mb-1.5">Reason</label>
-                <textarea disabled={!overrideEnabled} value={reason} onChange={(e) => setReason(e.target.value)} placeholder="Explain why you're overriding this score..." rows={3} maxLength={500} className="w-full px-3 py-2 text-[13px] border border-slate-200 rounded-lg bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 resize-none transition-all disabled:bg-slate-50" />
-                <div className="text-right text-[11px] text-slate-400 mt-1">{reason.length} / 500</div>
-              </div>
-              <div className="flex gap-3 mb-3">
-                <button disabled={!overrideEnabled} className="flex-1 h-9 text-[13px] font-bold bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-1.5 shadow-sm disabled:bg-slate-300">
-                  <Check className="w-4 h-4" /> Save Override
-                </button>
-                <button disabled={!overrideEnabled} className="flex-1 h-9 text-[13px] font-bold bg-white text-red-600 border border-red-200 rounded-lg hover:bg-red-50 transition-colors flex items-center justify-center gap-1.5 disabled:text-slate-400 disabled:border-slate-200">
-                  <AlertCircle className="w-4 h-4" /> Remove Override
-                </button>
-              </div>
+            <p className="text-[10px] text-slate-400 mt-1.5 text-center leading-snug">
+              Overrides are logged and visible in score history.
+            </p>
+          </div>
+        </div>
+
+        {/* ── Card 3: Admin Notes ── */}
+        <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+          <div className="flex items-center justify-between mb-3 shrink-0">
+            <div className="flex items-center gap-1.5">
+              <h3 className="text-[11px] font-bold text-slate-700 uppercase tracking-widest">
+                Admin Notes
+              </h3>
+              <HelpCircle className="w-3.5 h-3.5 text-slate-400" />
             </div>
-            <p className="text-[11px] text-slate-500 text-center">Overrides are logged and visible in score history.</p>
+            <button className="flex items-center gap-1 text-[11px] text-blue-600 border border-blue-200 bg-blue-50 hover:bg-blue-100 px-2 py-0.5 rounded-md font-semibold transition-colors">
+              <Plus className="w-3 h-3" />
+              Add Note
+            </button>
           </div>
 
-          {/* Admin Notes */}
-          <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-4">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-1.5">
-                <h3 className="text-[15px] font-bold text-slate-900">Admin Notes</h3>
-                <HelpCircle className="w-4 h-4 text-slate-400" />
-              </div>
-              <button className="flex items-center gap-1 text-[12px] text-blue-600 border border-blue-200 bg-blue-50 hover:bg-blue-100 px-2.5 py-1 rounded-md font-semibold transition-colors">
-                <Plus className="w-3.5 h-3.5" /> Add Note
-              </button>
-            </div>
-            <div className="flex gap-3 mb-4">
-              <div className="w-8 h-8 rounded-full object-cover shadow-sm border border-slate-200 overflow-hidden shrink-0">
-                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80" alt="Admin User" className="w-full h-full object-cover" />
-              </div>
-              <div className="flex-1">
-                <div className="flex items-center gap-2 mb-1 flex-wrap">
-                  <span className="text-[13px] font-bold text-slate-900">Admin User</span>
-                  <span className="text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200 px-1.5 py-0.5 rounded font-bold">Super Admin</span>
+          {/* Existing Note */}
+          <div className="mb-3">
+            <div className="bg-slate-50 border border-slate-200 rounded-lg p-3">
+              <div className="flex items-start gap-2">
+                <div className="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-white text-[10px] font-bold shrink-0 shadow-sm">
+                  AU
                 </div>
-                <p className="text-[12px] text-slate-600 mb-1">Price spike likely temporary due to limited stock. Re-check after next price drop.</p>
-                <p className="text-[11px] text-slate-400">May 18, 2024, 9:25 AM</p>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-1.5 flex-wrap mb-1">
+                    <span className="text-[11px] font-bold text-slate-800">
+                      Admin User
+                    </span>
+                    <span className="text-[9px] bg-emerald-100 text-emerald-700 border border-emerald-200 px-1.5 py-0.5 rounded font-bold">
+                      Super Admin
+                    </span>
+                    <span className="text-[10px] text-slate-400 ml-auto whitespace-nowrap">
+                      May 18, 2024, 9:23 AM
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-slate-600 leading-relaxed">
+                    Price spike likely temporary due to limited stock. Re-check
+                    after next price drop.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
+
+          {/* New Note Input */}
+          <textarea
+            value={adminNote}
+            onChange={(e) => setAdminNote(e.target.value)}
+            placeholder="Add a note..."
+            rows={2}
+            className="w-full shrink-0 px-2.5 py-2 text-[12px] border border-slate-200 rounded-lg bg-white text-slate-800 placeholder:text-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 resize-none transition-all"
+          />
         </div>
       </div>
     </div>

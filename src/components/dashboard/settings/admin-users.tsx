@@ -226,32 +226,24 @@ const users: UserRow[] = [
 
 export default function AdminUsers() {
   return (
-    <div className="min-h-screen bg-[#F8FAFC] px-4 py-6 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-365 space-y-6">
-        <section className="rounded-xl border border-slate-200/80 bg-white p-6 shadow-sm">
-          <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
-            <div className="min-w-0">
-              <p className="text-sm font-medium text-slate-500">
-                Admin
-                <span className="px-2 text-slate-300">›</span>
-                Settings
-                <span className="px-2 text-slate-300">›</span>
-                Admin Users
-              </p>
-              <h1 className="mt-3 text-3xl font-semibold tracking-tight text-slate-900">
-                Admin Users
-              </h1>
-              <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-500">
-                Manage administrator accounts, roles, and access.
-              </p>
-            </div>
-            <button className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#4F46E5] px-4 py-2 text-sm font-semibold text-white shadow-sm shadow-[#4F46E5]/10 transition hover:bg-[#4338ca]">
-              <Plus className="h-4 w-4" />
-              Invite Admin
-            </button>
+    <div className="bg-slate-50 min-h-screen w-full max-w-full overflow-x-hidden">
+      <div className="w-full max-w-full px-4 sm:px-6 py-5 space-y-5">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="min-w-0">
+            <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-slate-900">
+              Admin Users
+            </h1>
+            <p className="mt-1 sm:mt-2 max-w-2xl text-sm leading-6 text-slate-500">
+              Manage administrator accounts, roles, and access.
+            </p>
           </div>
+          <button className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-2xl bg-[#4F46E5] px-4 py-2.5 sm:py-2 text-sm font-semibold text-white shadow-sm shadow-[#4F46E5]/10 transition hover:bg-[#4338ca]">
+            <Plus className="h-4 w-4" />
+            Invite Admin
+          </button>
+        </div>
 
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {kpis.map((card) => {
             const Icon = card.icon;
             return (
@@ -267,12 +259,11 @@ export default function AdminUsers() {
               </div>
             );
           })}
-          </div>
-        </section>
+        </div>
 
-        <section className="rounded-xl border border-slate-200/80 bg-white p-5 shadow-sm">
+        <section className="w-full max-w-full overflow-hidden rounded-xl border border-slate-200/80 bg-white p-4 sm:p-5 shadow-sm">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-            <div className="flex-1 min-w-0">
+            <div className="flex-1 min-w-0 w-full">
               <label className="relative block">
                 <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">
                   <Search className="h-4 w-4" />
@@ -288,23 +279,23 @@ export default function AdminUsers() {
               </label>
             </div>
 
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-              <select className="min-w-42.5 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center w-full lg:w-auto">
+              <select className="w-full sm:w-40 md:w-44 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100">
                 <option>All Roles</option>
                 <option>Super Admin</option>
                 <option>Content Manager</option>
               </select>
-              <select className="min-w-42.5 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100">
+              <select className="w-full sm:w-40 md:w-44 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100">
                 <option>All Statuses</option>
                 <option>Active</option>
                 <option>Inactive</option>
               </select>
-              <select className="min-w-42.5 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100">
+              <select className="w-full sm:w-40 md:w-44 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100">
                 <option>All</option>
                 <option>Enabled</option>
                 <option>Disabled</option>
               </select>
-              <button className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-100">
+              <button className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-100">
                 <RefreshCcw className="h-4 w-4" />
                 Clear Filters
               </button>
@@ -312,7 +303,7 @@ export default function AdminUsers() {
           </div>
         </section>
 
-        <section className="overflow-hidden rounded-xl border border-slate-200/80 bg-white shadow-sm">
+        <section className="w-full max-w-full overflow-hidden rounded-xl border border-slate-200/80 bg-white shadow-sm">
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-slate-200 text-left text-sm">
               <thead className="bg-slate-50 text-slate-500">
@@ -355,7 +346,7 @@ export default function AdminUsers() {
               <tbody className="divide-y divide-slate-200 bg-white">
                 {users.map((user) => (
                   <tr key={user.email} className="hover:bg-slate-50 transition-colors">
-                    <td className="px-6 py-5 align-top">
+                    <td className="px-6 py-5 align-top whitespace-nowrap">
                       <div className="flex items-center gap-4">
                         <img
                           src={user.avatar}

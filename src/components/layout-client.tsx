@@ -12,8 +12,7 @@ export default function LayoutClient({ children }: { children: React.ReactNode }
   // Hide global header/sidebar on specific full-screen review pages
   const hideHeader =
     pathname.startsWith("/dashboard/alternatives/review") ||
-    pathname.startsWith("/dashboard/safety/") ||
-    pathname === "/dashboard/settings/users";
+    pathname.startsWith("/dashboard/safety/");
 
   const hideSidebar = 
     pathname.startsWith("/dashboard/alternatives/review") ||

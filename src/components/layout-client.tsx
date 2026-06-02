@@ -24,7 +24,7 @@ export default function LayoutClient({ children }: { children: React.ReactNode }
         {!hideSidebar && <Sidebar />}
         <div className="flex-1 flex flex-col h-full overflow-hidden">
           {!hideHeader && <Header />}
-          <main className="flex-1 overflow-y-auto bg-slate-50 min-w-0">
+          <main className="flex-1 overflow-y-auto overflow-x-hidden bg-slate-50 w-full min-w-0 max-w-full">
             {children}
           </main>
         </div>

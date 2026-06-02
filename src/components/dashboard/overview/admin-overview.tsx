@@ -92,10 +92,10 @@ export default function AdminOverview() {
   }, []);
 
   return (
-    <div className="bg-slate-50 min-h-full">
+    <div className="bg-slate-50 min-h-screen w-full max-w-full overflow-x-hidden">
 
       {/* ─── Page Body ─── */}
-      <div className="px-6 py-5 space-y-5">
+      <div className="w-full max-w-full px-4 sm:px-6 py-5 space-y-5">
 
         {/* ── Page Title ── */}
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
@@ -300,7 +300,7 @@ export default function AdminOverview() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
 
           {/* Search / Click Trend */}
-          <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+          <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden min-w-0">
             <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-100">
               <span className="text-[14px] font-bold text-slate-900">Search / Click Trend</span>
               <button className="flex items-center gap-1 h-7 px-2.5 border border-slate-200 rounded-lg text-[12px] font-medium text-slate-600 hover:bg-slate-50 transition-colors">
@@ -369,7 +369,7 @@ export default function AdminOverview() {
           </div>
 
           {/* Top Flagged Products */}
-          <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+          <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden min-w-0">
             <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-100">
               <span className="text-[14px] font-bold text-slate-900">Top Flagged Products</span>
               <button className="text-[12px] font-medium text-blue-600 hover:text-blue-700 transition-colors">View all</button>
@@ -394,7 +394,7 @@ export default function AdminOverview() {
           </div>
 
           {/* Recent Admin Activity */}
-          <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+          <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden min-w-0">
             <div className="px-5 py-3.5 border-b border-slate-100">
               <span className="text-[14px] font-bold text-slate-900">Recent Admin Activity</span>
             </div>

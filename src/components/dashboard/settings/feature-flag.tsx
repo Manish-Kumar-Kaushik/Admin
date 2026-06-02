@@ -480,7 +480,7 @@ export default function FeatureFlags() {
                   return (
                     <tr key={feature.id} className="hover:bg-slate-50/10 transition-colors">
                       {/* Feature Name */}
-                      <td className="py-4 px-4 pr-3">
+                      <td className="py-2.5 px-4 pr-3">
                         <div className="flex items-center gap-3">
                           <div className={`p-2 rounded-xl shrink-0 ${feature.iconStyle}`}>
                             <Icon className="h-5 w-5" />
@@ -499,12 +499,12 @@ export default function FeatureFlags() {
                       </td>
 
                       {/* Description */}
-                      <td className="py-4 pr-3 text-slate-500 font-medium leading-relaxed">
+                      <td className="py-2.5 pr-3 text-slate-500 font-medium leading-relaxed">
                         {feature.description}
                       </td>
 
                       {/* Environment */}
-                      <td className="py-4 text-center pr-12">
+                      <td className="py-2.5 text-center pr-12">
                         <span className={`inline-flex rounded-lg px-2.5 py-0.5 text-[10px] font-bold border ${
                           feature.environment === "Production"
                             ? "bg-[#DCFCE7]/70 text-[#15803D] border-[#DCFCE7]"
@@ -515,7 +515,7 @@ export default function FeatureFlags() {
                       </td>
 
                       {/* Status Toggle Button */}
-                      <td className="py-4 pl-8">
+                      <td className="py-2.5 pl-8">
                         <div className="flex items-center gap-2">
                           <button
                             onClick={() => handleToggle(feature.id)}
@@ -546,7 +546,7 @@ export default function FeatureFlags() {
                       </td>
 
                       {/* Rollout % Bar */}
-                      <td className="py-4 px-2">
+                      <td className="py-2.5 px-2">
                         <div className="flex flex-col gap-1 w-full max-w-[90px] mx-auto">
                           <div className="text-[10px] font-extrabold text-slate-700">{feature.rollout}%</div>
                           <div className="w-full h-1 bg-slate-200 rounded-full overflow-hidden">
@@ -559,7 +559,7 @@ export default function FeatureFlags() {
                       </td>
 
                       {/* Audience */}
-                      <td className="py-4 font-semibold text-slate-650 pr-2">
+                      <td className="py-2.5 font-semibold text-slate-650 pr-2">
                         <div className="flex items-center gap-1.5">
                           <AudienceIcon className="h-4 w-4 text-slate-400 shrink-0" />
                           <span>{feature.audience}</span>
@@ -567,7 +567,7 @@ export default function FeatureFlags() {
                       </td>
 
                       {/* Last Changed */}
-                      <td className="py-4">
+                      <td className="py-2.5">
                         <div className="flex items-center gap-2.5">
                           <img
                             src={feature.avatar}
@@ -582,7 +582,7 @@ export default function FeatureFlags() {
                       </td>
 
                       {/* Action Button */}
-                      <td className="py-4 text-center pr-4">
+                      <td className="py-2.5 text-center pr-4">
                         <button className="p-1 rounded-lg hover:bg-slate-50 text-slate-400 hover:text-slate-600 transition-colors">
                           <MoreVertical className="h-5 w-5" />
                         </button>

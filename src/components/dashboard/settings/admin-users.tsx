@@ -308,38 +308,38 @@ export default function AdminUsers() {
             <table className="min-w-full divide-y divide-slate-200 text-left text-sm">
               <thead className="bg-slate-50 text-slate-500">
                 <tr>
-                  <th scope="col" className="px-6 py-4 font-semibold uppercase tracking-[0.24em]">
+                  <th scope="col" className="px-6 py-4 text-[11px] font-semibold uppercase tracking-wide">
                     Admin
                   </th>
-                  <th scope="col" className="px-6 py-4 font-semibold uppercase tracking-[0.24em]">
+                  <th scope="col" className="px-6 py-4 text-[11px] font-semibold uppercase tracking-wide">
                     Email
                   </th>
-                  <th scope="col" className="px-6 py-4 font-semibold uppercase tracking-[0.24em]">
+                  <th scope="col" className="px-6 py-4 text-[11px] font-semibold uppercase tracking-wide">
                     <div className="inline-flex items-center gap-2">
                       Role
                       <ChevronDown className="h-4 w-4" />
                     </div>
                   </th>
-                  <th scope="col" className="px-6 py-4 font-semibold uppercase tracking-[0.24em]">MFA Status</th>
-                  <th scope="col" className="px-6 py-4 font-semibold uppercase tracking-[0.24em]">
+                  <th scope="col" className="px-6 py-4 text-[11px] font-semibold uppercase tracking-wide">MFA Status</th>
+                  <th scope="col" className="px-6 py-4 text-[11px] font-semibold uppercase tracking-wide">
                     <div className="inline-flex items-center gap-2">
                       Status
                       <ChevronDown className="h-4 w-4" />
                     </div>
                   </th>
-                  <th scope="col" className="px-6 py-4 font-semibold uppercase tracking-[0.24em]">
+                  <th scope="col" className="px-6 py-4 text-[11px] font-semibold uppercase tracking-wide">
                     <div className="inline-flex items-center gap-2">
                       Last Login
                       <ChevronDown className="h-4 w-4" />
                     </div>
                   </th>
-                  <th scope="col" className="px-6 py-4 font-semibold uppercase tracking-[0.24em]">
+                  <th scope="col" className="px-6 py-4 text-[11px] font-semibold uppercase tracking-wide">
                     <div className="inline-flex items-center gap-2">
                       Created At
                       <ChevronDown className="h-4 w-4" />
                     </div>
                   </th>
-                  <th scope="col" className="px-6 py-4 font-semibold uppercase tracking-[0.24em]">Actions</th>
+                  <th scope="col" className="px-6 py-4 text-[11px] font-semibold uppercase tracking-wide">Actions</th>
                 </tr>
               </thead>
 

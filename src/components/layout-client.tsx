@@ -6,7 +6,6 @@ import { SidebarProvider } from "@/components/dashboard/sidebar-context";
 import Header from "@/components/dashboard/header";
 
 export default function LayoutClient({ children }: { children: React.ReactNode }) {
-
   return (
     <SidebarProvider>
       <div className="h-screen w-screen flex flex-col sm:flex-row overflow-hidden">

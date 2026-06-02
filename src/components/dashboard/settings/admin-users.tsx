@@ -226,196 +226,196 @@ const users: UserRow[] = [
 
 export default function AdminUsers() {
   return (
-    <div className="flex flex-col flex-grow min-h-screen bg-[#F8FAFC] px-3 py-4 sm:px-4 sm:py-6 lg:px-6 min-w-0">
-      <div className="mx-auto max-w-365 space-y-6">
-        <section className="rounded-xl border border-slate-200/80 bg-white p-6 shadow-sm">
-          <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
-            <div className="min-w-0">
-              <p className="text-sm font-medium text-slate-500">
-                Admin
-                <span className="px-2 text-slate-300">›</span>
-                Settings
-                <span className="px-2 text-slate-300">›</span>
-                Admin Users
-              </p>
-              <h1 className="mt-3 text-3xl font-semibold tracking-tight text-slate-900">
-                Admin Users
-              </h1>
-              <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-500">
-                Manage administrator accounts, roles, and access.
-              </p>
-            </div>
-            <button className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#4F46E5] px-4 py-2 text-sm font-semibold text-white shadow-sm shadow-[#4F46E5]/10 transition hover:bg-[#4338ca]">
-              <Plus className="h-4 w-4" />
-              Invite Admin
-            </button>
+    <div className="flex flex-col min-h-screen w-full bg-slate-50 min-w-0">
+      <div className="flex-1 w-full p-3 sm:p-4 lg:p-6 flex flex-col gap-4 sm:gap-6 min-w-0">
+        
+        {/* Header Area */}
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight text-slate-950">
+              Admin Users
+            </h1>
+            <p className="mt-1 text-sm text-slate-500">
+              Manage administrator accounts, roles, and access.
+            </p>
           </div>
-          <button className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-2xl bg-[#4F46E5] px-4 py-2.5 sm:py-2 text-sm font-semibold text-white shadow-sm shadow-[#4F46E5]/10 transition hover:bg-[#4338ca]">
+          <button className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#4F46E5] px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-[#4338ca]">
             <Plus className="h-4 w-4" />
             Invite Admin
           </button>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          {kpis.map((card) => {
-            const Icon = card.icon;
-            return (
-              <div key={card.title} className="rounded-xl border border-slate-200/80 bg-white p-4 shadow-sm flex items-start gap-4">
-                <div className={`mt-0.5 shrink-0 inline-flex h-10 w-10 items-center justify-center rounded-2xl ${card.iconColor}`}>
-                  <Icon className="h-4 w-4" />
+        {/* KPI Section */}
+        <div className="bg-white border border-slate-200 rounded-xl p-4 sm:p-6 w-full min-w-0">
+          <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 xl:grid-cols-4 w-full">
+            {kpis.map((card, idx) => {
+              const Icon = card.icon;
+              return (
+                <div key={card.title} className={`flex items-start gap-3 sm:gap-4 ${idx !== kpis.length - 1 ? 'xl:border-r xl:border-slate-100 xl:pr-6' : ''}`}>
+                  <div className={`mt-0.5 shrink-0 inline-flex h-12 w-12 items-center justify-center rounded-full ${card.iconColor}`}>
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="text-xs font-medium text-slate-500">{card.title}</div>
+                    <div className="mt-1 flex items-baseline gap-2">
+                      <h2 className="text-2xl font-bold text-slate-950">{card.value}</h2>
+                    </div>
+                    <p className="mt-1 text-xs text-slate-500">{card.subtitle}</p>
+                  </div>
                 </div>
-                <div className="min-w-0 flex-1">
-                  <div className="text-xs font-semibold text-slate-500">{card.title}</div>
-                  <h2 className="mt-2 text-2xl font-semibold text-slate-900">{card.value}</h2>
-                  <p className="mt-0.5 text-xs text-slate-500">{card.subtitle}</p>
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
 
-        <section className="w-full max-w-full overflow-hidden rounded-xl border border-slate-200/80 bg-white p-4 sm:p-5 shadow-sm">
-          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-            <div className="flex-1 min-w-0 w-full">
-              <label className="relative block">
-                <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">
-                  <Search className="h-4 w-4" />
-                </span>
+        {/* Main Data Table Area */}
+        <div className="bg-white border border-slate-200 rounded-xl p-4 sm:p-6 flex flex-col gap-4 sm:gap-6 overflow-hidden min-w-0 w-full">
+          
+          {/* Filters Bar */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
+            <div className="flex flex-col gap-1.5 lg:col-span-2">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
                 <input
                   type="text"
-                  aria-label="Search by name or email"
                   placeholder="Search by name or email..."
-                  className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-11 pr-4 text-sm text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
-                  suppressHydrationWarning={true}
-                  data-form-type="other"
+                  className="w-full rounded-md border border-slate-200 bg-white py-2 pl-9 pr-4 text-sm text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                 />
-              </label>
+              </div>
             </div>
-
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center w-full lg:w-auto">
-              <select className="w-full sm:w-40 md:w-44 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100">
-                <option>All Roles</option>
-                <option>Super Admin</option>
-                <option>Content Manager</option>
-              </select>
-              <select className="w-full sm:w-40 md:w-44 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100">
-                <option>All Statuses</option>
-                <option>Active</option>
-                <option>Inactive</option>
-              </select>
-              <select className="w-full sm:w-40 md:w-44 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100">
-                <option>All</option>
-                <option>Enabled</option>
-                <option>Disabled</option>
-              </select>
-              <button className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-100">
-                <RefreshCcw className="h-4 w-4" />
-                Clear Filters
-              </button>
+            <div className="flex flex-col gap-1.5">
+              <label className="text-xs font-semibold text-slate-500">Role</label>
+              <div className="relative">
+                <select className="w-full appearance-none rounded-md border border-slate-200 bg-white py-2 pl-3 pr-8 text-sm text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                  <option>All Roles</option>
+                  <option>Super Admin</option>
+                  <option>Content Manager</option>
+                </select>
+                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none" />
+              </div>
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <label className="text-xs font-semibold text-slate-500">Status</label>
+              <div className="relative">
+                <select className="w-full appearance-none rounded-md border border-slate-200 bg-white py-2 pl-3 pr-8 text-sm text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                  <option>All Statuses</option>
+                  <option>Active</option>
+                  <option>Inactive</option>
+                </select>
+                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none" />
+              </div>
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <label className="text-xs font-semibold text-slate-500">MFA Status</label>
+              <div className="flex gap-2">
+                <div className="relative flex-1">
+                  <select className="w-full appearance-none rounded-md border border-slate-200 bg-white py-2 pl-3 pr-8 text-sm text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                    <option>All</option>
+                    <option>Enabled</option>
+                    <option>Disabled</option>
+                  </select>
+                  <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none" />
+                </div>
+                <button className="inline-flex items-center justify-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 transition whitespace-nowrap shadow-sm">
+                  <RefreshCcw className="h-4 w-4" />
+                  Clear Filters
+                </button>
+              </div>
             </div>
           </div>
-        </section>
 
-        <section className="w-full max-w-full overflow-hidden rounded-xl border border-slate-200/80 bg-white shadow-sm">
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-slate-200 text-left text-sm">
-              <thead className="bg-slate-50 text-slate-500">
-                <tr>
-                  <th scope="col" className="px-6 py-4 font-semibold uppercase tracking-[0.24em]">
-                    Admin
+          {/* Table */}
+          <div className="overflow-x-auto w-full min-w-0">
+            <table className="w-full text-left text-sm whitespace-nowrap border-collapse">
+              <thead>
+                <tr className="border-y border-slate-200 bg-white">
+                  <th className="py-4 font-semibold uppercase text-xs text-slate-500">Admin</th>
+                  <th className="py-4 font-semibold uppercase text-xs text-slate-500">Email</th>
+                  <th className="py-4 font-semibold uppercase text-xs text-slate-500">
+                    <div className="inline-flex items-center gap-1">Role <ChevronDown className="h-3 w-3" /></div>
                   </th>
-                  <th scope="col" className="px-6 py-4 font-semibold uppercase tracking-[0.24em]">
-                    Email
+                  <th className="py-4 font-semibold uppercase text-xs text-slate-500">MFA Status</th>
+                  <th className="py-4 font-semibold uppercase text-xs text-slate-500">
+                    <div className="inline-flex items-center gap-1">Status <ChevronDown className="h-3 w-3" /></div>
                   </th>
-                  <th scope="col" className="px-6 py-4 font-semibold uppercase tracking-[0.24em]">
-                    <div className="inline-flex items-center gap-2">
-                      Role
-                      <ChevronDown className="h-4 w-4" />
-                    </div>
+                  <th className="py-4 font-semibold uppercase text-xs text-slate-500">
+                    <div className="inline-flex items-center gap-1">Last Login <ChevronDown className="h-3 w-3" /></div>
                   </th>
-                  <th scope="col" className="px-6 py-4 font-semibold uppercase tracking-[0.24em]">MFA Status</th>
-                  <th scope="col" className="px-6 py-4 font-semibold uppercase tracking-[0.24em]">
-                    <div className="inline-flex items-center gap-2">
-                      Status
-                      <ChevronDown className="h-4 w-4" />
-                    </div>
+                  <th className="py-4 font-semibold uppercase text-xs text-slate-500">
+                    <div className="inline-flex items-center gap-1">Created At <ChevronDown className="h-3 w-3" /></div>
                   </th>
-                  <th scope="col" className="px-6 py-4 font-semibold uppercase tracking-[0.24em]">
-                    <div className="inline-flex items-center gap-2">
-                      Last Login
-                      <ChevronDown className="h-4 w-4" />
-                    </div>
-                  </th>
-                  <th scope="col" className="px-6 py-4 font-semibold uppercase tracking-[0.24em]">
-                    <div className="inline-flex items-center gap-2">
-                      Created At
-                      <ChevronDown className="h-4 w-4" />
-                    </div>
-                  </th>
-                  <th scope="col" className="px-6 py-4 font-semibold uppercase tracking-[0.24em]">Actions</th>
+                  <th className="py-4 font-semibold uppercase text-xs text-slate-500">Actions</th>
                 </tr>
               </thead>
-
-              <tbody className="divide-y divide-slate-200 bg-white">
-                {users.map((user) => (
-                  <tr key={user.email} className="hover:bg-slate-50 transition-colors">
-                    <td className="px-6 py-5 align-top whitespace-nowrap">
-                      <div className="flex items-center gap-4">
-                        <img
-                          src={user.avatar}
-                          alt={user.name}
-                          className="h-12 w-12 rounded-full object-cover"
-                        />
-                        <div>
-                          <p className="text-sm font-semibold text-slate-900">{user.name}</p>
-                          <p className="mt-1 text-xs text-slate-500">{user.title}</p>
+              <tbody className="divide-y divide-slate-100">
+                {users.map((user, idx) => (
+                  <tr key={idx} className="hover:bg-slate-50/50 transition-colors">
+                    <td className="py-4 pr-4">
+                      <div className="flex items-center gap-3">
+                        <img src={user.avatar} alt={user.name} className="h-8 w-8 rounded-full object-cover shrink-0" />
+                        <div className="min-w-0">
+                          <div className="text-sm font-semibold text-slate-900 truncate">{user.name}</div>
+                          <div className="text-xs text-slate-500 truncate">{user.title}</div>
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-5 align-top text-sm text-slate-600">{user.email}</td>
-                    <td className="px-6 py-5 align-top">
-                      <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${user.roleColor}`}>
+                    <td className="py-4 pr-4 text-slate-600 font-medium">{user.email}</td>
+                    <td className="py-4 pr-4">
+                      <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${user.roleColor}`}>
                         {user.role}
                       </span>
                     </td>
-                    <td className="px-6 py-5 align-top">
-                      <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${
-                        user.mfaStatus === "Enabled" ? "bg-[#DCFCE7] text-[#15803D]" : "bg-[#FFE7D9] text-[#C2410C]"
-                      }`}>
-                        {user.mfaStatus}
-                      </span>
-                    </td>
-                    <td className="px-6 py-5 align-top">
-                      <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${user.statusColor}`}>
-                        {user.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-5 align-top">
-                      <div className="text-sm text-slate-900">{user.lastLogin}</div>
-                      <div className="mt-1 text-xs text-slate-500">({user.lastLoginAgo})</div>
-                    </td>
-                    <td className="px-6 py-5 align-top">
-                      <div className="text-sm text-slate-900">{user.createdAt}</div>
-                      <div className="mt-1 text-xs text-slate-500">({user.createdAgo})</div>
-                    </td>
-                    <td className="px-6 py-5 align-top">
-                      {user.actionType === "edit" ? (
-                        <div className="inline-flex items-center h-9 overflow-hidden rounded-lg border border-slate-200 bg-white text-slate-700 shadow-sm">
-                          <button className="flex items-center gap-1.5 pl-3 pr-2.5 h-full transition-colors hover:bg-slate-50">
-                            <Pencil className="h-4 w-4 text-slate-500" />
-                            <span className="whitespace-nowrap text-xs font-semibold text-slate-800">Edit Role</span>
-                          </button>
-                          <div className="w-px h-4 bg-slate-200" />
-                          <button className="px-2.5 h-full flex items-center justify-center transition-colors hover:bg-slate-50">
-                            <ChevronDown className="w-3 h-3 text-slate-500" />
-                          </button>
-                        </div>
+                    <td className="py-4 pr-4">
+                      {user.mfaStatus === "Enabled" ? (
+                        <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-700">
+                          <ShieldCheck className="h-3.5 w-3.5" /> Enabled
+                        </span>
                       ) : (
-                        <button className="inline-flex items-center gap-2 rounded-2xl bg-[#DCFCE7] px-4 py-2 text-sm font-semibold text-[#14532D] transition hover:bg-[#BBF7D0]">
-                          <Play className="h-4 w-4" />
-                          Enable
-                        </button>
+                        <span className="inline-flex items-center gap-1.5 rounded-full bg-rose-50 px-2.5 py-0.5 text-xs font-semibold text-rose-700">
+                          <ShieldCheck className="h-3.5 w-3.5" /> Disabled
+                        </span>
                       )}
+                    </td>
+                    <td className="py-4 pr-4">
+                      {user.status === "Active" ? (
+                        <span className="inline-flex items-center text-emerald-600 font-semibold text-xs bg-emerald-50 px-2.5 py-0.5 rounded-full">
+                          Active
+                        </span>
+                      ) : user.status === "Inactive" ? (
+                         <span className="inline-flex items-center text-rose-600 font-semibold text-xs bg-rose-50 px-2.5 py-0.5 rounded-full">
+                           Inactive
+                         </span>
+                      ) : (
+                         <span className="inline-flex items-center text-rose-600 font-semibold text-xs bg-rose-50 px-2.5 py-0.5 rounded-full">
+                           Disabled
+                         </span>
+                      )}
+                    </td>
+                    <td className="py-4 pr-4">
+                      <div className="text-sm text-slate-900 font-medium">{user.lastLogin}</div>
+                      <div className="text-xs text-slate-500">({user.lastLoginAgo})</div>
+                    </td>
+                    <td className="py-4 pr-4">
+                      <div className="text-sm text-slate-900 font-medium">{user.createdAt}</div>
+                      <div className="text-xs text-slate-500">({user.createdAgo})</div>
+                    </td>
+                    <td className="py-4">
+                      <div className="flex items-center gap-2">
+                        {user.actionType === "edit" ? (
+                          <button className="inline-flex items-center gap-1.5 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-sm hover:bg-slate-50 transition-colors">
+                            <Pencil className="h-3.5 w-3.5" />
+                            Edit Role
+                          </button>
+                        ) : (
+                          <button className="inline-flex items-center gap-1.5 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-emerald-700 shadow-sm hover:bg-slate-50 transition-colors">
+                            <Play className="h-3.5 w-3.5" />
+                            Enable
+                          </button>
+                        )}
+                        <button className="inline-flex items-center justify-center rounded-md border border-slate-200 bg-white p-1.5 text-slate-500 hover:bg-slate-50 shadow-sm transition-colors">
+                          <ChevronDown className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -423,31 +423,35 @@ export default function AdminUsers() {
             </table>
           </div>
 
-          <div className="flex flex-col gap-4 border-t border-slate-200/80 bg-slate-50 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
+          {/* Pagination */}
+          <div className="flex flex-col gap-4 border-t border-slate-200 pt-4 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-sm text-slate-500">Showing 1 to 10 of 24 admins</p>
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
               <label className="flex items-center gap-3 text-sm text-slate-500">
                 <span className="hidden sm:inline">10 per page</span>
-                <select className="rounded-2xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100">
-                  <option>10</option>
-                  <option>20</option>
-                  <option>50</option>
-                </select>
+                <div className="relative">
+                  <select className="appearance-none rounded-md border border-slate-200 bg-white py-1.5 pl-3 pr-8 text-sm text-slate-700 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                    <option>10</option>
+                    <option>20</option>
+                    <option>50</option>
+                  </select>
+                  <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400 pointer-events-none" />
+                </div>
               </label>
-              <nav className="inline-flex items-center rounded-2xl bg-white shadow-sm ring-1 ring-slate-200">
-                <button className="px-3 py-2 text-slate-500 hover:text-slate-900">
+              <nav className="inline-flex items-center rounded-md bg-white shadow-sm ring-1 ring-slate-200 overflow-hidden">
+                <button className="px-3 py-1.5 text-slate-500 hover:text-slate-900 border-r border-slate-200 transition-colors bg-white hover:bg-slate-50">
                   <ChevronLeft className="h-4 w-4" />
                 </button>
-                <button className="px-4 py-2 text-sm font-semibold text-white bg-[#4F46E5]">1</button>
-                <button className="px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50">2</button>
-                <button className="px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50">3</button>
-                <button className="px-3 py-2 text-slate-500 hover:text-slate-900">
+                <button className="px-3.5 py-1.5 text-sm font-semibold text-white bg-[#4F46E5]">1</button>
+                <button className="px-3.5 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">2</button>
+                <button className="px-3.5 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors border-r border-slate-200">3</button>
+                <button className="px-3 py-1.5 text-slate-500 hover:text-slate-900 transition-colors bg-white hover:bg-slate-50">
                   <ChevronRight className="h-4 w-4" />
                 </button>
               </nav>
             </div>
           </div>
-        </section>
+        </div>
       </div>
     </div>
   );

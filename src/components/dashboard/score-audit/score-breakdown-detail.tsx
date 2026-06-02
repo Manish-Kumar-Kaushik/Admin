@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   ChevronRight,
@@ -233,13 +233,7 @@ function RadialScore({ score }: { score: number }) {
   const cy = 68;
   const circ = 2 * Math.PI * r;
   const filled = (score / 100) * circ;
-
-  const [animFilled, setAnimFilled] = useState(0);
-
-  useEffect(() => {
-    const t = setTimeout(() => setAnimFilled(filled), 150);
-    return () => clearTimeout(t);
-  }, [filled]);
+  const gap = 0;
 
   return (
     <svg width="136" height="136" viewBox="0 0 136 136">
@@ -259,7 +253,7 @@ function RadialScore({ score }: { score: number }) {
         stroke="#e2e8f0"
         strokeWidth="11"
       />
-      {/* Animated Progress */}
+      {/* Progress */}
       <circle
         cx={cx}
         cy={cy}
@@ -268,9 +262,8 @@ function RadialScore({ score }: { score: number }) {
         stroke="url(#ringGrad)"
         strokeWidth="11"
         strokeLinecap="round"
-        strokeDasharray={`${animFilled} ${circ - animFilled}`}
+        strokeDasharray={`${filled - gap} ${circ - filled + gap}`}
         transform="rotate(-90 68 68)"
-        style={{ transition: "stroke-dasharray 1.2s cubic-bezier(0.4, 0, 0.2, 1)" }}
       />
       {/* Score number */}
       <text
@@ -375,20 +368,14 @@ export default function ScoreBreakdownDetail() {
   const [newScore, setNewScore] = useState("");
   const [reason, setReason] = useState("");
   const [adminNote, setAdminNote] = useState("");
-  const [barsVisible, setBarsVisible] = useState(false);
-
-  useEffect(() => {
-    const t = setTimeout(() => setBarsVisible(true), 120);
-    return () => clearTimeout(t);
-  }, []);
 
   return (
-    <div className="flex flex-col lg:flex-row w-full bg-[#f8fafc]">
+    <div className="flex h-full bg-[#f8fafc] min-h-0">
       {/* ════════════════════════════════════════════
-          MAIN AREA
+          SCROLLABLE MAIN AREA
       ════════════════════════════════════════════ */}
-      <div className="flex-1 min-w-0">
-        <div className="w-full px-3 sm:px-5 py-3">
+      <div className="flex-1 overflow-y-auto min-w-0">
+        <div className="px-6 py-5 max-w-[1100px]">
 
           {/* ── Breadcrumb + Actions ── */}
           <div className="flex items-center justify-between mb-1">
@@ -437,7 +424,7 @@ export default function ScoreBreakdownDetail() {
           </div>
 
           {/* ── Product Hero Card ── */}
-          <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-4 mb-2">
+          <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-4 mb-4">
             <div className="flex items-center gap-4 flex-wrap">
               {/* Product Image */}
               <div className="w-[72px] h-[72px] rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center shrink-0 text-4xl">
@@ -530,7 +517,7 @@ export default function ScoreBreakdownDetail() {
           </div>
 
           {/* ── Score Overview Row ── */}
-          <div className="grid grid-cols-12 gap-4 mb-2">
+          <div className="grid grid-cols-12 gap-4 mb-4">
 
             {/* LEFT: Overall Radial + Meta */}
             <div className="col-span-12 lg:col-span-3 bg-white border border-slate-200 rounded-xl shadow-sm p-4 flex flex-col items-center">
@@ -612,11 +599,8 @@ export default function ScoreBreakdownDetail() {
                       {/* Progress bar */}
                       <div className={`w-full h-1.5 ${c.trackColor} rounded-full overflow-hidden`}>
                         <div
-                          className={`h-full rounded-full ${c.barColor}`}
-                          style={{ 
-                            width: barsVisible ? (c.score === null ? "0%" : `${c.score}%`) : "0%",
-                            transition: "width 1.1s cubic-bezier(0.4,0,0.2,1)"
-                          }}
+                          className={`h-full rounded-full ${c.barColor} transition-all`}
+                          style={{ width: c.score === null ? "0%" : `${c.score}%` }}
                         />
                       </div>
                       <p className="text-[10px] text-slate-400 mt-1">
@@ -657,10 +641,7 @@ export default function ScoreBreakdownDetail() {
                         <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
                           <div
                             className={`h-full rounded-full ${row.barColor}`}
-                            style={{ 
-                              width: barsVisible ? `${row.pct * 2}%` : "0%",
-                              transition: "width 1.2s cubic-bezier(0.4,0,0.2,1)"
-                            }}
+                            style={{ width: `${row.pct * 2}%` }}
                           />
                         </div>
                       </div>
@@ -717,7 +698,7 @@ export default function ScoreBreakdownDetail() {
           </div>
 
           {/* ── Score History ── */}
-          <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-4 mb-2">
+          <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-4 mb-4">
             <div className="flex items-center gap-1.5 mb-4">
               <span className="text-[13px] font-bold text-slate-800">
                 Score History
@@ -819,17 +800,18 @@ export default function ScoreBreakdownDetail() {
               </div>
             </div>
           </div>
-
+          {/* bottom padding */}
+          <div className="h-4" />
         </div>
       </div>
 
       {/* ════════════════════════════════════════════
           RIGHT PANEL
       ════════════════════════════════════════════ */}
-      <div className="w-full lg:w-[340px] xl:w-[380px] shrink-0 lg:border-l border-t lg:border-t-0 border-slate-200 bg-slate-50 flex flex-col p-4 gap-4">
+      <div className="w-[280px] xl:w-[296px] shrink-0 border-l border-slate-200 bg-white overflow-y-auto flex flex-col">
 
         {/* ── Card 1: Current Verdict Summary ── */}
-        <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+        <div className="border-b border-slate-200 p-4">
           <h3 className="text-[11px] font-bold text-slate-700 uppercase tracking-widest mb-3">
             Current Verdict Summary
           </h3>
@@ -895,7 +877,7 @@ export default function ScoreBreakdownDetail() {
         </div>
 
         {/* ── Card 2: Manual Override ── */}
-        <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+        <div className="border-b border-slate-200 p-4">
           <div className="flex items-center gap-1.5 mb-3">
             <h3 className="text-[11px] font-bold text-slate-700 uppercase tracking-widest">
               Manual Override
@@ -920,66 +902,59 @@ export default function ScoreBreakdownDetail() {
             </button>
           </div>
 
-          {/* Override fields — shown only when toggle ON */}
-          <div
-            className={`overflow-hidden transition-all duration-300 ${
-              overrideEnabled ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0 pointer-events-none"
-            }`}
-          >
-            {/* New Score */}
-            <div className="mb-2">
-              <label className="block text-[11px] text-slate-500 font-medium mb-1">
-                New score (0–100)
-              </label>
-              <input
-                type="number"
-                min={0}
-                max={100}
-                value={newScore}
-                onChange={(e) => setNewScore(e.target.value)}
-                placeholder="Enter new score..."
-                className="w-full h-8 px-2.5 text-[12px] border border-slate-200 rounded-lg bg-white text-slate-800 placeholder:text-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 transition-all"
-              />
-            </div>
-
-            {/* Reason */}
-            <div className="mb-3">
-              <label className="block text-[11px] text-slate-500 font-medium mb-1">
-                Reason
-              </label>
-              <textarea
-                value={reason}
-                onChange={(e) => setReason(e.target.value)}
-                placeholder="Explain why you're overriding this score..."
-                rows={3}
-                maxLength={500}
-                className="w-full px-2.5 py-2 text-[12px] border border-slate-200 rounded-lg bg-white text-slate-800 placeholder:text-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 resize-none transition-all"
-              />
-              <div className="text-right text-[10px] text-slate-400 mt-0.5">
-                {reason.length} / 500
-              </div>
-            </div>
-
-            {/* CTA Buttons */}
-            <div className="flex gap-2">
-              <button className="flex-1 h-8 text-[12px] font-bold bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-1 shadow-sm">
-                <Check className="w-3.5 h-3.5" />
-                Save Override
-              </button>
-              <button className="flex-1 h-8 text-[12px] font-bold bg-red-50 text-red-600 border border-red-200 rounded-lg hover:bg-red-100 transition-colors flex items-center justify-center gap-1">
-                <AlertCircle className="w-3.5 h-3.5" />
-                Remove Override
-              </button>
-            </div>
-            <p className="text-[10px] text-slate-400 mt-1.5 text-center leading-snug">
-              Overrides are logged and visible in score history.
-            </p>
+          {/* New Score */}
+          <div className="mb-2">
+            <label className="block text-[11px] text-slate-500 font-medium mb-1">
+              New score (0–100)
+            </label>
+            <input
+              type="number"
+              min={0}
+              max={100}
+              value={newScore}
+              onChange={(e) => setNewScore(e.target.value)}
+              placeholder="Enter new score..."
+              className="w-full h-8 px-2.5 text-[12px] border border-slate-200 rounded-lg bg-white text-slate-800 placeholder:text-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 transition-all"
+            />
           </div>
+
+          {/* Reason */}
+          <div className="mb-3">
+            <label className="block text-[11px] text-slate-500 font-medium mb-1">
+              Reason
+            </label>
+            <textarea
+              value={reason}
+              onChange={(e) => setReason(e.target.value)}
+              placeholder="Explain why you're overriding this score..."
+              rows={3}
+              maxLength={500}
+              className="w-full px-2.5 py-2 text-[12px] border border-slate-200 rounded-lg bg-white text-slate-800 placeholder:text-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 resize-none transition-all"
+            />
+            <div className="text-right text-[10px] text-slate-400 mt-0.5">
+              {reason.length} / 500
+            </div>
+          </div>
+
+          {/* CTA Buttons */}
+          <div className="flex gap-2">
+            <button className="flex-1 h-8 text-[12px] font-bold bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-1 shadow-sm">
+              <Check className="w-3.5 h-3.5" />
+              Save Override
+            </button>
+            <button className="flex-1 h-8 text-[12px] font-bold bg-red-50 text-red-600 border border-red-200 rounded-lg hover:bg-red-100 transition-colors flex items-center justify-center gap-1">
+              <AlertCircle className="w-3.5 h-3.5" />
+              Remove Override
+            </button>
+          </div>
+          <p className="text-[10px] text-slate-400 mt-1.5 text-center leading-snug">
+            Overrides are logged and visible in score history.
+          </p>
         </div>
 
         {/* ── Card 3: Admin Notes ── */}
-        <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
-          <div className="flex items-center justify-between mb-3 shrink-0">
+        <div className="p-4 flex-1 overflow-y-auto">
+          <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-1.5">
               <h3 className="text-[11px] font-bold text-slate-700 uppercase tracking-widest">
                 Admin Notes
@@ -993,29 +968,27 @@ export default function ScoreBreakdownDetail() {
           </div>
 
           {/* Existing Note */}
-          <div className="mb-3">
-            <div className="bg-slate-50 border border-slate-200 rounded-lg p-3">
-              <div className="flex items-start gap-2">
-                <div className="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-white text-[10px] font-bold shrink-0 shadow-sm">
-                  AU
+          <div className="bg-slate-50 border border-slate-200 rounded-lg p-3 mb-3">
+            <div className="flex items-start gap-2">
+              <div className="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-white text-[10px] font-bold shrink-0 shadow-sm">
+                AU
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-1.5 flex-wrap mb-1">
+                  <span className="text-[11px] font-bold text-slate-800">
+                    Admin User
+                  </span>
+                  <span className="text-[9px] bg-emerald-100 text-emerald-700 border border-emerald-200 px-1.5 py-0.5 rounded font-bold">
+                    Super Admin
+                  </span>
+                  <span className="text-[10px] text-slate-400 ml-auto whitespace-nowrap">
+                    May 18, 2024, 9:23 AM
+                  </span>
                 </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-1.5 flex-wrap mb-1">
-                    <span className="text-[11px] font-bold text-slate-800">
-                      Admin User
-                    </span>
-                    <span className="text-[9px] bg-emerald-100 text-emerald-700 border border-emerald-200 px-1.5 py-0.5 rounded font-bold">
-                      Super Admin
-                    </span>
-                    <span className="text-[10px] text-slate-400 ml-auto whitespace-nowrap">
-                      May 18, 2024, 9:23 AM
-                    </span>
-                  </div>
-                  <p className="text-[11px] text-slate-600 leading-relaxed">
-                    Price spike likely temporary due to limited stock. Re-check
-                    after next price drop.
-                  </p>
-                </div>
+                <p className="text-[11px] text-slate-600 leading-relaxed">
+                  Price spike likely temporary due to limited stock. Re-check
+                  after next price drop.
+                </p>
               </div>
             </div>
           </div>
@@ -1026,7 +999,7 @@ export default function ScoreBreakdownDetail() {
             onChange={(e) => setAdminNote(e.target.value)}
             placeholder="Add a note..."
             rows={2}
-            className="w-full shrink-0 px-2.5 py-2 text-[12px] border border-slate-200 rounded-lg bg-white text-slate-800 placeholder:text-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 resize-none transition-all"
+            className="w-full px-2.5 py-2 text-[12px] border border-slate-200 rounded-lg bg-white text-slate-800 placeholder:text-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 resize-none transition-all"
           />
         </div>
       </div>

@@ -506,14 +506,14 @@ const columns: ColumnDef<Product>[] = [
 ];
 
 const FilterDropdown = ({ label }: { label: string }) => (
-  <div className="relative inline-block w-auto">
-    <select className="appearance-none bg-white border border-slate-200 text-slate-700 py-1.5 sm:py-2 pl-2 sm:pl-3 pr-6 sm:pr-8 rounded-md text-[11px] sm:text-sm hover:border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent min-w-[90px] sm:min-w-[120px] cursor-pointer">
+  <div className="relative inline-block">
+    <select className="appearance-none bg-white border border-slate-200 text-slate-700 py-2 pl-3 pr-8 rounded-md text-sm hover:border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent min-w-[120px] cursor-pointer">
       <option value="">{label}</option>
       <option value="option1">Option 1</option>
       <option value="option2">Option 2</option>
     </select>
-    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-1.5 sm:px-2 text-slate-500">
-      <ChevronDown className="h-3 w-3 sm:h-4 sm:w-4" />
+    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-500">
+      <ChevronDown className="h-4 w-4" />
     </div>
   </div>
 );
@@ -534,9 +534,9 @@ export default function Products() {
   });
 
   return (
-    <div className="flex flex-col min-h-full w-full bg-slate-50 min-w-0">
+    <div className="flex flex-col h-full bg-slate-50">
       {/* Header Area */}
-      <div className="px-3 sm:px-4 lg:px-6 py-4 flex flex-col gap-4 bg-white border-b border-slate-200 shrink-0 min-w-0 w-full">
+      <div className="px-4 sm:px-8 py-6 flex flex-col gap-6 bg-white border-b border-slate-200 shrink-0">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div>
             <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Products</h1>
@@ -565,18 +565,18 @@ export default function Products() {
         </div>
 
         {/* Filters */}
-        <div className="flex flex-col gap-3 sm:gap-4">
-          <div className="relative max-w-2xl w-full">
-            <Search className="absolute left-2.5 sm:left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-400" />
+        <div className="flex flex-col gap-4">
+          <div className="relative max-w-2xl">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <input
               type="text"
-              placeholder="Search product, brand, model, UPC, SKU..."
-              className="w-full h-8 sm:h-10 pl-8 sm:pl-9 pr-3 sm:pr-4 rounded-md border border-slate-200 text-[11px] sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow bg-white placeholder:text-slate-400"
+              placeholder="Search product name, brand, model, UPC, GTIN, ASIN, SKU..."
+              className="w-full h-10 pl-9 pr-4 rounded-md border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow bg-white"
             />
           </div>
 
-          <div className="flex flex-col gap-2">
-            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex flex-wrap items-center gap-2">
               <FilterDropdown label="Category" />
               <FilterDropdown label="Retailer" />
               <FilterDropdown label="Verdict" />
@@ -587,19 +587,17 @@ export default function Products() {
               <FilterDropdown label="Has Price History" />
               <FilterDropdown label="Needs Review" />
             </div>
-            <div className="flex justify-end mt-1">
-              <button className="flex items-center gap-1.5 text-[11px] sm:text-sm text-slate-500 hover:text-slate-700 whitespace-nowrap px-2 sm:px-3 py-1 sm:py-1.5 rounded-md hover:bg-slate-100 transition-colors">
-                <X className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                Clear Filters
-              </button>
-            </div>
+            <button className="flex items-center gap-2 text-sm text-slate-500 hover:text-slate-700 whitespace-nowrap px-3 py-2 rounded-md hover:bg-slate-100 transition-colors">
+              <X className="w-4 h-4" />
+              Clear Filters
+            </button>
           </div>
         </div>
       </div>
 
       {/* Table Area */}
-      <div className="flex-1 p-3 sm:p-4 lg:p-6 flex flex-col min-w-0 w-full">
-        <div className="bg-white rounded-xl border border-slate-200 shadow-sm flex flex-col flex-1 overflow-hidden min-w-0">
+      <div className="flex-1 p-4 sm:p-8 overflow-hidden flex flex-col">
+        <div className="bg-white rounded-xl border border-slate-200 shadow-sm flex flex-col overflow-hidden">
           {/* Table Toolbar */}
           <div className="px-4 py-3 border-b border-slate-200 flex justify-end items-center gap-3">
              <Button variant="outline" size="sm" className="h-8 text-slate-600 flex items-center gap-2 border-slate-200">
@@ -617,7 +615,7 @@ export default function Products() {
           </div>
 
           {/* Actual Table */}
-          <div className="flex-1 overflow-x-auto min-w-0 w-full">
+          <div className="flex-1 overflow-x-auto">
             <Table>
               <TableHeader className="bg-slate-50 sticky top-0 z-10 shadow-[0_1px_0_0_#e2e8f0]">
                 {table.getHeaderGroups().map((headerGroup) => (
@@ -687,12 +685,12 @@ export default function Products() {
           </div>
           
           {/* Pagination */}
-          <div className="px-4 py-3 border-t border-slate-200 flex flex-col lg:flex-row items-center justify-between gap-4 bg-white shrink-0 w-full">
+          <div className="px-4 py-3 border-t border-slate-200 flex flex-col lg:flex-row items-center justify-between gap-4 bg-white shrink-0">
             <div className="text-sm text-slate-500 text-center lg:text-left">
               Showing <span className="font-medium text-slate-900">1-8</span> of <span className="font-medium text-slate-900">248</span> products
             </div>
-            <div className="flex flex-col sm:flex-row items-center gap-4 flex-wrap justify-center w-full sm:w-auto">
-              <div className="flex flex-wrap items-center justify-center gap-1 w-full sm:w-auto">
+            <div className="flex flex-col sm:flex-row items-center gap-4">
+              <div className="flex items-center gap-1">
                 <Button
                   variant="outline"
                   className="h-8 w-8 p-0"
@@ -702,14 +700,14 @@ export default function Products() {
                   <span className="sr-only">Go to previous page</span>
                   <ChevronLeft className="h-4 w-4" />
                 </Button>
-                <div className="flex flex-wrap items-center justify-center gap-1 mx-1 sm:mx-2 text-sm font-medium">
-                  <button className="w-7 h-7 sm:w-8 sm:h-8 rounded bg-blue-50 text-blue-600 flex items-center justify-center">1</button>
-                  <button className="w-7 h-7 sm:w-8 sm:h-8 rounded hover:bg-slate-100 text-slate-600 flex items-center justify-center">2</button>
-                  <button className="hidden sm:flex w-8 h-8 rounded hover:bg-slate-100 text-slate-600 items-center justify-center">3</button>
-                  <button className="hidden md:flex w-8 h-8 rounded hover:bg-slate-100 text-slate-600 items-center justify-center">4</button>
-                  <button className="hidden lg:flex w-8 h-8 rounded hover:bg-slate-100 text-slate-600 items-center justify-center">5</button>
+                <div className="flex items-center gap-1 mx-2 text-sm font-medium">
+                  <button className="w-8 h-8 rounded bg-blue-50 text-blue-600 flex items-center justify-center">1</button>
+                  <button className="w-8 h-8 rounded hover:bg-slate-100 text-slate-600 flex items-center justify-center">2</button>
+                  <button className="w-8 h-8 rounded hover:bg-slate-100 text-slate-600 flex items-center justify-center">3</button>
+                  <button className="w-8 h-8 rounded hover:bg-slate-100 text-slate-600 flex items-center justify-center">4</button>
+                  <button className="w-8 h-8 rounded hover:bg-slate-100 text-slate-600 flex items-center justify-center">5</button>
                   <span className="text-slate-400">...</span>
-                  <button className="w-7 h-7 sm:w-8 sm:h-8 rounded hover:bg-slate-100 text-slate-600 flex items-center justify-center">31</button>
+                  <button className="w-8 h-8 rounded hover:bg-slate-100 text-slate-600 flex items-center justify-center">31</button>
                 </div>
                 <Button
                   variant="outline"

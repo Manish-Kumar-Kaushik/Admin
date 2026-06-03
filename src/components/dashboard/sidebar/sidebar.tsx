@@ -333,17 +333,13 @@ export default function Sidebar() {
               </svg>
             </div>
             <div className="flex flex-col leading-tight">
-              <span className="font-bold text-white text-base">
+              <span className="font-bold text-white text-base whitespace-nowrap">
                 BuyWise AI
               </span>
-              <span className="text-xs text-slate-400">
+              <span className="text-xs text-slate-400 whitespace-nowrap">
                 Admin Console
               </span>
             </div>
-          </div>
-          <div className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-emerald-950/40 border border-emerald-900/50">
-            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
-            <span className="text-[10px] font-medium text-emerald-400">Production</span>
           </div>
           <button
             onClick={toggle}

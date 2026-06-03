@@ -8,7 +8,7 @@ import Header from "@/components/dashboard/header";
 export default function LayoutClient({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
-      <div className="h-full w-full flex flex-col sm:flex-row overflow-hidden">
+      <div className="h-screen w-screen flex flex-col sm:flex-row overflow-hidden">
         <Sidebar />
         <div className="flex-1 flex flex-col h-full min-h-0 overflow-hidden">
           <Header />

@@ -347,10 +347,10 @@ export default function RetailerConnectors() {
                           <YAxis yAxisId="right" orientation="right" tickLine={false} axisLine={false} tick={{ fontSize: 9, fill: "#64748b", fontWeight: 500 }} tickMargin={12} domain={[0, 4]} ticks={[0, 1, 2, 3, 4]} tickFormatter={(v) => `${v}%`} width={30} />
                           <Tooltip content={<CustomTooltip />} />
                           <Legend content={renderCustomLegend} verticalAlign="top" />
-                          <Line yAxisId="left" name="Avg Response Time (ms)" type="linear" dataKey="plotResponse" stroke="#2563eb" strokeWidth={2} dot={{ r: 3, fill: "#2563eb", stroke: "#2563eb" }} activeDot={{ r: 4 }}>
+                          <Line yAxisId="left" name="Avg Response Time (ms)" type="linear" dataKey="plotResponse" stroke="#2563eb" strokeWidth={2} dot={{ r: 3, fill: "#2563eb", stroke: "#2563eb" }} activeDot={{ r: 5 }} isAnimationActive={true} animationBegin={0} animationDuration={1500} animationEasing="ease-out">
                             <LabelList dataKey="response" position="top" style={{ fill: '#2563eb', fontSize: 9, fontWeight: 'bold' }} offset={8} />
                           </Line>
-                          <Line yAxisId="right" name="Error Rate (%)" type="linear" dataKey="plotError" stroke="#ef4444" strokeWidth={2} dot={{ r: 3, fill: "#ef4444", stroke: "#ef4444" }} activeDot={{ r: 4 }}>
+                          <Line yAxisId="right" name="Error Rate (%)" type="linear" dataKey="plotError" stroke="#ef4444" strokeWidth={2} dot={{ r: 3, fill: "#ef4444", stroke: "#ef4444" }} activeDot={{ r: 5 }} isAnimationActive={true} animationBegin={300} animationDuration={1500} animationEasing="ease-out">
                             <LabelList dataKey="error" position="bottom" style={{ fill: '#ef4444', fontSize: 9, fontWeight: 'bold' }} offset={8} formatter={(v: any) => `${v}%`} />
                           </Line>
                         </LineChart>
@@ -393,10 +393,18 @@ export default function RetailerConnectors() {
             <Card className="p-5">
               <h2 className="mb-4 text-base font-bold text-slate-950">Retailer Health Overview <span className="text-slate-400">ⓘ</span></h2>
               <div className="space-y-4">
-                {health.map((item) => (
+                {health.map((item, idx) => (
                   <div key={item.name} className="grid grid-cols-[64px_1fr] items-center gap-3 text-[12px] sm:grid-cols-[64px_1fr_46px_78px]">
                     <span className="font-bold text-slate-900">{item.name}</span>
-                    <Progress value={item.value} className="h-2 bg-slate-200" indicatorClassName={item.color} />
+                    <div className="relative h-2 w-full overflow-hidden rounded-full bg-slate-200">
+                      <div
+                        className={`h-full rounded-full ${item.color} transition-all duration-[1200ms] ease-out`}
+                        style={{
+                          width: mounted ? `${item.value}%` : '0%',
+                          transitionDelay: `${idx * 120}ms`,
+                        }}
+                      />
+                    </div>
                     <span className="text-right font-semibold text-slate-700">{item.value.toFixed(1)}%</span>
                     <span className="flex items-center gap-2 font-medium text-slate-800"><span className={`h-2 w-2 rounded-full ${item.color}`} /> {item.status}</span>
                   </div>
@@ -426,13 +434,19 @@ export default function RetailerConnectors() {
                 <h2 className="text-base font-bold text-slate-950">Rate Limit Monitor</h2>
                 <button className="text-xs font-semibold text-blue-600">View all</button>
               </div>
-              <div className="flex flex-col gap-3 border-b border-slate-200 pb-5 sm:flex-row sm:justify-between">
+              <div className="flex flex-col gap-4 border-b border-slate-200 pb-5 lg:flex-row lg:justify-between lg:gap-3">
                 {rateLimits.map((item) => (
-                  <div key={item.name} className="min-w-0 text-center">
-                    <div className="mb-2 flex h-7 items-center justify-center"><RetailerLogo name={item.name} /></div>
-                    <div className="truncate text-[12px] font-bold text-slate-900">{item.name}</div>
-                    <div className="mt-2 text-[14px] font-black text-slate-950">{item.percent}%</div>
-                    <div className={`mt-1 whitespace-nowrap text-[10px] font-semibold ${item.percent >= 50 ? "text-emerald-600" : item.percent >= 10 ? "text-orange-500" : "text-rose-600"}`}>{item.raw}</div>
+                  <div key={item.name} className="flex items-center justify-between lg:flex-col lg:justify-center min-w-0 border-b border-slate-100 lg:border-0 pb-4 lg:pb-0 last:border-0 last:pb-0">
+                    <div className="flex items-center gap-3.5 lg:flex-col lg:gap-0">
+                      <div className="flex items-center justify-center shrink-0 lg:mb-2">
+                        <RetailerLogo name={item.name} />
+                      </div>
+                      <div className="flex flex-col text-left lg:text-center">
+                        <div className="truncate text-[14px] lg:text-[12px] font-bold text-slate-900 leading-tight">{item.name}</div>
+                        <div className={`mt-0.5 lg:mt-1 whitespace-nowrap text-[12px] lg:text-[10px] font-semibold leading-tight ${item.percent >= 50 ? "text-emerald-600" : item.percent >= 10 ? "text-orange-500" : "text-rose-600"}`}>{item.raw}</div>
+                      </div>
+                    </div>
+                    <div className="text-[18px] lg:text-[14px] font-black text-slate-950 lg:mt-2 text-right lg:text-center">{item.percent}%</div>
                   </div>
                 ))}
               </div>

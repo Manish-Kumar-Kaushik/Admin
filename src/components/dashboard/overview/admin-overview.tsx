@@ -342,8 +342,8 @@ export default function AdminOverview() {
                         contentStyle={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: "8px", fontSize: "11px", padding: "6px 10px", boxShadow: "0 4px 12px rgba(0,0,0,0.08)" }}
                         labelStyle={{ color: "#475569", fontWeight: 600, marginBottom: 4 }}
                       />
-                      <Line yAxisId="left"  type="monotone" dataKey="Searches" stroke="#2563eb" strokeWidth={2} dot={{ r: 3, fill: "#fff", stroke: "#2563eb", strokeWidth: 1.5 }} activeDot={{ r: 4 }} />
-                      <Line yAxisId="right" type="monotone" dataKey="Clicks"   stroke="#10b981" strokeWidth={2} dot={{ r: 3, fill: "#fff", stroke: "#10b981", strokeWidth: 1.5 }} activeDot={{ r: 4 }} />
+                      <Line yAxisId="left"  type="monotone" dataKey="Searches" stroke="#2563eb" strokeWidth={2} dot={{ r: 3, fill: "#fff", stroke: "#2563eb", strokeWidth: 1.5 }} activeDot={{ r: 5 }} isAnimationActive={true} animationBegin={0} animationDuration={1400} animationEasing="ease-out" />
+                      <Line yAxisId="right" type="monotone" dataKey="Clicks"   stroke="#10b981" strokeWidth={2} dot={{ r: 3, fill: "#fff", stroke: "#10b981", strokeWidth: 1.5 }} activeDot={{ r: 5 }} isAnimationActive={true} animationBegin={200} animationDuration={1400} animationEasing="ease-out" />
                     </LineChart>
                   </ResponsiveContainer>
                 ) : (

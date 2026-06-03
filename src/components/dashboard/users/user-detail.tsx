@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowLeft,
   Pencil,
@@ -20,6 +21,8 @@ import {
   ShieldCheck,
   FileText,
   UserCheck,
+  MoreVertical,
+  UserX,
 } from "lucide-react";
 
 // ─── Mock Data ───────────────────────────────────────────────────────────────
@@ -161,6 +164,23 @@ const fmt = (n: number) =>
     maximumFractionDigits: 2,
   })}`;
 
+// ─── Animations Variants ─────────────────────────────────────────────────────
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.05,
+    },
+  },
+} as const;
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 15 },
+  show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 120, damping: 14 } },
+} as const;
+
 // ─── Main Component ──────────────────────────────────────────────────────────
 
 export default function UserDetail() {
@@ -188,11 +208,11 @@ export default function UserDetail() {
                 Active
               </span>
             </div>
-            <p className="mt-1.5 text-xs text-slate-500 font-medium flex flex-wrap gap-x-4 gap-y-1">
-              <span>User ID: <span className="text-slate-900 font-semibold">U-1048921</span></span>
-              <span className="text-slate-200">|</span>
+            <p className="mt-2 text-xs text-slate-550 font-medium flex flex-wrap items-center gap-x-3 gap-y-1.5">
+              <span className="bg-slate-100 px-2 py-0.5 rounded-md text-slate-800">User ID: <span className="font-bold">U-1048921</span></span>
+              <span className="w-1 h-1 rounded-full bg-slate-300 hidden sm:inline" />
               <span>Member since: <span className="text-slate-900 font-semibold">Feb 12, 2024</span></span>
-              <span className="text-slate-200">|</span>
+              <span className="w-1 h-1 rounded-full bg-slate-300 hidden sm:inline" />
               <span>Last active: <span className="text-slate-900 font-semibold">May 20, 2024 at 10:15 AM (EDT)</span></span>
             </p>
           </div>
@@ -213,20 +233,28 @@ export default function UserDetail() {
         </div>
 
         {/* ─── Main Content Grid ─── */}
-        <div className="grid gap-6 grid-cols-1 lg:grid-cols-10 w-full max-w-full items-start">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="show"
+          className="grid gap-6 grid-cols-1 lg:grid-cols-10 w-full max-w-full items-start"
+        >
 
           {/* Left / Middle Columns (User summary + details cards) -> 70% width */}
           <div className="lg:col-span-7 flex flex-col gap-4 min-w-0">
-            
+
             {/* User Profile Summary Card */}
-            <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs flex flex-col justify-between gap-6">
+            <motion.div
+              variants={itemVariants}
+              className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs flex flex-col justify-between gap-6 hover:shadow-md transition-shadow duration-300"
+            >
               <div>
                 <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">User Profile Summary</h3>
-                
+
                 <div className="flex flex-col lg:flex-row gap-6 items-stretch justify-between w-full">
                   {/* Left info: avatar and text */}
                   <div className="flex gap-4 items-start min-w-0 flex-1">
-                    <div className="h-16 w-16 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-650 font-extrabold text-xl shrink-0 select-none shadow-xs border border-indigo-100">
+                    <div className="h-16 w-16 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white font-extrabold text-xl shrink-0 select-none shadow-md hover:scale-105 transition-transform duration-200">
                       JA
                     </div>
                     <div className="space-y-1 min-w-0">
@@ -241,12 +269,12 @@ export default function UserDetail() {
                       </div>
 
                       <div className="space-y-1.5 pt-1.5 select-none text-[11px] text-slate-500 font-medium leading-tight">
-                        <div className="flex flex-wrap gap-x-4">
+                        <div className="flex flex-wrap gap-x-4 gap-y-1">
                           <span>Plan: <span className="text-slate-800 font-semibold">Free</span></span>
                           <span>Platform: <span className="text-slate-800 font-semibold">Web</span></span>
                           <span>Language: <span className="text-slate-800 font-semibold">English (US)</span></span>
                         </div>
-                        <div className="flex flex-wrap gap-x-4">
+                        <div className="flex flex-wrap gap-x-4 gap-y-1">
                           <span>Country: <span className="text-slate-800 font-semibold">United States</span></span>
                           <span>Timezone: <span className="text-slate-800 font-semibold">Eastern Time (ET)</span></span>
                         </div>
@@ -254,8 +282,8 @@ export default function UserDetail() {
                     </div>
                   </div>
 
-                  {/* 5 metric counters - next to details, no boxes, separated by lines */}
-                  <div className="flex flex-row items-center lg:border-l lg:border-slate-200 divide-x divide-slate-200 select-none w-full lg:w-auto overflow-x-auto lg:overflow-x-visible scrollbar-none py-2 lg:py-0 shrink-0">
+                  {/* 5 metric counters - next to details, responsive layout */}
+                  <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-5 lg:flex lg:flex-row gap-3 lg:gap-0 lg:border-l lg:border-slate-200 lg:divide-x lg:divide-slate-200 w-full lg:w-auto shrink-0 select-none mt-4 lg:mt-0">
                     {[
                       { label: "Saved Products", val: "24" },
                       { label: "Price Alerts", val: "5" },
@@ -263,11 +291,16 @@ export default function UserDetail() {
                       { label: "Support Reports", val: "2" },
                       { label: "Privacy Requests", val: "0" },
                     ].map((m) => (
-                      <div key={m.label} className="flex flex-col items-center px-4 sm:px-6 shrink-0 text-center min-w-[85px] sm:min-w-[110px] lg:min-w-[90px] xl:min-w-[115px]">
-                        <span className="text-[9px] sm:text-[10.5px] text-slate-800 font-bold tracking-tight mb-2.5 block leading-tight">
+                      <div
+                        key={m.label}
+                        className="flex flex-col items-center justify-center p-3 rounded-xl border border-slate-100 bg-slate-50/50 hover:bg-indigo-50/20 hover:border-indigo-100 transition-all duration-200 text-center min-w-0 lg:border-none lg:bg-transparent lg:hover:bg-transparent lg:p-0 lg:px-4 sm:px-6 lg:min-w-[90px] xl:min-w-[115px] group/metric"
+                      >
+                        <span className="text-[10px] sm:text-[11px] text-slate-500 font-bold tracking-tight mb-1.5 block leading-tight group-hover/metric:text-indigo-650 transition-colors">
                           {m.label}
                         </span>
-                        <span className="text-2xl sm:text-3xl font-bold text-slate-950">{m.val}</span>
+                        <span className="text-2xl sm:text-3xl font-black text-slate-950 group-hover/metric:scale-110 transition-transform duration-200 cursor-default">
+                          {m.val}
+                        </span>
                       </div>
                     ))}
                   </div>
@@ -275,42 +308,80 @@ export default function UserDetail() {
               </div>
 
               {/* Collapsible Info Alert Banners */}
-              <div className="rounded-xl border border-blue-200 bg-blue-50/50 p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs leading-relaxed text-blue-700 select-none">
+              <div className={`rounded-xl border p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs leading-relaxed select-none transition-all duration-300 ${elevatedAccess
+                ? "border-emerald-200 bg-emerald-50/50 text-emerald-800"
+                : "border-blue-200 bg-blue-50/50 text-blue-700"
+                }`}>
                 <div className="flex gap-2.5 items-start">
-                  <Info className="h-4.5 w-4.5 text-blue-500 shrink-0 mt-0.5" />
+                  <div className="shrink-0 mt-0.5">
+                    {elevatedAccess ? (
+                      <ShieldCheck className="h-5 w-5 text-emerald-600 animate-pulse" />
+                    ) : (
+                      <Info className="h-5 w-5 text-blue-500" />
+                    )}
+                  </div>
                   <div>
-                    <span className="font-bold block">This view contains limited data to protect user privacy.</span>
-                    <span className="text-[11px] font-semibold text-blue-600 block mt-0.5">Sensitive shopping and order data are hidden. Request elevated access if needed for support.</span>
+                    <span className="font-bold block">
+                      {elevatedAccess
+                        ? "Elevated Access Session Active"
+                        : "This view contains limited data to protect user privacy."
+                      }
+                    </span>
+                    <span className={`text-[11px] font-semibold block mt-0.5 ${elevatedAccess ? "text-emerald-650" : "text-blue-600"
+                      }`}>
+                      {elevatedAccess
+                        ? "Sensitive user activity, parsed receipt values, and internal support logs are temporarily unlocked."
+                        : "Sensitive shopping and order data are hidden. Request elevated access if needed for support."
+                      }
+                    </span>
                   </div>
                 </div>
                 <button
                   onClick={() => setElevatedAccess(!elevatedAccess)}
-                  className="inline-flex items-center gap-1.5 h-8 px-3 rounded-lg border border-blue-200 bg-white text-[11px] font-bold text-blue-600 hover:bg-blue-50 transition-colors shadow-sm shrink-0 whitespace-nowrap"
+                  className={`inline-flex items-center gap-1.5 h-8 px-3 rounded-lg border text-[11px] font-bold transition-all duration-200 shadow-sm shrink-0 whitespace-nowrap ${elevatedAccess
+                    ? "border-emerald-300 bg-white text-emerald-700 hover:bg-emerald-50 active:scale-95"
+                    : "border-blue-200 bg-white text-blue-600 hover:bg-blue-50 active:scale-95"
+                    }`}
                 >
-                  <Lock className="h-3 w-3 text-blue-400" />
+                  <Lock className={`h-3.5 w-3.5 ${elevatedAccess ? "text-emerald-550" : "text-blue-400"}`} />
                   {elevatedAccess ? "Revoke Elevated Access" : "Request Elevated Access"}
                 </button>
               </div>
-            </div>
+            </motion.div>
 
             {/* Sub Row 1: Saved Products + Price Alerts */}
             <div className="grid gap-6 grid-cols-1 md:grid-cols-2 w-full">
-              
+
               {/* Saved Products Card */}
-              <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs flex flex-col justify-between space-y-4 min-w-0 overflow-hidden">
+              <motion.div
+                variants={itemVariants}
+                className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs flex flex-col justify-between space-y-4 min-w-0 overflow-hidden hover:shadow-md transition-shadow duration-300"
+              >
                 <div className="flex items-center justify-between">
                   <h3 className="text-sm font-bold text-slate-950">Saved Products <span className="text-slate-400 font-semibold">(24)</span></h3>
                   <span className="text-xs font-bold text-indigo-650 cursor-pointer hover:underline select-none">View all</span>
                 </div>
-                <div className="space-y-3.5 flex-1">
+                <div className="space-y-1 flex-1">
                   {savedProducts.map((p) => (
-                    <div key={p.id} className="flex items-center justify-between gap-3 text-xs min-w-0">
+                    <div key={p.id} className="flex items-center justify-between gap-3 text-xs min-w-0 hover:bg-slate-50/85 p-2 -mx-2 rounded-xl transition-all duration-150 group">
                       <div className="flex items-center gap-3 min-w-0 flex-1">
-                        <img src={p.image} alt={p.name} className="h-10 w-10 rounded-lg object-cover border border-slate-200 shrink-0" />
+                        <img src={p.image} alt={p.name} className="h-10 w-10 rounded-lg object-cover border border-slate-200 shrink-0 group-hover:scale-105 transition-transform duration-200" />
                         <div className="min-w-0">
-                          <div className="text-sm font-semibold text-slate-900 truncate leading-tight">{p.name}</div>
+                          <div className="text-sm font-semibold text-slate-900 truncate leading-tight group-hover:text-indigo-650 transition-colors">{p.name}</div>
                           <div className="text-xs text-slate-500 mt-0.5 truncate">
                             ASIN: {p.asin} • Added {p.addedDate}
+                            <AnimatePresence>
+                              {elevatedAccess && (
+                                <motion.span
+                                  initial={{ opacity: 0, height: 0 }}
+                                  animate={{ opacity: 1, height: "auto" }}
+                                  exit={{ opacity: 0, height: 0 }}
+                                  className="text-[10px] text-indigo-600 font-bold block mt-0.5 whitespace-nowrap"
+                                >
+                                  Ref: ORD-99382103 • Total Orders: 3
+                                </motion.span>
+                              )}
+                            </AnimatePresence>
                           </div>
                         </div>
                       </div>
@@ -324,30 +395,45 @@ export default function UserDetail() {
                 <span className="text-xs font-bold text-indigo-650 hover:underline cursor-pointer select-none inline-flex items-center gap-0.5 pt-1.5">
                   View all 24 saved products <ChevronRight className="h-3.5 w-3.5" />
                 </span>
-              </div>
+              </motion.div>
 
               {/* Price Alerts Card */}
-              <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs flex flex-col justify-between space-y-4 min-w-0 overflow-hidden">
+              <motion.div
+                variants={itemVariants}
+                className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs flex flex-col justify-between space-y-4 min-w-0 overflow-hidden hover:shadow-md transition-shadow duration-300"
+              >
                 <div className="flex items-center justify-between">
                   <h3 className="text-sm font-bold text-slate-950">Price Alerts <span className="text-slate-400 font-semibold">(5)</span></h3>
                   <span className="text-xs font-bold text-indigo-650 cursor-pointer hover:underline select-none">View all</span>
                 </div>
-                <div className="space-y-3.5 flex-1">
+                <div className="space-y-1 flex-1">
                   {priceAlerts.map((a) => (
-                    <div key={a.id} className="flex items-center justify-between gap-3 text-xs min-w-0">
+                    <div key={a.id} className="flex items-center justify-between gap-3 text-xs min-w-0 hover:bg-slate-50/85 p-2 -mx-2 rounded-xl transition-all duration-150 group">
                       <div className="flex items-center gap-3 min-w-0 flex-1">
-                        <div className="h-10 w-10 rounded-lg bg-indigo-50/50 flex items-center justify-center shrink-0 border border-slate-100">
+                        <div className="h-10 w-10 rounded-lg bg-indigo-50/50 flex items-center justify-center shrink-0 border border-slate-100 group-hover:bg-indigo-100/50 transition-colors">
                           <ShieldCheck className="h-5 w-5 text-indigo-600" />
                         </div>
                         <div className="min-w-0">
-                          <div className="text-sm font-semibold text-slate-900 truncate leading-tight">{a.name}</div>
+                          <div className="text-sm font-semibold text-slate-900 truncate leading-tight group-hover:text-indigo-650 transition-colors">{a.name}</div>
                           <div className="text-xs text-slate-500 mt-0.5">
                             Target price: <span className="font-semibold">{fmt(a.targetPrice)}</span>
+                            <AnimatePresence>
+                              {elevatedAccess && (
+                                <motion.span
+                                  initial={{ opacity: 0, height: 0 }}
+                                  animate={{ opacity: 1, height: "auto" }}
+                                  exit={{ opacity: 0, height: 0 }}
+                                  className="text-[10px] text-emerald-650 font-bold block mt-0.5 whitespace-nowrap"
+                                >
+                                  Channels: Email & Web Push Active
+                                </motion.span>
+                              )}
+                            </AnimatePresence>
                           </div>
                         </div>
                       </div>
                       <div className="text-right shrink-0">
-                        <div className="text-sm font-semibold text-emerald-605">{fmt(a.currentPrice)}</div>
+                        <div className="text-sm font-semibold text-emerald-700">{fmt(a.currentPrice)}</div>
                         <div className="text-xs text-slate-400">{a.merchant}</div>
                       </div>
                     </div>
@@ -356,29 +442,44 @@ export default function UserDetail() {
                 <span className="text-xs font-bold text-indigo-650 hover:underline cursor-pointer select-none inline-flex items-center gap-0.5 pt-1.5">
                   View all 5 price alerts <ChevronRight className="h-3.5 w-3.5" />
                 </span>
-              </div>
+              </motion.div>
             </div>
 
             {/* Sub Row 2: Receipt Uploads + Support Reports + Privacy Requests */}
-            <div className="grid gap-6 grid-cols-1 md:grid-cols-3 w-full">
-              
+            <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full">
+
               {/* Receipt Uploads */}
-              <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs flex flex-col justify-between space-y-4 min-w-0 overflow-hidden">
+              <motion.div
+                variants={itemVariants}
+                className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs flex flex-col justify-between space-y-4 min-w-0 overflow-hidden hover:shadow-md transition-shadow duration-300"
+              >
                 <div className="flex items-center justify-between">
                   <h3 className="text-sm font-bold text-slate-950">Receipt Uploads <span className="text-slate-400 font-semibold">(3)</span></h3>
                   <span className="text-xs font-bold text-indigo-650 cursor-pointer hover:underline select-none">View all</span>
                 </div>
-                <div className="space-y-3 flex-1">
+                <div className="space-y-2 flex-1">
                   {receiptUploads.map((r) => (
-                    <div key={r.id} className="flex items-center justify-between gap-2.5 text-xs min-w-0">
+                    <div key={r.id} className="flex items-center justify-between gap-2.5 text-xs min-w-0 hover:bg-slate-50/85 p-2 -mx-2 rounded-xl transition-all duration-150 group">
                       <div className="flex items-center gap-2 min-w-0 flex-1">
-                        <div className="h-8 w-8 rounded bg-blue-50 flex items-center justify-center shrink-0 border border-slate-100">
+                        <div className="h-8 w-8 rounded bg-blue-50 flex items-center justify-center shrink-0 border border-slate-100 group-hover:bg-blue-100/50 transition-colors">
                           <FileText className="h-4 w-4 text-blue-550" />
                         </div>
                         <div className="min-w-0">
-                          <div className="font-bold text-slate-800 truncate leading-tight">{r.filename}</div>
+                          <div className="font-bold text-slate-800 truncate leading-tight group-hover:text-indigo-650 transition-colors">{r.filename}</div>
                           <div className="text-[10px] text-slate-450 font-semibold mt-0.5">
                             {r.date} • {r.size}
+                            <AnimatePresence>
+                              {elevatedAccess && (
+                                <motion.span
+                                  initial={{ opacity: 0, height: 0 }}
+                                  animate={{ opacity: 1, height: "auto" }}
+                                  exit={{ opacity: 0, height: 0 }}
+                                  className="text-[10px] text-blue-600 font-bold block mt-0.5 whitespace-nowrap"
+                                >
+                                  Parsed Val: $184.20 • Match ID: TXN-49219
+                                </motion.span>
+                              )}
+                            </AnimatePresence>
                           </div>
                         </div>
                       </div>
@@ -391,26 +492,41 @@ export default function UserDetail() {
                 <span className="text-xs font-bold text-indigo-650 hover:underline cursor-pointer select-none inline-flex items-center gap-0.5 pt-1.5">
                   View all 3 receipts <ChevronRight className="h-3.5 w-3.5" />
                 </span>
-              </div>
+              </motion.div>
 
               {/* Support Reports */}
-              <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs flex flex-col justify-between space-y-4 min-w-0 overflow-hidden">
+              <motion.div
+                variants={itemVariants}
+                className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs flex flex-col justify-between space-y-4 min-w-0 overflow-hidden hover:shadow-md transition-shadow duration-300"
+              >
                 <div className="flex items-center justify-between">
                   <h3 className="text-sm font-bold text-slate-950">Support Reports <span className="text-slate-400 font-semibold">(2)</span></h3>
                   <span className="text-xs font-bold text-indigo-650 cursor-pointer hover:underline select-none">View all</span>
                 </div>
-                <div className="space-y-3.5 flex-1">
+                <div className="space-y-3 flex-1">
                   {supportReports.map((s) => (
-                    <div key={s.id} className="flex items-start justify-between gap-2.5 text-xs min-w-0">
+                    <div key={s.id} className="flex items-start justify-between gap-2.5 text-xs min-w-0 hover:bg-slate-50/85 p-2 -mx-2 rounded-xl transition-all duration-150 group">
                       <div className="min-w-0 flex-1">
-                        <div className="flex items-center gap-1.5">
+                        <div className="flex items-center gap-1.5 flex-wrap">
                           <span className={`inline-flex px-1.5 py-0.5 rounded text-[9px] font-bold border ${s.statusColor} select-none`}>
                             {s.status}
                           </span>
-                          <span className="font-bold text-slate-800 truncate leading-tight">{s.issue}</span>
+                          <span className="font-bold text-slate-800 truncate leading-tight group-hover:text-indigo-650 transition-colors">{s.issue}</span>
                         </div>
                         <p className="text-[10px] text-slate-450 font-semibold mt-1">
                           Report ID: {s.reportId} • {s.date}
+                          <AnimatePresence>
+                            {elevatedAccess && (
+                              <motion.span
+                                initial={{ opacity: 0, height: 0 }}
+                                animate={{ opacity: 1, height: "auto" }}
+                                exit={{ opacity: 0, height: 0 }}
+                                className="text-[10px] text-amber-600 font-bold block mt-0.5 whitespace-nowrap font-sans"
+                              >
+                                Agent: Sarah Jenkins (L2 Support)
+                              </motion.span>
+                            )}
+                          </AnimatePresence>
                         </p>
                       </div>
                     </div>
@@ -419,14 +535,17 @@ export default function UserDetail() {
                 <span className="text-xs font-bold text-indigo-650 hover:underline cursor-pointer select-none inline-flex items-center gap-0.5 pt-1.5">
                   View all reports <ChevronRight className="h-3.5 w-3.5" />
                 </span>
-              </div>
+              </motion.div>
 
               {/* Privacy Requests */}
-              <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs flex flex-col justify-between items-center text-center space-y-4 min-w-0 overflow-hidden">
+              <motion.div
+                variants={itemVariants}
+                className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs flex flex-col justify-between items-center text-center space-y-4 min-w-0 overflow-hidden hover:shadow-md transition-shadow duration-300 sm:col-span-2 lg:col-span-1"
+              >
                 <div className="flex items-center justify-between w-full">
                   <h3 className="text-sm font-bold text-slate-950">Privacy Requests <span className="text-slate-400 font-semibold">(0)</span></h3>
                 </div>
-                
+
                 <div className="flex flex-col items-center justify-center flex-1 space-y-2 py-4 select-none">
                   <div className="h-12 w-12 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center shrink-0">
                     <Shield className="h-6 w-6 text-emerald-550" />
@@ -438,15 +557,18 @@ export default function UserDetail() {
                     </p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
 
           {/* Right Column (Privacy actions, Notes, Data Access Notice) -> 30% width */}
-          <div className="lg:col-span-3 flex flex-col gap-4 min-w-0">
-            
+          <div className="lg:col-span-3 flex flex-col gap-4 min-w-0 lg:mt-24 mt-4">
+
             {/* Privacy Actions Card */}
-            <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs space-y-4">
+            <motion.div
+              variants={itemVariants}
+              className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs space-y-4 hover:shadow-md transition-shadow duration-300"
+            >
               <div>
                 <div className="flex items-center gap-2 mb-1">
                   <Shield className="h-4.5 w-4.5 text-indigo-600" />
@@ -459,9 +581,9 @@ export default function UserDetail() {
 
               <div className="space-y-2 text-xs">
                 {/* Export Data */}
-                <button className="w-full flex items-center gap-3 p-3 rounded-lg border border-slate-200 hover:bg-slate-50 transition-colors shadow-2xs text-left group">
-                  <div className="h-8 w-8 rounded-md bg-blue-50 flex items-center justify-center shrink-0">
-                    <Download className="h-4 w-4 text-blue-500" />
+                <button className="w-full flex items-center gap-3 p-3 rounded-lg border border-slate-200 hover:bg-slate-50/80 active:scale-98 transition-all shadow-2xs text-left group">
+                  <div className="h-8 w-8 rounded-md bg-blue-50 flex items-center justify-center shrink-0 group-hover:bg-blue-100 transition-colors">
+                    <Download className="h-4 w-4 text-blue-550" />
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="font-bold text-slate-800 group-hover:text-blue-600 transition-colors">Export User Data</div>
@@ -470,9 +592,9 @@ export default function UserDetail() {
                 </button>
 
                 {/* Delete Receipts */}
-                <button className="w-full flex items-center gap-3 p-3 rounded-lg border border-slate-200 hover:bg-slate-50 transition-colors shadow-2xs text-left group">
-                  <div className="h-8 w-8 rounded-md bg-rose-50 flex items-center justify-center shrink-0">
-                    <Trash2 className="h-4 w-4 text-rose-500" />
+                <button className="w-full flex items-center gap-3 p-3 rounded-lg border border-slate-200 hover:bg-slate-50/80 active:scale-98 transition-all shadow-2xs text-left group">
+                  <div className="h-8 w-8 rounded-md bg-rose-50 flex items-center justify-center shrink-0 group-hover:bg-rose-100 transition-colors">
+                    <Trash2 className="h-4 w-4 text-rose-550" />
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="font-bold text-slate-800 group-hover:text-rose-600 transition-colors">Delete Receipt History</div>
@@ -481,8 +603,8 @@ export default function UserDetail() {
                 </button>
 
                 {/* Anonymize */}
-                <button className="w-full flex items-center gap-3 p-3 rounded-lg border border-slate-200 hover:bg-slate-50 transition-colors shadow-2xs text-left group">
-                  <div className="h-8 w-8 rounded-md bg-purple-50 flex items-center justify-center shrink-0">
+                <button className="w-full flex items-center gap-3 p-3 rounded-lg border border-slate-200 hover:bg-slate-50/80 active:scale-98 transition-all shadow-2xs text-left group">
+                  <div className="h-8 w-8 rounded-md bg-purple-50 flex items-center justify-center shrink-0 group-hover:bg-purple-100 transition-colors">
                     <UserMinus className="h-4 w-4 text-purple-550" />
                   </div>
                   <div className="min-w-0 flex-1">
@@ -492,9 +614,9 @@ export default function UserDetail() {
                 </button>
 
                 {/* Suspend */}
-                <button className="w-full flex items-center gap-3 p-3 rounded-lg border border-rose-200 bg-rose-50/20 hover:bg-rose-50/50 transition-colors shadow-2xs text-left group">
-                  <div className="h-8 w-8 rounded-md bg-rose-50 flex items-center justify-center shrink-0 border border-rose-100 shadow-xs">
-                    <AlertTriangle className="h-4 w-4 text-rose-500" />
+                <button className="w-full flex items-center gap-3 p-3 rounded-lg border border-rose-200 bg-rose-50/10 hover:bg-rose-50/30 active:scale-98 transition-all shadow-2xs text-left group">
+                  <div className="h-8 w-8 rounded-md bg-rose-50 flex items-center justify-center shrink-0 border border-rose-150 shadow-2xs group-hover:bg-rose-100 transition-colors">
+                    <UserX className="h-4 w-4 text-rose-550" />
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="font-bold text-rose-600">Suspend Account</div>
@@ -502,10 +624,13 @@ export default function UserDetail() {
                   </div>
                 </button>
               </div>
-            </div>
+            </motion.div>
 
             {/* Admin Notes Card */}
-            <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs space-y-4">
+            <motion.div
+              variants={itemVariants}
+              className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs space-y-4 hover:shadow-md transition-shadow duration-300"
+            >
               <div>
                 <h3 className="text-sm font-bold text-slate-950">Admin Notes</h3>
                 <p className="text-[11px] text-slate-500 font-semibold leading-relaxed mt-1">
@@ -521,7 +646,7 @@ export default function UserDetail() {
                     placeholder="Write a note..."
                     value={adminNote}
                     onChange={(e) => setAdminNote(e.target.value)}
-                    className="w-full rounded-lg border border-slate-200 p-3 text-xs text-slate-850 placeholder:text-slate-400 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 resize-none font-semibold"
+                    className="w-full rounded-lg border border-slate-200 p-3 text-xs text-slate-850 placeholder:text-slate-400 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 resize-none font-semibold transition-all duration-200"
                   />
                   <div className="absolute bottom-2.5 right-3 text-[9px] text-slate-400 font-bold">
                     {adminNote.length}/1000
@@ -529,15 +654,18 @@ export default function UserDetail() {
                 </div>
                 <button
                   onClick={handleSaveNote}
-                  className="w-full h-9 rounded-lg bg-indigo-600 text-white text-xs font-bold hover:bg-indigo-700 transition-colors shadow-sm select-none shadow-indigo-100"
+                  className="w-full h-9 rounded-lg bg-indigo-600 text-white text-xs font-bold hover:bg-indigo-700 active:scale-98 transition-all shadow-sm select-none shadow-indigo-100"
                 >
                   Save Note
                 </button>
               </div>
-            </div>
+            </motion.div>
 
             {/* Data Access Notice Card */}
-            <div className="rounded-xl border border-blue-100 bg-blue-50/30 p-6 shadow-xs space-y-4 flex flex-col justify-between items-center text-center">
+            <motion.div
+              variants={itemVariants}
+              className="rounded-xl border border-blue-100 bg-gradient-to-br from-blue-50/40 to-indigo-50/20 p-6 shadow-xs space-y-4 flex flex-col justify-between items-center text-center hover:shadow-md transition-shadow duration-300"
+            >
               <div className="h-10 w-10 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center shrink-0">
                 <Lock className="h-4.5 w-4.5 text-blue-500" />
               </div>
@@ -549,15 +677,18 @@ export default function UserDetail() {
               </div>
               <button
                 onClick={() => setElevatedAccess(!elevatedAccess)}
-                className="w-full h-9 rounded-lg border border-blue-200 bg-white text-xs font-bold text-blue-600 hover:bg-blue-50 transition-colors shadow-sm flex items-center justify-center gap-1.5 select-none"
+                className={`w-full h-9 rounded-lg border text-xs font-bold transition-all duration-200 shadow-sm flex items-center justify-center gap-1.5 select-none active:scale-98 ${elevatedAccess
+                  ? "border-emerald-250 bg-emerald-50 text-emerald-700 hover:bg-emerald-100"
+                  : "border-blue-200 bg-white text-blue-600 hover:bg-blue-50"
+                  }`}
               >
-                <Lock className="h-3.5 w-3.5 text-blue-400" />
+                <Lock className={`h-3.5 w-3.5 ${elevatedAccess ? "text-emerald-555" : "text-blue-400"}`} />
                 {elevatedAccess ? "Revoke Elevated Access" : "Request Elevated Access"}
               </button>
-            </div>
+            </motion.div>
           </div>
 
-        </div>
+        </motion.div>
 
       </div>
     </div>

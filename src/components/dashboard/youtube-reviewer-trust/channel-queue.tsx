@@ -25,12 +25,12 @@ import {
   XCircle,
   AlertCircle
 } from "lucide-react";
-import { 
-  BarChart, 
-  Bar, 
-  XAxis, 
-  YAxis, 
-  Tooltip, 
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
   ResponsiveContainer,
   Cell
 } from "recharts";
@@ -74,7 +74,7 @@ const chartData = [
 
 export default function YouTubeReviewerTrust() {
   const [activeTab, setActiveTab] = useState("Channel Queue");
-  
+
   const getStatusBadge = (status: string) => {
     switch (status) {
       case "Pending Review":
@@ -97,8 +97,8 @@ export default function YouTubeReviewerTrust() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-900 w-full overflow-x-hidden py-4 px-4 md:px-8 flex flex-col gap-4 md:gap-6">
-      
+    <div className="w-full min-h-full bg-slate-50 font-sans text-slate-900 overflow-x-hidden py-4 px-4 md:px-8 flex flex-col gap-4 md:gap-6">
+
       {/* ── HEADER ── */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
         <div>
@@ -145,11 +145,10 @@ export default function YouTubeReviewerTrust() {
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`pb-3 border-b-2 text-sm font-semibold transition-colors ${
-              activeTab === tab
+            className={`pb-3 border-b-2 text-sm font-semibold transition-colors ${activeTab === tab
                 ? "border-indigo-600 text-indigo-600"
                 : "border-transparent text-slate-500 hover:text-slate-700 font-medium"
-            }`}
+              }`}
           >
             {tab}
           </button>
@@ -159,21 +158,21 @@ export default function YouTubeReviewerTrust() {
       {/* ── MAIN CONTENT: TABLE & RIGHT SIDEBAR ── */}
       {activeTab === "Channel Queue" ? (
         <div className="grid grid-cols-1 xl:grid-cols-[1fr_320px] gap-4">
-          
+
           {/* LEFT COLUMN */}
           <div className="flex flex-col gap-4 min-w-0">
-            
+
             {/* Table Header Controls (Outside Table Card) */}
-            <div className="flex items-center gap-3 w-full overflow-x-auto pb-1 scrollbar-hide">
-              <div className="relative flex-1 min-w-[280px]">
+            <div className="flex flex-wrap items-center gap-3 w-full pb-1">
+              <div className="relative flex-1 min-w-[200px]">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                <input 
-                  type="text" 
-                  placeholder="Search channel, YouTube handle, product category..." 
+                <input
+                  type="text"
+                  placeholder="Search channel, YouTube handle, product category..."
                   className="w-full pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-lg text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors shadow-sm"
                 />
               </div>
-              
+
               <button className="flex items-center gap-2 px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 shrink-0 shadow-sm">
                 Category <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
               </button>
@@ -193,12 +192,12 @@ export default function YouTubeReviewerTrust() {
                 <Filter className="w-4 h-4" /> More Filters
               </button>
             </div>
-            
+
             {/* Table Card */}
             <div className="bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col overflow-hidden">
-              
+
               {/* Table */}
-              <div className="overflow-x-auto min-h-[550px]">
+              <div className="overflow-x-auto min-h-0">
                 <table className="w-full text-left border-collapse min-w-[1000px]">
                   <thead>
                     <tr className="bg-slate-50/50 border-b border-slate-200">
@@ -207,11 +206,11 @@ export default function YouTubeReviewerTrust() {
                       <th className="px-5 py-4 text-[11px] uppercase font-semibold text-slate-500 whitespace-nowrap text-center">
                         <div className="flex items-center justify-center gap-1">Trust Score <ArrowRight className="w-3 h-3 rotate-90" /></div>
                       </th>
-                      <th className="px-5 py-4 text-[11px] uppercase font-semibold text-slate-500 whitespace-nowrap text-center">Subscriber<br/>Count <HelpCircle className="w-3 h-3 inline ml-0.5 text-slate-400" /></th>
-                      <th className="px-5 py-4 text-[11px] uppercase font-semibold text-slate-500 whitespace-nowrap">Review<br/>Consistency</th>
-                      <th className="px-5 py-4 text-[11px] uppercase font-semibold text-slate-500 whitespace-nowrap">Sponsorship<br/>Transparency</th>
-                      <th className="px-5 py-4 text-[11px] uppercase font-semibold text-slate-500 whitespace-nowrap">Product<br/>Depth <HelpCircle className="w-3 h-3 inline ml-0.5 text-slate-400" /></th>
-                      <th className="px-5 py-4 text-[11px] uppercase font-semibold text-slate-500 whitespace-nowrap">Videos<br/>Found</th>
+                      <th className="px-5 py-4 text-[11px] uppercase font-semibold text-slate-500 whitespace-nowrap text-center">Subscriber<br />Count <HelpCircle className="w-3 h-3 inline ml-0.5 text-slate-400" /></th>
+                      <th className="px-5 py-4 text-[11px] uppercase font-semibold text-slate-500 whitespace-nowrap">Review<br />Consistency</th>
+                      <th className="px-5 py-4 text-[11px] uppercase font-semibold text-slate-500 whitespace-nowrap">Sponsorship<br />Transparency</th>
+                      <th className="px-5 py-4 text-[11px] uppercase font-semibold text-slate-500 whitespace-nowrap">Product<br />Depth <HelpCircle className="w-3 h-3 inline ml-0.5 text-slate-400" /></th>
+                      <th className="px-5 py-4 text-[11px] uppercase font-semibold text-slate-500 whitespace-nowrap">Videos<br />Found</th>
                       <th className="px-5 py-4 text-[11px] uppercase font-semibold text-slate-500 whitespace-nowrap">Status</th>
                       <th className="px-5 py-4 text-[11px] uppercase font-semibold text-slate-500 whitespace-nowrap text-center">Action</th>
                     </tr>
@@ -269,7 +268,7 @@ export default function YouTubeReviewerTrust() {
                 <div className="flex items-center gap-1">
                   Showing 1 to 7 of 7 results
                 </div>
-                
+
                 {/* Pagination Controls */}
                 <div className="flex items-center gap-2">
                   <button className="w-8 h-8 flex items-center justify-center rounded border border-slate-200 text-slate-400 cursor-not-allowed">
@@ -284,7 +283,7 @@ export default function YouTubeReviewerTrust() {
                 </div>
 
                 <div className="flex items-center gap-2">
-                  Rows per page 
+                  Rows per page
                   <button className="flex items-center gap-1 border border-slate-200 rounded px-2 py-1 text-slate-700">
                     25 <ChevronDown className="w-3 h-3" />
                   </button>
@@ -295,7 +294,7 @@ export default function YouTubeReviewerTrust() {
             {/* Action Legend Below Table (Outside the card) */}
             <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-5 mt-2">
               <div className="flex flex-wrap items-center justify-start lg:justify-between gap-x-8 gap-y-6">
-               <div className="flex items-center gap-3.5">
+                <div className="flex items-center gap-3.5">
                   <div className="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100 shrink-0">
                     <Eye className="w-5 h-5" />
                   </div>
@@ -303,8 +302,8 @@ export default function YouTubeReviewerTrust() {
                     <span className="text-[15px] font-bold text-slate-900 leading-tight">View Channel</span>
                     <span className="text-[13px] text-slate-500 leading-tight mt-0.5">View channel profile</span>
                   </div>
-               </div>
-               <div className="flex items-center gap-3.5">
+                </div>
+                <div className="flex items-center gap-3.5">
                   <div className="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100 shrink-0">
                     <Check className="w-5 h-5 stroke-[3]" />
                   </div>
@@ -312,8 +311,8 @@ export default function YouTubeReviewerTrust() {
                     <span className="text-[15px] font-bold text-slate-900 leading-tight">Approve Trusted</span>
                     <span className="text-[13px] text-slate-500 leading-tight mt-0.5">Add to trusted list</span>
                   </div>
-               </div>
-               <div className="flex items-center gap-3.5">
+                </div>
+                <div className="flex items-center gap-3.5">
                   <div className="w-10 h-10 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center border border-rose-100 shrink-0">
                     <ShieldBan className="w-5 h-5" />
                   </div>
@@ -321,8 +320,8 @@ export default function YouTubeReviewerTrust() {
                     <span className="text-[15px] font-bold text-slate-900 leading-tight">Block</span>
                     <span className="text-[13px] text-slate-500 leading-tight mt-0.5">Block from analysis</span>
                   </div>
-               </div>
-               <div className="flex items-center gap-3.5">
+                </div>
+                <div className="flex items-center gap-3.5">
                   <div className="w-10 h-10 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center border border-purple-100 shrink-0">
                     <AlertTriangle className="w-5 h-5" />
                   </div>
@@ -330,63 +329,13 @@ export default function YouTubeReviewerTrust() {
                     <span className="text-[15px] font-bold text-slate-900 leading-tight">Request Manual Review</span>
                     <span className="text-[13px] text-slate-500 leading-tight mt-0.5">Escalate for review</span>
                   </div>
-               </div>
+                </div>
               </div>
             </div>
           </div>
 
           {/* RIGHT COLUMN: INSIGHTS PANEL */}
-          <div className="flex flex-col gap-3 h-max">
-            
-            {/* Trust Score Factors */}
-            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-5">
-              <div className="flex items-center gap-2 mb-4">
-                <ShieldCheck className="w-5 h-5 text-indigo-600" />
-                <h2 className="text-base font-bold text-slate-900">Trust Score Factors</h2>
-              </div>
-              
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded bg-emerald-50 text-emerald-600 flex items-center justify-center">
-                      <ShieldCheck className="w-4 h-4" />
-                    </div>
-                    <span className="text-sm font-medium text-slate-700">Review Authenticity</span>
-                  </div>
-                  <span className="text-sm font-bold text-slate-900">35%</span>
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded bg-blue-50 text-blue-600 flex items-center justify-center">
-                      <Star className="w-4 h-4" />
-                    </div>
-                    <span className="text-sm font-medium text-slate-700">Sponsorship Transparency</span>
-                  </div>
-                  <span className="text-sm font-bold text-slate-900">25%</span>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded bg-purple-50 text-purple-600 flex items-center justify-center">
-                      <RefreshCw className="w-4 h-4" />
-                    </div>
-                    <span className="text-sm font-medium text-slate-700">Content Consistency</span>
-                  </div>
-                  <span className="text-sm font-bold text-slate-900">20%</span>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded bg-amber-50 text-amber-600 flex items-center justify-center">
-                      <Clock className="w-4 h-4" />
-                    </div>
-                    <span className="text-sm font-medium text-slate-700">Account Age & History</span>
-                  </div>
-                  <span className="text-sm font-bold text-slate-900">20%</span>
-                </div>
-              </div>
-            </div>
+          <div className="flex flex-col gap-3 h-max xl:mt-[72px] mt-4">
 
             {/* Top Review Categories */}
             <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-5">
@@ -394,7 +343,7 @@ export default function YouTubeReviewerTrust() {
                 <h2 className="text-base font-bold text-slate-900">Top Review Categories</h2>
                 <Filter className="w-4 h-4 text-slate-400" />
               </div>
-              
+
               <div className="space-y-4">
                 <div className="flex items-center w-full gap-3">
                   <div className="w-24 shrink-0">
@@ -454,13 +403,63 @@ export default function YouTubeReviewerTrust() {
               </div>
             </div>
 
+            {/* Trust Score Factors */}
+            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-5">
+              <div className="flex items-center gap-2 mb-4">
+                <ShieldCheck className="w-5 h-5 text-indigo-600" />
+                <h2 className="text-base font-bold text-slate-900">Trust Score Factors</h2>
+              </div>
+
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                      <ShieldCheck className="w-4 h-4" />
+                    </div>
+                    <span className="text-sm font-medium text-slate-700">Review Authenticity</span>
+                  </div>
+                  <span className="text-sm font-bold text-slate-900">35%</span>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded bg-blue-50 text-blue-600 flex items-center justify-center">
+                      <Star className="w-4 h-4" />
+                    </div>
+                    <span className="text-sm font-medium text-slate-700">Sponsorship Transparency</span>
+                  </div>
+                  <span className="text-sm font-bold text-slate-900">25%</span>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded bg-purple-50 text-purple-600 flex items-center justify-center">
+                      <RefreshCw className="w-4 h-4" />
+                    </div>
+                    <span className="text-sm font-medium text-slate-700">Content Consistency</span>
+                  </div>
+                  <span className="text-sm font-bold text-slate-900">20%</span>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded bg-amber-50 text-amber-600 flex items-center justify-center">
+                      <Clock className="w-4 h-4" />
+                    </div>
+                    <span className="text-sm font-medium text-slate-700">Account Age & History</span>
+                  </div>
+                  <span className="text-sm font-bold text-slate-900">20%</span>
+                </div>
+              </div>
+            </div>
+
             {/* Recent Reviewer Decisions */}
             <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-5">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-base font-bold text-slate-900">Recent Decisions</h2>
                 <span className="text-xs font-semibold text-indigo-600 cursor-pointer">View All</span>
               </div>
-              
+
               <div className="space-y-5 mt-2">
                 <div className="flex items-center gap-3">
                   <div className="w-7 h-7 rounded-full bg-emerald-600 flex items-center justify-center shrink-0 shadow-sm">
@@ -514,7 +513,7 @@ export default function YouTubeReviewerTrust() {
                 </div>
               </div>
             </div>
-            
+
           </div>
         </div>
       ) : (
@@ -526,7 +525,7 @@ export default function YouTubeReviewerTrust() {
           <p className="text-sm text-slate-500 text-center max-w-md">
             The {activeTab.toLowerCase()} view is currently empty or under development. Switch back to Channel Queue to see the main dashboard.
           </p>
-          <button 
+          <button
             onClick={() => setActiveTab("Channel Queue")}
             className="mt-6 px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-semibold hover:bg-indigo-700 transition-colors shadow-sm"
           >

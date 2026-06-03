@@ -379,14 +379,14 @@ export default function ProductMergeReview() {
             <span className="text-sm font-bold text-green-600">Merge these products</span>
           </div>
           <div className="flex flex-wrap items-center justify-center sm:justify-end gap-3">
-            <Button variant="outline" className="h-10 px-5 text-xs font-bold text-slate-700 bg-white border-slate-200 shadow-sm rounded-lg hover:bg-slate-50">
-              <HelpCircle className="w-4 h-4 mr-2 text-slate-400" /> Request More Evidence
+            <Button variant="outline" className="h-10 px-4 sm:px-5 text-xs font-bold text-slate-700 bg-white border-slate-200 shadow-sm rounded-lg hover:bg-slate-50 whitespace-nowrap">
+              <HelpCircle className="w-4 h-4 mr-1.5 sm:mr-2 text-slate-400 shrink-0" /> Request More Evidence
             </Button>
-            <Button variant="outline" className="h-10 px-5 text-xs font-bold text-slate-700 bg-white border-slate-200 shadow-sm rounded-lg hover:bg-slate-50">
-              <X className="w-4 h-4 mr-2 text-slate-400" /> Keep Separate
+            <Button variant="outline" className="h-10 px-4 sm:px-5 text-xs font-bold text-slate-700 bg-white border-slate-200 shadow-sm rounded-lg hover:bg-slate-50 whitespace-nowrap">
+              <X className="w-4 h-4 mr-1.5 sm:mr-2 text-slate-400 shrink-0" /> Keep Separate
             </Button>
-            <Button className="h-10 px-6 text-xs font-bold bg-indigo-600 text-white hover:bg-indigo-700 shadow-sm rounded-lg">
-              <Merge className="w-4 h-4 mr-2" /> Merge Products
+            <Button className="h-10 px-4 sm:px-6 text-xs font-bold bg-indigo-600 text-white hover:bg-indigo-700 shadow-sm rounded-lg whitespace-nowrap">
+              <Merge className="w-4 h-4 mr-1.5 sm:mr-2 shrink-0" /> Merge Products
             </Button>
           </div>
         </div>

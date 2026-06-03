@@ -221,6 +221,7 @@ const groups: SidebarGroup[] = [
         name: "Compliance Logs",
         icon: Shield,
         subItems: [
+          { name: "Compliance Logs", href: "/dashboard/compliance" },
           { name: "AI Audit Logs", href: "/dashboard/compliance/ai" },
           { name: "Affiliate Disclosure Logs", href: "/dashboard/compliance/affiliate" },
           { name: "Source History", href: "/dashboard/compliance/source" },

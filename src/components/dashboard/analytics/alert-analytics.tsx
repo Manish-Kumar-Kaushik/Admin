@@ -619,7 +619,7 @@ export default function AlertAnalytics() {
 
   return (
     <div className="bg-slate-50 min-h-screen w-full max-w-full overflow-x-hidden">
-      <div className="w-full max-w-full px-4 sm:px-8 py-6 space-y-6">
+      <div className="w-full max-w-full px-3 sm:px-4 md:px-6 py-4 sm:py-6 space-y-5 sm:space-y-6">
 
         {/* ─── Page Header ─── */}
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between w-full">
@@ -781,22 +781,22 @@ export default function AlertAnalytics() {
               <h2 className="text-sm font-bold text-slate-900">Top Performing Alerts</h2>
             </div>
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[500px] text-xs text-left border-collapse">
+              <table className="w-full min-w-[700px] text-xs text-left border-collapse">
                 <thead>
-                  <tr className="text-slate-400 font-bold border-b border-slate-100 text-[10px] uppercase tracking-wider">
+                  <tr className="text-slate-400 font-bold border-b border-slate-100 text-[10px] uppercase tracking-wider whitespace-nowrap">
                     <th className="py-3 px-5 w-[30%]">Alert Name</th>
                     <th className="py-3 w-[15%]">Type</th>
-                    <th className="py-3 w-[10%]">Triggered</th>
-                    <th className="py-3 w-[10%]">CTR</th>
-                    <th className="py-3 w-[15%]">Conversion Rate</th>
-                    <th className="py-3 pr-5 w-[20%]">Rev/User</th>
+                    <th className="py-3 w-[12%] pl-4 sm:pl-8">Triggered</th>
+                    <th className="py-3 w-[10%] pl-4 sm:pl-8">CTR</th>
+                    <th className="py-3 w-[15%] pl-4 sm:pl-8 whitespace-nowrap">Conversion Rate</th>
+                    <th className="py-3 pr-5 pl-6 sm:pl-10 w-[18%]">REVENUE</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
                   {topAlerts.map((row, i) => (
                     <tr key={i} className="hover:bg-slate-50/40 transition-colors">
                       <td className="py-3.5 px-5">
-                        <div className="flex items-center gap-2.5">
+                        <div className="flex items-center gap-2.5 text-left whitespace-nowrap">
                           <img src={row.image} alt={row.name} className="h-8 w-8 rounded-lg object-cover border border-slate-150 shrink-0" />
                           <div>
                             <div className="font-bold text-slate-900 text-xs leading-tight">{row.name}</div>
@@ -804,13 +804,21 @@ export default function AlertAnalytics() {
                           </div>
                         </div>
                       </td>
-                      <td className="py-3.5">
-                        <span className={`inline-flex rounded px-1.5 py-0.5 text-[10px] font-bold ${getTypeBadge(row.type)}`}>{row.type}</span>
+                      <td className="py-3.5 whitespace-nowrap">
+                        <span className={`inline-flex rounded px-1.5 py-0.5 text-[10px] font-bold w-fit ${getTypeBadge(row.type)}`}>{row.type}</span>
                       </td>
-                      <td className="py-3.5 font-bold text-slate-800">{row.triggered}</td>
-                      <td className="py-3.5 font-semibold text-slate-700">{row.ctr}</td>
-                      <td className="py-3.5 font-semibold text-slate-700">{row.conv}</td>
-                      <td className="py-3.5 pr-5 font-bold text-slate-900">{row.rev}</td>
+                      <td className="py-3.5 pl-4 sm:pl-8 whitespace-nowrap">
+                        <span className="font-bold text-slate-800">{row.triggered}</span>
+                      </td>
+                      <td className="py-3.5 pl-4 sm:pl-8 whitespace-nowrap">
+                        <span className="font-semibold text-slate-700">{row.ctr}</span>
+                      </td>
+                      <td className="py-3.5 pl-4 sm:pl-8 whitespace-nowrap">
+                        <span className="font-semibold text-slate-700">{row.conv}</span>
+                      </td>
+                      <td className="py-3.5 pr-5 pl-6 sm:pl-10 whitespace-nowrap">
+                        <span className="font-bold text-slate-900">{row.rev}</span>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -829,9 +837,9 @@ export default function AlertAnalytics() {
               <h2 className="text-sm font-bold text-slate-900">Recent Alert Activity</h2>
             </div>
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[520px] text-xs text-left border-collapse">
+              <table className="w-full min-w-[800px] text-xs text-left border-collapse">
                 <thead>
-                  <tr className="text-slate-400 font-bold border-b border-slate-100 text-[10px] uppercase tracking-wider">
+                  <tr className="text-slate-400 font-bold border-b border-slate-100 text-[10px] uppercase tracking-wider whitespace-nowrap">
                     <th className="py-3 px-5 w-[14%]">Alert ID</th>
                     <th className="py-3 w-[20%]">Product</th>
                     <th className="py-3 w-[14%]">Type</th>
@@ -846,23 +854,29 @@ export default function AlertAnalytics() {
                     const ChanIcon = row.channelIcon;
                     return (
                       <tr key={i} className="hover:bg-slate-50/40 transition-colors">
-                        <td className="py-3.5 px-5 font-mono text-[10px] font-bold text-slate-700">{row.id}</td>
-                        <td className="py-3.5">
+                        <td className="py-3.5 px-5 font-mono text-[10px] font-bold text-slate-700 whitespace-nowrap">
+                          {row.id}
+                        </td>
+                        <td className="py-3.5 whitespace-nowrap">
                           <div className="flex items-center gap-2 min-w-0">
                             <img src={row.image} alt={row.product} className="h-7 w-7 rounded-md object-cover border border-slate-150 shrink-0" />
                             <span className="font-semibold text-slate-800 truncate text-xs">{row.product}</span>
                           </div>
                         </td>
-                        <td className="py-3.5">
-                          <span className={`inline-flex rounded px-1.5 py-0.5 text-[10px] font-bold ${getTypeBadge(row.type)}`}>{row.type}</span>
+                        <td className="py-3.5 whitespace-nowrap">
+                          <span className={`inline-flex rounded px-1.5 py-0.5 text-[10px] font-bold w-fit ${getTypeBadge(row.type)}`}>{row.type}</span>
                         </td>
-                        <td className="py-3.5 font-semibold text-slate-700 text-xs">{row.user}</td>
-                        <td className="py-3.5 text-[10px] text-slate-500 font-medium">{row.triggeredOn}</td>
-                        <td className="py-3.5">
+                        <td className="py-3.5 font-semibold text-slate-700 text-xs whitespace-nowrap">
+                          {row.user}
+                        </td>
+                        <td className="py-3.5 text-[10px] text-slate-500 font-medium whitespace-nowrap">
+                          {row.triggeredOn}
+                        </td>
+                        <td className="py-3.5 whitespace-nowrap">
                           <ChanIcon className="h-4 w-4 text-slate-400" />
                         </td>
-                        <td className="py-3.5 pr-5">
-                          <span className={`inline-flex rounded-full px-2 py-0.5 text-[10px] font-bold ${getStatusBadge(row.status)}`}>{row.status}</span>
+                        <td className="py-3.5 pr-5 whitespace-nowrap">
+                          <span className={`inline-flex rounded-full px-2 py-0.5 text-[10px] font-bold w-fit ${getStatusBadge(row.status)}`}>{row.status}</span>
                         </td>
                       </tr>
                     );

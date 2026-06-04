@@ -421,6 +421,7 @@ export default function ComplianceLog() {
               <span className="text-xs font-bold text-slate-700 select-none leading-none">Product</span>
               <div className="flex items-center border border-slate-200 rounded-xl bg-white px-3 min-w-[180px] h-[38px] gap-1.5 shadow-3xs">
                 <input
+                  suppressHydrationWarning
                   type="text"
                   value={productSearch}
                   onChange={(e) => setProductSearch(e.target.value)}
@@ -436,6 +437,7 @@ export default function ComplianceLog() {
               <span className="text-xs font-bold text-slate-700 select-none leading-none">User</span>
               <div className="flex items-center border border-slate-200 rounded-xl bg-white px-3 min-w-[180px] h-[38px] gap-1.5 shadow-3xs">
                 <input
+                  suppressHydrationWarning
                   type="text"
                   value={userSearch}
                   onChange={(e) => setUserSearch(e.target.value)}

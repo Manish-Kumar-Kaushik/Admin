@@ -306,7 +306,7 @@ export default function AffiliateDisclosureLogs() {
 
   return (
     <div className="bg-slate-50 min-h-screen w-full max-w-full overflow-x-hidden">
-      <div className="w-full max-w-full px-4 sm:px-8 py-6 space-y-6">
+      <div className="w-full max-w-full px-3 sm:px-4 md:px-6 py-4 sm:py-6 space-y-5 sm:space-y-6">
         
         {/* ─── Page Header area ─── */}
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between w-full">
@@ -412,13 +412,13 @@ export default function AffiliateDisclosureLogs() {
         </div>
 
         {/* ─── Filters Grid ─── */}
-        <section className="rounded-xl border border-slate-200 bg-white p-3 shadow-xs w-full max-w-full flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 min-w-0">
-          <div className="flex flex-wrap items-center gap-3.5 w-full lg:w-auto">
+        <section className="rounded-xl border border-slate-200 bg-white p-3 shadow-xs w-full max-w-full flex flex-col xl:flex-row xl:items-center xl:justify-between gap-4 min-w-0">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-3 w-full xl:w-auto">
             
             {/* Date Range Selector */}
-            <div className="flex flex-col border border-slate-200 rounded-xl bg-white px-3 py-1.5 min-w-[185px] h-[52px] justify-between relative shadow-2xs">
-              <label className="text-[10px] text-slate-400 font-bold select-none block leading-none">Date Range</label>
-              <div className="flex items-center gap-1.5 text-xs font-bold text-slate-800 leading-none mb-0.5">
+            <div className="col-span-2 md:col-span-1 flex flex-col border border-slate-200 rounded-xl bg-white px-3 py-1.5 w-full h-[52px] justify-between relative shadow-2xs">
+              <label className="text-[9px] md:text-[10px] text-slate-400 font-bold select-none block leading-none">Date Range</label>
+              <div className="flex items-center gap-1.5 text-[11px] md:text-xs font-bold text-slate-800 leading-none mb-0.5">
                 <Calendar className="h-3.5 w-3.5 text-slate-400 shrink-0" />
                 <span>{dateRange}</span>
                 <ChevronDown className="h-3.5 w-3.5 text-slate-400 ml-auto shrink-0" />
@@ -426,13 +426,13 @@ export default function AffiliateDisclosureLogs() {
             </div>
 
             {/* Placement Filter */}
-            <div className="flex flex-col border border-slate-200 rounded-xl bg-white px-3 py-1.5 min-w-[140px] h-[52px] justify-between relative shadow-2xs">
-              <label className="text-[10px] text-slate-400 font-bold select-none block leading-none">Placement</label>
+            <div className="flex flex-col border border-slate-200 rounded-xl bg-white px-3 py-1.5 w-full h-[52px] justify-between relative shadow-2xs">
+              <label className="text-[9px] md:text-[10px] text-slate-400 font-bold select-none block leading-none">Placement</label>
               <div className="relative w-full flex items-center mb-0.5">
                 <select
                   value={selectedPlacement}
                   onChange={(e) => setSelectedPlacement(e.target.value)}
-                  className="w-full bg-transparent text-xs font-bold text-slate-800 outline-none cursor-pointer pr-5 appearance-none select-none"
+                  className="w-full bg-transparent text-[11px] md:text-xs font-bold text-slate-800 outline-none cursor-pointer pr-5 appearance-none select-none"
                 >
                   <option value="All Placements">All Placements</option>
                   <option value="Product Page">Product Page</option>
@@ -445,13 +445,13 @@ export default function AffiliateDisclosureLogs() {
             </div>
 
             {/* Page/Location Filter */}
-            <div className="flex flex-col border border-slate-200 rounded-xl bg-white px-3 py-1.5 min-w-[140px] h-[52px] justify-between relative shadow-2xs">
-              <label className="text-[10px] text-slate-400 font-bold select-none block leading-none">Page / Location</label>
+            <div className="flex flex-col border border-slate-200 rounded-xl bg-white px-3 py-1.5 w-full h-[52px] justify-between relative shadow-2xs">
+              <label className="text-[9px] md:text-[10px] text-slate-400 font-bold select-none block leading-none">Page / Location</label>
               <div className="relative w-full flex items-center mb-0.5">
                 <select
                   value={selectedPageLocation}
                   onChange={(e) => setSelectedPageLocation(e.target.value)}
-                  className="w-full bg-transparent text-xs font-bold text-slate-800 outline-none cursor-pointer pr-5 appearance-none select-none"
+                  className="w-full bg-transparent text-[11px] md:text-xs font-bold text-slate-800 outline-none cursor-pointer pr-5 appearance-none select-none"
                 >
                   <option value="All Pages">All Pages</option>
                 </select>
@@ -460,13 +460,13 @@ export default function AffiliateDisclosureLogs() {
             </div>
 
             {/* Device Filter */}
-            <div className="flex flex-col border border-slate-200 rounded-xl bg-white px-3 py-1.5 min-w-[140px] h-[52px] justify-between relative shadow-2xs">
-              <label className="text-[10px] text-slate-400 font-bold select-none block leading-none">Device</label>
+            <div className="flex flex-col border border-slate-200 rounded-xl bg-white px-3 py-1.5 w-full h-[52px] justify-between relative shadow-2xs">
+              <label className="text-[9px] md:text-[10px] text-slate-400 font-bold select-none block leading-none">Device</label>
               <div className="relative w-full flex items-center mb-0.5">
                 <select
                   value={selectedDevice}
                   onChange={(e) => setSelectedDevice(e.target.value)}
-                  className="w-full bg-transparent text-xs font-bold text-slate-800 outline-none cursor-pointer pr-5 appearance-none select-none"
+                  className="w-full bg-transparent text-[11px] md:text-xs font-bold text-slate-800 outline-none cursor-pointer pr-5 appearance-none select-none"
                 >
                   <option value="All Devices">All Devices</option>
                   <option value="Desktop">Desktop</option>
@@ -477,13 +477,13 @@ export default function AffiliateDisclosureLogs() {
             </div>
 
             {/* User Filter */}
-            <div className="flex flex-col border border-slate-200 rounded-xl bg-white px-3 py-1.5 min-w-[140px] h-[52px] justify-between relative shadow-2xs">
-              <label className="text-[10px] text-slate-400 font-bold select-none block leading-none">User</label>
+            <div className="flex flex-col border border-slate-200 rounded-xl bg-white px-3 py-1.5 w-full h-[52px] justify-between relative shadow-2xs">
+              <label className="text-[9px] md:text-[10px] text-slate-400 font-bold select-none block leading-none">User</label>
               <div className="relative w-full flex items-center mb-0.5">
                 <select
                   value={selectedUser}
                   onChange={(e) => setSelectedUser(e.target.value)}
-                  className="w-full bg-transparent text-xs font-bold text-slate-800 outline-none cursor-pointer pr-5 appearance-none select-none"
+                  className="w-full bg-transparent text-[11px] md:text-xs font-bold text-slate-800 outline-none cursor-pointer pr-5 appearance-none select-none"
                 >
                   <option value="All Users">All Users</option>
                   <option value="Sarah Johnson">Sarah Johnson</option>
@@ -521,8 +521,8 @@ export default function AffiliateDisclosureLogs() {
             <div className="rounded-xl border border-slate-200 bg-white shadow-xs min-w-0 overflow-hidden">
               
               {/* Tab Header row */}
-              <div className="px-5 border-b border-slate-200 flex flex-wrap items-center justify-between gap-3 bg-white">
-                <div className="flex border-b border-transparent pb-0.5">
+              <div className="px-5 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white">
+                <div className="flex border-b border-transparent pb-0.5 overflow-x-auto max-w-full [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
                   {[
                     { label: "All Logs", count: 128482 },
                     { label: "Impressions", count: 128482 },

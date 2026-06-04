@@ -196,9 +196,10 @@ const groups: SidebarGroup[] = [
         name: "Receipts",
         icon: Receipt,
         subItems: [
-          { name: "Receipt Uploads", href: "/dashboard/receipts" },
+          { name: "Receipt Admin", href: "/dashboard/receipts" },
           { name: "OCR Review", href: "/dashboard/receipts/ocr" },
           { name: "Product Match Review", href: "/dashboard/receipts/match" },
+          { name: "Receipt Uploads", href: "/dashboard/receipts/uploads" },
         ],
       },
       {

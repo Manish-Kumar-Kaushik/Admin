@@ -266,72 +266,74 @@ export default function OCRReview() {
           </div>
         </div>
 
-        {/* KPI Stats Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          
-          {/* Card 1: Total Receipts */}
-          <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm flex items-center gap-4">
-            <div className="h-10 w-10 rounded-lg bg-indigo-50 border border-indigo-100/50 text-[#4F46E5] flex items-center justify-center shrink-0">
-              <FileText className="h-5 w-5" />
-            </div>
-            <div className="min-w-0">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Total Receipts</span>
-              <span className="text-xl font-black text-slate-900 leading-none mt-1 block">1,248</span>
-              <span className="text-[10px] text-slate-500 block mt-1">
-                <span className="text-emerald-600 font-bold">↑ 14.6%</span> vs last 30 days
-              </span>
-            </div>
-          </div>
 
-          {/* Card 2: Pending Review */}
-          <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm flex items-center gap-4">
-            <div className="h-10 w-10 rounded-lg bg-amber-50 border border-amber-100/50 text-amber-600 flex items-center justify-center shrink-0">
-              <Clock className="h-5 w-5" />
-            </div>
-            <div className="min-w-0">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Pending Review</span>
-              <span className="text-xl font-black text-slate-900 leading-none mt-1 block">132</span>
-              <span className="text-[10px] text-slate-500 block mt-1">
-                <span className="text-emerald-600 font-bold">↑ 11.2%</span> vs last 30 days
-              </span>
-            </div>
-          </div>
-
-          {/* Card 3: Approved */}
-          <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm flex items-center gap-4">
-            <div className="h-10 w-10 rounded-lg bg-emerald-50 border border-emerald-100/50 text-emerald-600 flex items-center justify-center shrink-0">
-              <CheckCircle className="h-5 w-5" />
-            </div>
-            <div className="min-w-0">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Approved</span>
-              <span className="text-xl font-black text-slate-900 leading-none mt-1 block">1,032</span>
-              <span className="text-[10px] text-slate-500 block mt-1">
-                <span className="text-emerald-600 font-bold">↑ 8.7%</span> vs last 30 days
-              </span>
-            </div>
-          </div>
-
-          {/* Card 4: Needs Correction */}
-          <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm flex items-center gap-4">
-            <div className="h-10 w-10 rounded-lg bg-rose-50 border border-rose-100/50 text-rose-600 flex items-center justify-center shrink-0">
-              <AlertCircle className="h-5 w-5" />
-            </div>
-            <div className="min-w-0">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Needs Correction</span>
-              <span className="text-xl font-black text-slate-900 leading-none mt-1 block">84</span>
-              <span className="text-[10px] text-slate-500 block mt-1">
-                <span className="text-rose-600 font-bold">↓ 6.3%</span> vs last 30 days
-              </span>
-            </div>
-          </div>
-
-        </div>
 
         {/* Main Grid Wrapper */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
           
           {/* Left Table Panel (8 columns if right pane open, else 12) */}
           <div className={cn("min-w-0 space-y-4", showRightPane ? "lg:col-span-8" : "lg:col-span-12")}>
+            
+            {/* KPI Stats Cards */}
+            <div className="grid grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-4">
+              
+              {/* Card 1: Total Receipts */}
+              <div className="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm flex items-center gap-3 w-full">
+                <div className="h-9 w-9 rounded-lg bg-indigo-50 border border-indigo-100/50 text-[#4F46E5] flex items-center justify-center shrink-0">
+                  <FileText className="h-4.5 w-4.5" />
+                </div>
+                <div className="min-w-0">
+                  <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block truncate">Total Receipts</span>
+                  <span className="text-lg font-black text-slate-900 leading-none mt-1 block truncate">1,248</span>
+                  <span className="text-[8px] text-slate-500 block mt-1 truncate">
+                    <span className="text-emerald-600 font-bold">↑ 14.6%</span> vs last 30 days
+                  </span>
+                </div>
+              </div>
+
+              {/* Card 2: Pending Review */}
+              <div className="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm flex items-center gap-3 w-full">
+                <div className="h-9 w-9 rounded-lg bg-amber-50 border border-amber-100/50 text-amber-600 flex items-center justify-center shrink-0">
+                  <Clock className="h-4.5 w-4.5" />
+                </div>
+                <div className="min-w-0">
+                  <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block truncate">Pending Review</span>
+                  <span className="text-lg font-black text-slate-900 leading-none mt-1 block truncate">132</span>
+                  <span className="text-[8px] text-slate-500 block mt-1 truncate">
+                    <span className="text-emerald-600 font-bold">↑ 11.2%</span> vs last 30 days
+                  </span>
+                </div>
+              </div>
+
+              {/* Card 3: Approved */}
+              <div className="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm flex items-center gap-3 w-full">
+                <div className="h-9 w-9 rounded-lg bg-emerald-50 border border-emerald-100/50 text-emerald-600 flex items-center justify-center shrink-0">
+                  <CheckCircle className="h-4.5 w-4.5" />
+                </div>
+                <div className="min-w-0">
+                  <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block truncate">Approved</span>
+                  <span className="text-lg font-black text-slate-900 leading-none mt-1 block truncate">1,032</span>
+                  <span className="text-[8px] text-slate-500 block mt-1 truncate">
+                    <span className="text-emerald-600 font-bold">↑ 8.7%</span> vs last 30 days
+                  </span>
+                </div>
+              </div>
+
+              {/* Card 4: Needs Correction */}
+              <div className="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm flex items-center gap-3 w-full">
+                <div className="h-9 w-9 rounded-lg bg-rose-50 border border-rose-100/50 text-rose-600 flex items-center justify-center shrink-0">
+                  <AlertCircle className="h-4.5 w-4.5" />
+                </div>
+                <div className="min-w-0">
+                  <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block truncate">Needs Correction</span>
+                  <span className="text-lg font-black text-slate-900 leading-none mt-1 block truncate">84</span>
+                  <span className="text-[8px] text-slate-500 block mt-1 truncate">
+                    <span className="text-rose-600 font-bold">↓ 6.3%</span> vs last 30 days
+                  </span>
+                </div>
+              </div>
+            </div>
+
                {/* Tabs & Filters Card */}
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-2xs space-y-4 select-none">
               

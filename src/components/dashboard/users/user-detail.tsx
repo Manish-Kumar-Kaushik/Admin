@@ -282,8 +282,8 @@ export default function UserDetail() {
                     </div>
                   </div>
 
-                  {/* 5 metric counters - next to details, responsive layout */}
-                  <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-5 lg:flex lg:flex-row gap-3 lg:gap-0 lg:border-l lg:border-slate-200 lg:divide-x lg:divide-slate-200 w-full lg:w-auto shrink-0 select-none mt-4 lg:mt-0">
+                  {/* 5 metric counters - next to details, horizontally scrollable with | separators */}
+                  <div className="flex flex-row items-center divide-x divide-slate-200 lg:border-l lg:border-slate-200 w-full lg:w-auto shrink-0 select-none mt-4 lg:mt-0 overflow-x-auto scrollbar-none pb-1 lg:pb-0">
                     {[
                       { label: "Saved Products", val: "24" },
                       { label: "Price Alerts", val: "5" },
@@ -293,9 +293,9 @@ export default function UserDetail() {
                     ].map((m) => (
                       <div
                         key={m.label}
-                        className="flex flex-col items-center justify-center p-3 rounded-xl border border-slate-100 bg-slate-50/50 hover:bg-indigo-50/20 hover:border-indigo-100 transition-all duration-200 text-center min-w-0 lg:border-none lg:bg-transparent lg:hover:bg-transparent lg:p-0 lg:px-4 sm:px-6 lg:min-w-[90px] xl:min-w-[115px] group/metric"
+                        className="flex flex-col items-center justify-center px-4 sm:px-5 text-center shrink-0 min-w-[90px] lg:min-w-[100px] xl:min-w-[115px] group/metric"
                       >
-                        <span className="text-[10px] sm:text-[11px] text-slate-500 font-bold tracking-tight mb-1.5 block leading-tight group-hover/metric:text-indigo-650 transition-colors">
+                        <span className="text-[10px] sm:text-[11px] text-slate-500 font-bold tracking-tight mb-1.5 block leading-tight group-hover/metric:text-indigo-650 transition-colors whitespace-nowrap">
                           {m.label}
                         </span>
                         <span className="text-2xl sm:text-3xl font-black text-slate-950 group-hover/metric:scale-110 transition-transform duration-200 cursor-default">

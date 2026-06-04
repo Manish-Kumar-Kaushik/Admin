@@ -300,70 +300,70 @@ export default function ProductMatchReview() {
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
               
               {/* Card 1: Total to Review */}
-              <div className="bg-white border border-slate-200 rounded-xl p-3 shadow-sm flex items-center gap-3">
-                <div className="h-8.5 w-8.5 rounded-lg bg-indigo-50 border border-indigo-100/50 text-[#4F46E5] flex items-center justify-center shrink-0">
-                  <FileText className="h-4.5 w-4.5" />
+              <div className="bg-white border border-slate-200 rounded-xl p-4 sm:p-5 shadow-sm flex items-center gap-4">
+                <div className="h-10 w-10 rounded-lg bg-indigo-50 border border-indigo-100/50 text-[#4F46E5] flex items-center justify-center shrink-0">
+                  <FileText className="h-5 w-5" />
                 </div>
                 <div className="min-w-0">
-                  <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Total to Review</span>
-                  <span className="text-base font-black text-slate-900 leading-none mt-0.5 block">1,248</span>
-                  <span className="text-[9px] text-slate-500 block mt-0.5 whitespace-nowrap">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Total to Review</span>
+                  <span className="text-xl font-black text-slate-900 leading-none mt-1.5 block">1,248</span>
+                  <span className="text-[10px] text-slate-500 block mt-1.5 whitespace-nowrap">
                     <span className="text-rose-600 font-bold">↓ 12.4%</span> vs 7d
                   </span>
                 </div>
               </div>
 
               {/* Card 2: High Confidence */}
-              <div className="bg-white border border-slate-200 rounded-xl p-3 shadow-sm flex items-center gap-3">
-                <div className="h-8.5 w-8.5 rounded-lg bg-emerald-50 border border-emerald-100/50 text-emerald-600 flex items-center justify-center shrink-0">
-                  <CheckCircle className="h-4.5 w-4.5" />
+              <div className="bg-white border border-slate-200 rounded-xl p-4 sm:p-5 shadow-sm flex items-center gap-4">
+                <div className="h-10 w-10 rounded-lg bg-emerald-50 border border-emerald-100/50 text-emerald-600 flex items-center justify-center shrink-0">
+                  <CheckCircle className="h-5 w-5" />
                 </div>
                 <div className="min-w-0">
-                  <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">High Confidence</span>
-                  <span className="text-base font-black text-slate-900 leading-none mt-0.5 block">842</span>
-                  <span className="text-[9px] text-slate-500 font-bold block mt-0.5">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">High Confidence</span>
+                  <span className="text-xl font-black text-slate-900 leading-none mt-1.5 block">842</span>
+                  <span className="text-[10px] text-slate-500 font-bold block mt-1.5">
                     67.6%
                   </span>
                 </div>
               </div>
 
               {/* Card 3: Needs Review */}
-              <div className="bg-white border border-slate-200 rounded-xl p-3 shadow-sm flex items-center gap-3">
-                <div className="h-8.5 w-8.5 rounded-lg bg-amber-50 border border-amber-100/50 text-amber-600 flex items-center justify-center shrink-0">
-                  <Clock className="h-4.5 w-4.5" />
+              <div className="bg-white border border-slate-200 rounded-xl p-4 sm:p-5 shadow-sm flex items-center gap-4">
+                <div className="h-10 w-10 rounded-lg bg-amber-50 border border-amber-100/50 text-amber-600 flex items-center justify-center shrink-0">
+                  <Clock className="h-5 w-5" />
                 </div>
                 <div className="min-w-0">
-                  <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Needs Review</span>
-                  <span className="text-base font-black text-slate-900 leading-none mt-0.5 block">286</span>
-                  <span className="text-[9px] text-slate-500 font-bold block mt-0.5">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Needs Review</span>
+                  <span className="text-xl font-black text-slate-900 leading-none mt-1.5 block">286</span>
+                  <span className="text-[10px] text-slate-500 font-bold block mt-1.5">
                     22.9%
                   </span>
                 </div>
               </div>
 
               {/* Card 4: Low Confidence */}
-              <div className="bg-white border border-slate-200 rounded-xl p-3 shadow-sm flex items-center gap-3">
-                <div className="h-8.5 w-8.5 rounded-lg bg-rose-50 border border-rose-100/50 text-rose-600 flex items-center justify-center shrink-0">
-                  <AlertCircle className="h-4.5 w-4.5" />
+              <div className="bg-white border border-slate-200 rounded-xl p-4 sm:p-5 shadow-sm flex items-center gap-4">
+                <div className="h-10 w-10 rounded-lg bg-rose-50 border border-rose-100/50 text-rose-600 flex items-center justify-center shrink-0">
+                  <AlertCircle className="h-5 w-5" />
                 </div>
                 <div className="min-w-0">
-                  <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Low Confidence</span>
-                  <span className="text-base font-black text-slate-900 leading-none mt-0.5 block">120</span>
-                  <span className="text-[9px] text-slate-500 font-bold block mt-0.5">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Low Confidence</span>
+                  <span className="text-xl font-black text-slate-900 leading-none mt-1.5 block">120</span>
+                  <span className="text-[10px] text-slate-500 font-bold block mt-1.5">
                     9.6%
                   </span>
                 </div>
               </div>
 
               {/* Card 5: Manual Match */}
-              <div className="bg-white border border-slate-200 rounded-xl p-3 shadow-sm flex items-center gap-3">
-                <div className="h-8.5 w-8.5 rounded-lg bg-blue-50 border border-blue-100/50 text-blue-600 flex items-center justify-center shrink-0">
-                  <Plus className="h-4.5 w-4.5" />
+              <div className="bg-white border border-slate-200 rounded-xl p-4 sm:p-5 shadow-sm flex items-center gap-4">
+                <div className="h-10 w-10 rounded-lg bg-blue-50 border border-blue-100/50 text-blue-600 flex items-center justify-center shrink-0">
+                  <Plus className="h-5 w-5" />
                 </div>
                 <div className="min-w-0">
-                  <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Manual Match</span>
-                  <span className="text-base font-black text-slate-900 leading-none mt-0.5 block">64</span>
-                  <span className="text-[9px] text-slate-500 font-bold block mt-0.5">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Manual Match</span>
+                  <span className="text-xl font-black text-slate-900 leading-none mt-1.5 block">64</span>
+                  <span className="text-[10px] text-slate-500 font-bold block mt-1.5">
                     5.1%
                   </span>
                 </div>

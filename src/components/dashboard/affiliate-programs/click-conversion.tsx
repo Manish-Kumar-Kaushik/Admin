@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
+import { ResponsiveContainer, ComposedChart, Area, XAxis, YAxis, CartesianGrid, Tooltip } from "recharts";
 import {
   MousePointerClick,
   ShoppingCart,
@@ -18,6 +19,16 @@ import {
   ChevronsLeft,
   ChevronsRight,
 } from "lucide-react";
+
+const performanceChartData = [
+  { date: "May 14", clicks: 3300, conversions: 900, cr: 4.5 },
+  { date: "May 15", clicks: 4000, conversions: 1300, cr: 5.2 },
+  { date: "May 16", clicks: 4200, conversions: 1550, cr: 4.2 },
+  { date: "May 17", clicks: 3800, conversions: 1200, cr: 4.9 },
+  { date: "May 18", clicks: 4200, conversions: 1200, cr: 4.5 },
+  { date: "May 19", clicks: 4000, conversions: 1200, cr: 4.0 },
+  { date: "May 20", clicks: 3100, conversions: 1000, cr: 3.8 },
+];
 
 interface ProgramPerformance {
   program: string;
@@ -203,7 +214,7 @@ export default function ClickConversion() {
               <span className="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Total Clicks</span>
               <span className="text-lg sm:text-2xl font-extrabold text-slate-900 leading-tight mt-0.5 block">24,842</span>
               <span className="text-[9px] sm:text-[10px] text-slate-500 block mt-0.5 leading-tight">
-                <span className="text-emerald-600 font-bold">↗ 18.6%</span> <span className="block sm:inline text-[8px] sm:text-[10px] text-slate-400">vs May 7 – 13</span>
+                <span className="text-emerald-600 font-bold">↗ 18.6%</span> <span className="block sm:inline sm:ml-2 text-[8px] sm:text-[10px] text-slate-400">vs May 7 - May 13</span>
               </span>
             </div>
           </div>
@@ -217,7 +228,7 @@ export default function ClickConversion() {
               <span className="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Conversions</span>
               <span className="text-lg sm:text-2xl font-extrabold text-slate-900 leading-tight mt-0.5 block">1,248</span>
               <span className="text-[9px] sm:text-[10px] text-slate-500 block mt-0.5 leading-tight">
-                <span className="text-emerald-600 font-bold">↗ 12.3%</span> <span className="block sm:inline text-[8px] sm:text-[10px] text-slate-400">vs May 7 – 13</span>
+                <span className="text-emerald-600 font-bold">↗ 12.3%</span> <span className="block sm:inline sm:ml-2 text-[8px] sm:text-[10px] text-slate-400">vs May 7 - May 13</span>
               </span>
             </div>
           </div>
@@ -231,7 +242,7 @@ export default function ClickConversion() {
               <span className="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Conversion Rate</span>
               <span className="text-lg sm:text-2xl font-extrabold text-slate-900 leading-tight mt-0.5 block">5.02%</span>
               <span className="text-[9px] sm:text-[10px] text-slate-500 block mt-0.5 leading-tight">
-                <span className="text-emerald-600 font-bold">↗ 8.4%</span> <span className="block sm:inline text-[8px] sm:text-[10px] text-slate-400">vs May 7 – 13</span>
+                <span className="text-emerald-600 font-bold">↗ 8.4%</span> <span className="block sm:inline sm:ml-2 text-[8px] sm:text-[10px] text-slate-400">vs May 7 - May 13</span>
               </span>
             </div>
           </div>
@@ -251,7 +262,7 @@ export default function ClickConversion() {
               <span className="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Total Earnings</span>
               <span className="text-lg sm:text-2xl font-extrabold text-slate-900 leading-tight mt-0.5 block">$4,832.19</span>
               <span className="text-[9px] sm:text-[10px] text-slate-500 block mt-0.5 leading-tight">
-                <span className="text-emerald-600 font-bold">↗ 15.7%</span> <span className="block sm:inline text-[8px] sm:text-[10px] text-slate-400">vs May 7 – 13</span>
+                <span className="text-emerald-600 font-bold">↗ 15.7%</span> <span className="block sm:inline sm:ml-2 text-[8px] sm:text-[10px] text-slate-400">vs May 7 - May 13</span>
               </span>
             </div>
           </div>
@@ -265,7 +276,7 @@ export default function ClickConversion() {
               <span className="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-wider block">EPC</span>
               <span className="text-lg sm:text-2xl font-extrabold text-slate-900 leading-tight mt-0.5 block">$0.19</span>
               <span className="text-[9px] sm:text-[10px] text-slate-500 block mt-0.5 leading-tight">
-                <span className="text-emerald-600 font-bold">↗ 9.1%</span> <span className="block sm:inline text-[8px] sm:text-[10px] text-slate-400">vs May 7 – 13</span>
+                <span className="text-emerald-600 font-bold">↗ 9.1%</span> <span className="block sm:inline sm:ml-2 text-[8px] sm:text-[10px] text-slate-400">vs May 7 - May 13</span>
               </span>
             </div>
           </div>
@@ -305,145 +316,110 @@ export default function ClickConversion() {
             </div>
 
             {/* Dual Y-Axes Chart Area */}
-            <div className="flex gap-2 items-stretch h-52 relative">
-              {/* Left Y Axis (Clicks/Conversions) */}
-              <div className="flex flex-col justify-between text-[9px] font-bold text-slate-400 w-6 text-right pr-1 py-1">
-                <span>5K</span>
-                <span>4K</span>
-                <span>3K</span>
-                <span>2K</span>
-                <span>1K</span>
-                <span>0</span>
-              </div>
-
-              {/* Center Graph Area */}
-              <div className="flex-1 relative border-l border-b border-slate-100">
-                {/* SVG Graph */}
-                <svg className="w-full h-full overflow-visible" viewBox="0 0 100 100" preserveAspectRatio="none">
-                  {/* Gradient Definitions */}
+            <div className="h-[250px] w-full mt-2 relative pl-8 pr-8">
+              <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
+                <ComposedChart data={performanceChartData} margin={{ top: 15, right: 0, left: 0, bottom: 0 }}>
                   <defs>
-                    <linearGradient id="purpleArea" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#4F46E5" stopOpacity="0.08" />
-                      <stop offset="100%" stopColor="#4F46E5" stopOpacity="0.0" />
+                    <linearGradient id="colorClicks" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#4F46E5" stopOpacity={0.15}/>
+                      <stop offset="95%" stopColor="#4F46E5" stopOpacity={0}/>
                     </linearGradient>
-                    <linearGradient id="orangeArea" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#F59E0B" stopOpacity="0.06" />
-                      <stop offset="100%" stopColor="#F59E0B" stopOpacity="0.0" />
+                    <linearGradient id="colorConversions" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#10B981" stopOpacity={0.15}/>
+                      <stop offset="95%" stopColor="#10B981" stopOpacity={0}/>
                     </linearGradient>
-                    <linearGradient id="greenArea" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#10B981" stopOpacity="0.06" />
-                      <stop offset="100%" stopColor="#10B981" stopOpacity="0.0" />
+                    <linearGradient id="colorCr" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#F59E0B" stopOpacity={0.15}/>
+                      <stop offset="95%" stopColor="#F59E0B" stopOpacity={0}/>
                     </linearGradient>
                   </defs>
-
-                  {/* Grid Lines at y=10, 26, 42, 58, 74, 90 */}
-                  <line x1="0" y1="10" x2="100" y2="10" stroke="#f1f5f9" strokeWidth="0.5" />
-                  <line x1="0" y1="26" x2="100" y2="26" stroke="#f1f5f9" strokeWidth="0.5" />
-                  <line x1="0" y1="42" x2="100" y2="42" stroke="#f1f5f9" strokeWidth="0.5" />
-                  <line x1="0" y1="58" x2="100" y2="58" stroke="#f1f5f9" strokeWidth="0.5" />
-                  <line x1="0" y1="74" x2="100" y2="74" stroke="#f1f5f9" strokeWidth="0.5" />
-                  <line x1="0" y1="90" x2="100" y2="90" stroke="#e2e8f0" strokeWidth="0.8" />
-
-                  {/* Area Fills under Lines (bottom bounds at y=90) */}
-                  <path
-                    d="M 8,37.2 L 22,26.0 L 36,22.8 L 50,29.2 L 64,22.8 L 78,26.0 L 92,40.4 L 92,90 L 8,90 Z"
-                    fill="url(#purpleArea)"
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                  <XAxis 
+                    dataKey="date" 
+                    axisLine={false} 
+                    tickLine={false} 
+                    tick={{ fill: '#94a3b8', fontSize: 9, fontWeight: 700 }}
+                    dy={10}
                   />
-                  <path
-                    d="M 8,54.0 L 22,48.4 L 36,56.4 L 50,50.8 L 64,54.0 L 78,58.0 L 92,59.6 L 92,90 L 8,90 Z"
-                    fill="url(#orangeArea)"
+                  <YAxis 
+                    yAxisId="left" 
+                    axisLine={false} 
+                    tickLine={false} 
+                    tick={{ fill: '#94a3b8', fontSize: 9, fontWeight: 700 }}
+                    tickFormatter={(value) => value === 0 ? "0" : `${value / 1000}K`}
+                    domain={[0, 5000]}
+                    ticks={[0, 1000, 2000, 3000, 4000, 5000]}
+                    dx={-5}
                   />
-                  <path
-                    d="M 8,75.6 L 22,69.2 L 36,65.2 L 50,70.8 L 64,70.8 L 78,70.8 L 92,74.0 L 92,90 L 8,90 Z"
-                    fill="url(#greenArea)"
+                  <YAxis 
+                    yAxisId="right" 
+                    orientation="right" 
+                    axisLine={false} 
+                    tickLine={false} 
+                    tick={{ fill: '#94a3b8', fontSize: 9, fontWeight: 700 }}
+                    tickFormatter={(value) => `${value}%`}
+                    domain={[0, 10]}
+                    ticks={[0, 2, 4, 6, 8, 10]}
+                    dx={5}
                   />
-
-                  {/* Line 1: Clicks (Purple) - May 14 to May 20 */}
-                  <path
-                    d="M 8,37.2 L 22,26.0 L 36,22.8 L 50,29.2 L 64,22.8 L 78,26.0 L 92,40.4"
-                    fill="none"
-                    stroke="#4F46E5"
-                    strokeWidth="1.1"
-                    strokeLinecap="round"
+                  <Tooltip 
+                    contentStyle={{ borderRadius: '8px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)', fontSize: '11px', fontWeight: 600 }}
+                    itemStyle={{ fontSize: '12px', fontWeight: 700 }}
                   />
-                  
-                  {/* Line 2: Conversions (Green) - May 14 to May 20 */}
-                  <path
-                    d="M 8,75.6 L 22,69.2 L 36,65.2 L 50,70.8 L 64,70.8 L 78,70.8 L 92,74.0"
-                    fill="none"
-                    stroke="#10B981"
-                    strokeWidth="1.1"
-                    strokeLinecap="round"
+                  <Area 
+                    yAxisId="left"
+                    type="linear" 
+                    dataKey="clicks" 
+                    name="Clicks"
+                    stroke="#4F46E5" 
+                    strokeWidth={1.5}
+                    fillOpacity={1} 
+                    fill="url(#colorClicks)" 
+                    activeDot={{ r: 5, strokeWidth: 0 }}
+                    dot={{ r: 3, fill: '#4F46E5', strokeWidth: 1.5, stroke: '#fff' }}
+                    isAnimationActive={true}
+                    animationDuration={1500}
                   />
-
-                  {/* Line 3: Conversion Rate (Orange) - May 14 to May 20 */}
-                  <path
-                    d="M 8,54.0 L 22,48.4 L 36,56.4 L 50,50.8 L 64,54.0 L 78,58.0 L 92,59.6"
-                    fill="none"
-                    stroke="#F59E0B"
-                    strokeWidth="1.1"
-                    strokeLinecap="round"
+                  <Area 
+                    yAxisId="left"
+                    type="linear" 
+                    dataKey="conversions" 
+                    name="Conversions"
+                    stroke="#10B981" 
+                    strokeWidth={1.5}
+                    fillOpacity={1} 
+                    fill="url(#colorConversions)" 
+                    activeDot={{ r: 5, strokeWidth: 0 }}
+                    dot={{ r: 3, fill: '#10B981', strokeWidth: 1.5, stroke: '#fff' }}
+                    isAnimationActive={true}
+                    animationDuration={1500}
                   />
-
-                  {/* Clicks Dots */}
-                  <circle cx="8" cy="37.2" r="2" fill="#4F46E5" stroke="#fff" strokeWidth="1.2" />
-                  <circle cx="22" cy="26.0" r="2" fill="#4F46E5" stroke="#fff" strokeWidth="1.2" />
-                  <circle cx="36" cy="22.8" r="2" fill="#4F46E5" stroke="#fff" strokeWidth="1.2" />
-                  <circle cx="50" cy="29.2" r="2" fill="#4F46E5" stroke="#fff" strokeWidth="1.2" />
-                  <circle cx="64" cy="22.8" r="2" fill="#4F46E5" stroke="#fff" strokeWidth="1.2" />
-                  <circle cx="78" cy="26.0" r="2" fill="#4F46E5" stroke="#fff" strokeWidth="1.2" />
-                  <circle cx="92" cy="40.4" r="2" fill="#4F46E5" stroke="#fff" strokeWidth="1.2" />
-
-                  {/* Conversions Dots */}
-                  <circle cx="8" cy="75.6" r="2" fill="#10B981" stroke="#fff" strokeWidth="1.2" />
-                  <circle cx="22" cy="69.2" r="2" fill="#10B981" stroke="#fff" strokeWidth="1.2" />
-                  <circle cx="36" cy="65.2" r="2" fill="#10B981" stroke="#fff" strokeWidth="1.2" />
-                  <circle cx="50" cy="70.8" r="2" fill="#10B981" stroke="#fff" strokeWidth="1.2" />
-                  <circle cx="64" cy="70.8" r="2" fill="#10B981" stroke="#fff" strokeWidth="1.2" />
-                  <circle cx="78" cy="70.8" r="2" fill="#10B981" stroke="#fff" strokeWidth="1.2" />
-                  <circle cx="92" cy="74.0" r="2" fill="#10B981" stroke="#fff" strokeWidth="1.2" />
-
-                  {/* CR Dots */}
-                  <circle cx="8" cy="54.0" r="2" fill="#F59E0B" stroke="#fff" strokeWidth="1.2" />
-                  <circle cx="22" cy="48.4" r="2" fill="#F59E0B" stroke="#fff" strokeWidth="1.2" />
-                  <circle cx="36" cy="56.4" r="2" fill="#F59E0B" stroke="#fff" strokeWidth="1.2" />
-                  <circle cx="50" cy="50.8" r="2" fill="#F59E0B" stroke="#fff" strokeWidth="1.2" />
-                  <circle cx="64" cy="54.0" r="2" fill="#F59E0B" stroke="#fff" strokeWidth="1.2" />
-                  <circle cx="78" cy="58.0" r="2" fill="#F59E0B" stroke="#fff" strokeWidth="1.2" />
-                  <circle cx="92" cy="59.6" r="2" fill="#F59E0B" stroke="#fff" strokeWidth="1.2" />
-                </svg>
-
-                {/* Y-Axis Label Rotated (Left) */}
-                <div className="hidden sm:block absolute -left-7 top-1/2 -translate-y-1/2 -rotate-90 origin-center text-[8px] font-bold text-slate-400 uppercase tracking-wider whitespace-nowrap pointer-events-none">
-                  Clicks / Conversions
-                </div>
-
-                {/* Y-Axis Label Rotated (Right) */}
-                <div className="hidden sm:block absolute -right-7 top-1/2 -translate-y-1/2 rotate-90 origin-center text-[8px] font-bold text-slate-400 uppercase tracking-wider whitespace-nowrap pointer-events-none">
-                  Conversion Rate (%)
-                </div>
+                  <Area 
+                    yAxisId="right"
+                    type="linear" 
+                    dataKey="cr" 
+                    name="Conversion Rate (%)"
+                    stroke="#F59E0B" 
+                    strokeWidth={1.5}
+                    fillOpacity={1} 
+                    fill="url(#colorCr)" 
+                    activeDot={{ r: 5, strokeWidth: 0 }}
+                    dot={{ r: 3, fill: '#F59E0B', strokeWidth: 1.5, stroke: '#fff' }}
+                    isAnimationActive={true}
+                    animationDuration={1500}
+                  />
+                </ComposedChart>
+              </ResponsiveContainer>
+              
+              {/* Y-Axis Label Rotated (Left) */}
+              <div className="hidden sm:block absolute -left-3 top-1/2 -translate-y-1/2 -rotate-90 origin-center text-[9px] font-bold text-slate-400 uppercase tracking-wider whitespace-nowrap pointer-events-none">
+                Clicks / Conversions
               </div>
 
-              {/* Right Y Axis (Conversion Rate) */}
-              <div className="flex flex-col justify-between text-[9px] font-bold text-slate-400 w-7 text-left pl-1.5 py-1">
-                <span>10%</span>
-                <span>8%</span>
-                <span>6%</span>
-                <span>4%</span>
-                <span>2%</span>
-                <span>0%</span>
+              {/* Y-Axis Label Rotated (Right) */}
+              <div className="hidden sm:block absolute -right-3 top-1/2 -translate-y-1/2 rotate-90 origin-center text-[9px] font-bold text-slate-400 uppercase tracking-wider whitespace-nowrap pointer-events-none">
+                Conversion Rate (%)
               </div>
-            </div>
-
-            {/* X Axis Labels */}
-            <div className="flex justify-between text-[9px] font-bold text-slate-400 pt-1.5 pl-6 pr-7">
-              <span>May 14</span>
-              <span>May 15</span>
-              <span>May 16</span>
-              <span>May 17</span>
-              <span>May 18</span>
-              <span>May 19</span>
-              <span>May 20</span>
             </div>
           </div>
 

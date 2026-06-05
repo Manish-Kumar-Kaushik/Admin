@@ -306,86 +306,86 @@ export default function SuspiciousReview() {
         {/* 6 Stats KPI Cards */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 w-full">
           {/* Card 1 */}
-          <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-3xs flex items-center justify-between w-full min-w-0">
+          <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-3xs flex items-center justify-start gap-3 sm:gap-4 w-full min-w-0">
+            <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-xl bg-red-50 text-red-500 flex items-center justify-center shrink-0">
+              <Flag className="h-5 w-5 sm:h-5 sm:w-5 fill-red-50" />
+            </div>
             <div className="min-w-0 leading-tight space-y-1">
-              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Flagged Products</span>
+              <span className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase tracking-wider block truncate">Flagged Products</span>
               <span className="text-xl sm:text-2xl font-extrabold text-slate-900 block">384</span>
-              <span className="text-[9px] text-red-500 font-bold block">
+              <span className="text-[9px] sm:text-[10px] text-red-500 font-bold block truncate">
                 ↑ 18% <span className="text-slate-400 font-medium">vs prior 7 days</span>
               </span>
-            </div>
-            <div className="h-10 w-10 rounded-xl bg-red-50 text-red-500 flex items-center justify-center shrink-0">
-              <Flag className="h-5 w-5 fill-red-50" />
             </div>
           </div>
 
           {/* Card 2 */}
-          <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-3xs flex items-center justify-between w-full min-w-0">
+          <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-3xs flex items-center justify-start gap-3 sm:gap-4 w-full min-w-0">
+            <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center shrink-0">
+              <Shield className="h-5 w-5 sm:h-5 sm:w-5" />
+            </div>
             <div className="min-w-0 leading-tight space-y-1">
-              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">High Risk Patterns</span>
+              <span className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase tracking-wider block truncate">High Risk Patterns</span>
               <span className="text-xl sm:text-2xl font-extrabold text-slate-900 block">52</span>
-              <span className="text-[9px] text-red-500 font-bold block">
+              <span className="text-[9px] sm:text-[10px] text-red-500 font-bold block truncate">
                 ↑ 24% <span className="text-slate-400 font-medium">vs prior 7 days</span>
               </span>
-            </div>
-            <div className="h-10 w-10 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center shrink-0">
-              <Shield className="h-5 w-5" />
             </div>
           </div>
 
           {/* Card 3 */}
-          <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-3xs flex items-center justify-between w-full min-w-0">
+          <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-3xs flex items-center justify-start gap-3 sm:gap-4 w-full min-w-0">
+            <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-xl bg-blue-50 text-blue-500 flex items-center justify-center shrink-0">
+              <Copy className="h-5 w-5 sm:h-5 sm:w-5" />
+            </div>
             <div className="min-w-0 leading-tight space-y-1">
-              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Repeated Wording</span>
+              <span className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase tracking-wider block truncate">Repeated Wording</span>
               <span className="text-xl sm:text-2xl font-extrabold text-slate-900 block">128</span>
-              <span className="text-[9px] text-red-500 font-bold block">
+              <span className="text-[9px] sm:text-[10px] text-red-500 font-bold block truncate">
                 ↑ 16% <span className="text-slate-400 font-medium">vs prior 7 days</span>
               </span>
-            </div>
-            <div className="h-10 w-10 rounded-xl bg-blue-50 text-blue-500 flex items-center justify-center shrink-0">
-              <Copy className="h-5 w-5" />
             </div>
           </div>
 
           {/* Card 4 */}
-          <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-3xs flex items-center justify-between w-full min-w-0">
+          <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-3xs flex items-center justify-start gap-3 sm:gap-4 w-full min-w-0">
+            <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center shrink-0">
+              <TrendingUp className="h-5 w-5 sm:h-5 sm:w-5" />
+            </div>
             <div className="min-w-0 leading-tight space-y-1">
-              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Rating Spike Alerts</span>
+              <span className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase tracking-wider block truncate">Rating Spike Alerts</span>
               <span className="text-xl sm:text-2xl font-extrabold text-slate-900 block">41</span>
-              <span className="text-[9px] text-red-500 font-bold block">
+              <span className="text-[9px] sm:text-[10px] text-red-500 font-bold block truncate">
                 ↑ 12% <span className="text-slate-400 font-medium">vs prior 7 days</span>
               </span>
-            </div>
-            <div className="h-10 w-10 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center shrink-0">
-              <TrendingUp className="h-5 w-5" />
             </div>
           </div>
 
           {/* Card 5 */}
-          <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-3xs flex items-center justify-between w-full min-w-0">
+          <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-3xs flex items-center justify-start gap-3 sm:gap-4 w-full min-w-0">
+            <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+              <AlertCircle className="h-5 w-5 sm:h-5 sm:w-5" />
+            </div>
             <div className="min-w-0 leading-tight space-y-1">
-              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Sentiment Mismatch</span>
+              <span className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase tracking-wider block truncate">Sentiment Mismatch</span>
               <span className="text-xl sm:text-2xl font-extrabold text-slate-900 block">73</span>
-              <span className="text-[9px] text-red-500 font-bold block">
+              <span className="text-[9px] sm:text-[10px] text-red-500 font-bold block truncate">
                 ↑ 9% <span className="text-slate-400 font-medium">vs prior 7 days</span>
               </span>
-            </div>
-            <div className="h-10 w-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
-              <AlertCircle className="h-5 w-5" />
             </div>
           </div>
 
           {/* Card 6 */}
-          <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-3xs flex items-center justify-between w-full min-w-0">
+          <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-3xs flex items-center justify-start gap-3 sm:gap-4 w-full min-w-0">
+            <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+              <TrendingDown className="h-5 w-5 sm:h-5 sm:w-5" />
+            </div>
             <div className="min-w-0 leading-tight space-y-1">
-              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Avg. Review Trust Impact</span>
+              <span className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase tracking-wider block truncate">Avg. Review Trust Impact</span>
               <span className="text-xl sm:text-2xl font-extrabold text-slate-900 block">-8.4 <span className="text-xs font-bold text-slate-455">pts</span></span>
-              <span className="text-[9px] text-blue-600 font-bold block">
+              <span className="text-[9px] sm:text-[10px] text-blue-600 font-bold block truncate">
                 ↓ -1.3 pts <span className="text-slate-400 font-medium">vs prior 7 days</span>
               </span>
-            </div>
-            <div className="h-10 w-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
-              <TrendingDown className="h-5 w-5" />
             </div>
           </div>
         </div>

@@ -1,17 +1,17 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { 
-  RefreshCw, 
-  PlayCircle, 
-  Download, 
-  ChevronDown, 
-  Layers, 
-  Clock, 
-  CheckCircle2, 
-  Link2, 
-  XCircle, 
-  ChevronLeft, 
+import {
+  RefreshCw,
+  PlayCircle,
+  Download,
+  ChevronDown,
+  Layers,
+  Clock,
+  CheckCircle2,
+  Link2,
+  XCircle,
+  ChevronLeft,
   ChevronRight,
   MoreHorizontal,
   CheckSquare,
@@ -176,10 +176,10 @@ export default function AlternativeRecommendations() {
   };
 
   return (
-    <div className="w-full min-h-screen bg-slate-50 font-sans text-slate-900 flex flex-col overflow-x-hidden">
+    <div className="bg-[#FAFBFD] min-h-full w-full font-sans text-slate-900 flex flex-col overflow-x-hidden">
       {/* Main Container */}
-      <div className="flex-1 w-full py-4 px-2 sm:py-6 sm:px-4 flex flex-col gap-4 sm:gap-6 min-w-0">
-        
+      <div className="flex-1 w-full max-w-full py-4 px-3 sm:py-5 sm:px-4 md:px-5 flex flex-col gap-4 sm:gap-5 min-w-0 overflow-x-hidden">
+
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
@@ -202,15 +202,15 @@ export default function AlternativeRecommendations() {
         </div>
 
         {/* Top KPI Row */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 sm:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 w-full min-w-0">
           <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm flex items-center gap-4 min-w-0">
             <div className="h-10 w-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
               <Layers className="w-5 h-5" />
             </div>
             <div className="min-w-0">
               <span className="text-xs font-bold text-slate-500 block truncate">Total Recommendations</span>
-              <span className="text-2xl font-black text-slate-950 block mt-0.5">2,841</span>
-              <span className="text-[10px] font-semibold text-emerald-600 flex items-center mt-1">
+              <span className="text-lg sm:text-2xl font-black text-slate-950 block mt-0.5">2,841</span>
+              <span className="text-[9px] sm:text-[10px] font-semibold text-emerald-600 flex items-center mt-1 whitespace-nowrap">
                 +12.4% vs last 7 days
               </span>
             </div>
@@ -221,8 +221,8 @@ export default function AlternativeRecommendations() {
             </div>
             <div className="min-w-0">
               <span className="text-xs font-bold text-slate-500 block truncate">Pending Review</span>
-              <span className="text-2xl font-black text-slate-950 block mt-0.5">512</span>
-              <span className="text-[10px] font-semibold text-slate-500 flex items-center mt-1">
+              <span className="text-lg sm:text-2xl font-black text-slate-950 block mt-0.5">512</span>
+              <span className="text-[9px] sm:text-[10px] font-semibold text-slate-500 flex items-center mt-1 whitespace-nowrap">
                 18.0% of total
               </span>
             </div>
@@ -233,8 +233,8 @@ export default function AlternativeRecommendations() {
             </div>
             <div className="min-w-0">
               <span className="text-xs font-bold text-slate-500 block truncate">High Confidence</span>
-              <span className="text-2xl font-black text-slate-950 block mt-0.5">1,482</span>
-              <span className="text-[10px] font-semibold text-slate-500 flex items-center mt-1">
+              <span className="text-lg sm:text-2xl font-black text-slate-950 block mt-0.5">1,482</span>
+              <span className="text-[9px] sm:text-[10px] font-semibold text-slate-500 flex items-center mt-1 whitespace-nowrap">
                 52.2% of total
               </span>
             </div>
@@ -245,8 +245,8 @@ export default function AlternativeRecommendations() {
             </div>
             <div className="min-w-0">
               <span className="text-xs font-bold text-slate-500 block truncate">Affiliate Ready</span>
-              <span className="text-2xl font-black text-slate-950 block mt-0.5">1,926</span>
-              <span className="text-[10px] font-semibold text-slate-500 flex items-center mt-1">
+              <span className="text-lg sm:text-2xl font-black text-slate-950 block mt-0.5">1,926</span>
+              <span className="text-[9px] sm:text-[10px] font-semibold text-slate-500 flex items-center mt-1 whitespace-nowrap">
                 67.8% of total
               </span>
             </div>
@@ -257,8 +257,8 @@ export default function AlternativeRecommendations() {
             </div>
             <div className="min-w-0">
               <span className="text-xs font-bold text-slate-500 block truncate">Rejected Today</span>
-              <span className="text-2xl font-black text-slate-950 block mt-0.5">76</span>
-              <span className="text-[10px] font-semibold text-slate-500 flex items-center mt-1">
+              <span className="text-lg sm:text-2xl font-black text-slate-950 block mt-0.5">76</span>
+              <span className="text-[9px] sm:text-[10px] font-semibold text-slate-500 flex items-center mt-1 whitespace-nowrap">
                 2.7% of reviewed
               </span>
             </div>
@@ -269,8 +269,8 @@ export default function AlternativeRecommendations() {
             </div>
             <div className="min-w-0">
               <span className="text-xs font-bold text-slate-500 block truncate">Avg. Approval Time</span>
-              <span className="text-2xl font-black text-slate-950 block mt-0.5">2h 34m</span>
-              <span className="text-[10px] font-semibold text-emerald-600 flex items-center mt-1">
+              <span className="text-lg sm:text-2xl font-black text-slate-950 block mt-0.5">2h 34m</span>
+              <span className="text-[9px] sm:text-[10px] font-semibold text-emerald-600 flex items-center mt-1 whitespace-nowrap">
                 ↓ 12m vs last 7 days
               </span>
             </div>
@@ -279,7 +279,7 @@ export default function AlternativeRecommendations() {
 
         {/* Middle Section: Queue & Comparison */}
         <div className="grid grid-cols-1 xl:grid-cols-[1fr_600px] gap-4 sm:gap-6 min-w-0">
-          
+
           {/* Recommendation Queue */}
           <div className="bg-white rounded-xl border border-slate-200 shadow-sm flex flex-col min-w-0">
             <div className="p-5 border-b border-slate-100 flex flex-wrap items-center justify-between gap-4">
@@ -301,7 +301,7 @@ export default function AlternativeRecommendations() {
                 </button>
               </div>
             </div>
-            <div className="overflow-x-auto flex-1">
+            <div className="overflow-x-auto flex-1 w-full min-w-0">
               <table className="w-full text-left whitespace-nowrap min-w-[800px]">
                 <thead>
                   <tr className="border-b border-slate-100">
@@ -375,17 +375,17 @@ export default function AlternativeRecommendations() {
                 </tbody>
               </table>
             </div>
-            <div className="p-4 border-t border-slate-100 flex items-center justify-between">
-              <span className="text-xs text-slate-500 font-medium">1-7 of 512 recommendations</span>
-              <div className="flex items-center gap-4">
-                <div className="flex items-center gap-1">
+            <div className="p-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <span className="text-xs text-slate-500 font-medium text-center sm:text-left">1-7 of 512 recommendations</span>
+              <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4">
+                <div className="flex flex-wrap items-center justify-center gap-1">
                   <button className="w-7 h-7 flex items-center justify-center rounded border border-slate-200 text-slate-400 hover:text-slate-600 hover:bg-slate-50">
                     <ChevronLeft className="w-4 h-4" />
                   </button>
                   <button className="w-7 h-7 flex items-center justify-center rounded bg-blue-600 text-white text-xs font-bold">1</button>
                   <button className="w-7 h-7 flex items-center justify-center rounded hover:bg-slate-50 text-slate-700 text-xs font-bold">2</button>
                   <button className="w-7 h-7 flex items-center justify-center rounded hover:bg-slate-50 text-slate-700 text-xs font-bold">3</button>
-                  <span className="text-slate-400 px-1">...</span>
+                  <span className="text-slate-400 px-1 hidden sm:inline">...</span>
                   <button className="w-7 h-7 flex items-center justify-center rounded hover:bg-slate-50 text-slate-700 text-xs font-bold">73</button>
                   <button className="w-7 h-7 flex items-center justify-center rounded border border-slate-200 text-slate-600 hover:bg-slate-50">
                     <ChevronRight className="w-4 h-4" />
@@ -401,16 +401,16 @@ export default function AlternativeRecommendations() {
           </div>
 
           {/* Comparison Preview */}
-          <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm flex flex-col min-w-0">
-            <h2 className="text-sm font-bold text-slate-950 mb-6">Comparison Preview</h2>
-            <div className="flex items-stretch justify-center relative min-h-[300px]">
-              
+          <div className="bg-white rounded-xl border border-slate-200 p-4 sm:p-6 shadow-sm flex flex-col min-w-0">
+            <h2 className="text-sm font-bold text-slate-950 mb-4 sm:mb-6">Comparison Preview</h2>
+            <div className="flex flex-col sm:flex-row items-stretch justify-center relative min-h-[300px] gap-6 sm:gap-0">
+
               {/* Original Card */}
-              <div className="flex-1 border border-slate-200 rounded-xl p-4 flex flex-col">
+              <div className="flex-1 border border-slate-200 rounded-xl p-4 flex flex-col relative z-0">
                 <p className="text-xs font-bold text-slate-500 mb-4">Original Product</p>
                 <div className="flex items-start gap-4 mb-6">
-                  <div className="w-12 h-12 rounded-lg bg-slate-100 flex items-center justify-center shrink-0">
-                    <Headphones className="w-6 h-6 text-slate-400" />
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-slate-100 flex items-center justify-center shrink-0">
+                    <Headphones className="w-5 h-5 sm:w-6 sm:h-6 text-slate-400" />
                   </div>
                   <div>
                     <h3 className="text-sm font-bold text-slate-950 leading-tight mb-1">Sony WH-1000XM5</h3>
@@ -461,22 +461,22 @@ export default function AlternativeRecommendations() {
               </div>
 
               {/* Center Arrow */}
-              <div className="absolute left-1/2 top-[120px] -translate-x-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center shadow-md border-4 border-white">
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center shadow-md border-4 border-white rotate-90 sm:rotate-0">
                 <ChevronRight className="w-4 h-4 text-white" />
               </div>
 
-              <div className="w-4"></div> {/* Spacing */}
+              <div className="hidden sm:block w-4 shrink-0"></div> {/* Spacing on Desktop */}
 
               {/* Alternative Card */}
-              <div className="flex-1 border border-slate-200 rounded-xl p-4 flex flex-col relative overflow-hidden bg-emerald-50/10">
+              <div className="flex-1 border border-slate-200 rounded-xl p-4 flex flex-col relative z-0 overflow-hidden bg-emerald-50/10">
                 <div className="flex items-center justify-between mb-4">
                   <p className="text-xs font-bold text-slate-500">Recommended Alternative</p>
                   <span className="bg-emerald-50 text-emerald-700 text-[10px] px-2 py-0.5 rounded-full font-bold">High Confidence (92%)</span>
                 </div>
-                
+
                 <div className="flex items-start gap-4 mb-6">
-                  <div className="w-12 h-12 rounded-lg bg-slate-100 flex items-center justify-center shrink-0">
-                    <Headphones className="w-6 h-6 text-slate-400" />
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-slate-100 flex items-center justify-center shrink-0">
+                    <Headphones className="w-5 h-5 sm:w-6 sm:h-6 text-slate-400" />
                   </div>
                   <div>
                     <h3 className="text-sm font-bold text-slate-950 leading-tight mb-1">Bose QuietComfort Ultra</h3>
@@ -531,12 +531,12 @@ export default function AlternativeRecommendations() {
 
         {/* Bottom Section: 3 Cols */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 min-w-0">
-          
+
           {/* Chart */}
-          <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm flex flex-col min-w-0">
+          <div className="bg-white rounded-xl border border-slate-200 p-4 sm:p-6 shadow-sm flex flex-col min-w-0">
             <h2 className="text-sm font-bold text-slate-950 mb-4">Alternative Type Breakdown</h2>
-            <div className="flex-1 flex items-center justify-center relative min-h-[220px]">
-              <div className="absolute inset-0 flex items-center justify-start w-1/2">
+            <div className="flex-1 flex flex-col sm:flex-row lg:flex-col 2xl:flex-row items-center justify-center gap-6 sm:gap-4 lg:gap-6 2xl:gap-4 relative min-h-[220px]">
+              <div className="relative w-full sm:w-1/2 lg:w-full 2xl:w-1/2 h-[220px] flex items-center justify-center shrink-0">
                 {isChartMounted && (
                   <ResponsiveContainer width="100%" height={220}>
                     <PieChart>
@@ -557,7 +557,7 @@ export default function AlternativeRecommendations() {
                           <Cell key={`cell-${index}`} fill={entry.color} />
                         ))}
                       </Pie>
-                      <RechartsTooltip 
+                      <RechartsTooltip
                         contentStyle={{ borderRadius: '8px', border: '1px solid #E2E8F0', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)', fontSize: '12px', fontWeight: 600 }}
                         itemStyle={{ color: '#0F172A' }}
                       />
@@ -570,16 +570,16 @@ export default function AlternativeRecommendations() {
                   <span className="block text-[10px] font-bold text-slate-500 mt-1">Total</span>
                 </div>
               </div>
-              
+
               {/* Custom Legend */}
-              <div className="w-1/2 ml-auto pl-4 flex flex-col gap-3 justify-center">
+              <div className="w-full sm:w-1/2 lg:w-full 2xl:w-1/2 flex flex-col gap-3 justify-center">
                 {breakdownData.map((item, index) => (
-                  <div key={index} className="flex items-center justify-between group">
-                    <div className="flex items-center gap-2">
-                      <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: item.color }}></div>
-                      <span className="text-xs font-semibold text-slate-700 truncate max-w-[120px] group-hover:text-slate-950 transition-colors">{item.name}</span>
+                  <div key={index} className="flex items-center justify-between group gap-2 w-full">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <div className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: item.color }}></div>
+                      <span className="text-xs font-semibold text-slate-700 truncate group-hover:text-slate-950 transition-colors">{item.name}</span>
                     </div>
-                    <div className="flex items-center gap-3 text-right">
+                    <div className="flex items-center gap-3 text-right shrink-0">
                       <span className="text-xs font-bold text-slate-900">{item.value.toLocaleString()}</span>
                       <span className="text-xs text-slate-400 font-medium w-9">{item.percentage}</span>
                     </div>
@@ -730,7 +730,7 @@ export default function AlternativeRecommendations() {
                 </div>
               </div>
             </div>
-            
+
             <div className="mt-4 pt-4 border-t border-slate-100 flex justify-center">
               <button className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1 transition-colors">
                 View all recent decisions <ChevronRight className="w-3.5 h-3.5" />

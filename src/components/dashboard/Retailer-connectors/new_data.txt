@@ -1,0 +1,642 @@
+const usageData = [
+  {
+    "time": "12:00 PM",
+    "amazon": 74.3,
+    "walmart": 37.1,
+    "bestBuy": 29.3,
+    "target": 23.9,
+    "ebay": 7.3
+  },
+  {
+    "time": "",
+    "amazon": 71.9,
+    "walmart": 38.4,
+    "bestBuy": 26.8,
+    "target": 22,
+    "ebay": 6.8
+  },
+  {
+    "time": "",
+    "amazon": 73.4,
+    "walmart": 36.8,
+    "bestBuy": 26.6,
+    "target": 22.7,
+    "ebay": 6
+  },
+  {
+    "time": "",
+    "amazon": 73.7,
+    "walmart": 36.3,
+    "bestBuy": 26.5,
+    "target": 24.6,
+    "ebay": 5.5
+  },
+  {
+    "time": "",
+    "amazon": 72.5,
+    "walmart": 35,
+    "bestBuy": 28.1,
+    "target": 23.7,
+    "ebay": 5.7
+  },
+  {
+    "time": "",
+    "amazon": 70.8,
+    "walmart": 36,
+    "bestBuy": 28.6,
+    "target": 22.4,
+    "ebay": 7.1
+  },
+  {
+    "time": "",
+    "amazon": 71.9,
+    "walmart": 38.5,
+    "bestBuy": 28.7,
+    "target": 20.9,
+    "ebay": 8.3
+  },
+  {
+    "time": "",
+    "amazon": 74.5,
+    "walmart": 38.2,
+    "bestBuy": 28.9,
+    "target": 19.9,
+    "ebay": 7
+  },
+  {
+    "time": "",
+    "amazon": 72.6,
+    "walmart": 36.7,
+    "bestBuy": 28.2,
+    "target": 19.9,
+    "ebay": 6.1
+  },
+  {
+    "time": "",
+    "amazon": 74.9,
+    "walmart": 37.5,
+    "bestBuy": 28.5,
+    "target": 20.8,
+    "ebay": 4.9
+  },
+  {
+    "time": "",
+    "amazon": 76.5,
+    "walmart": 38.1,
+    "bestBuy": 27.6,
+    "target": 19.1,
+    "ebay": 5.9
+  },
+  {
+    "time": "3:00 PM",
+    "amazon": 78,
+    "walmart": 35.6,
+    "bestBuy": 29.4,
+    "target": 19.7,
+    "ebay": 4.9
+  },
+  {
+    "time": "",
+    "amazon": 74.6,
+    "walmart": 36.2,
+    "bestBuy": 30.3,
+    "target": 21.2,
+    "ebay": 6.3
+  },
+  {
+    "time": "",
+    "amazon": 71.3,
+    "walmart": 37.6,
+    "bestBuy": 28.6,
+    "target": 22.5,
+    "ebay": 4.8
+  },
+  {
+    "time": "",
+    "amazon": 72.3,
+    "walmart": 36.1,
+    "bestBuy": 26.9,
+    "target": 23.4,
+    "ebay": 5.8
+  },
+  {
+    "time": "",
+    "amazon": 72.9,
+    "walmart": 38.7,
+    "bestBuy": 29.2,
+    "target": 24.2,
+    "ebay": 6.2
+  },
+  {
+    "time": "",
+    "amazon": 69.5,
+    "walmart": 41.2,
+    "bestBuy": 27.9,
+    "target": 24.4,
+    "ebay": 6.6
+  },
+  {
+    "time": "",
+    "amazon": 66.8,
+    "walmart": 43.2,
+    "bestBuy": 27.1,
+    "target": 25.8,
+    "ebay": 6.2
+  },
+  {
+    "time": "",
+    "amazon": 65.9,
+    "walmart": 44.5,
+    "bestBuy": 27.1,
+    "target": 24.6,
+    "ebay": 5.1
+  },
+  {
+    "time": "",
+    "amazon": 67.5,
+    "walmart": 42.8,
+    "bestBuy": 27.5,
+    "target": 24.1,
+    "ebay": 6.1
+  },
+  {
+    "time": "",
+    "amazon": 66.8,
+    "walmart": 45.3,
+    "bestBuy": 27.4,
+    "target": 22.5,
+    "ebay": 7
+  },
+  {
+    "time": "",
+    "amazon": 67.5,
+    "walmart": 42.4,
+    "bestBuy": 26.7,
+    "target": 22.6,
+    "ebay": 7.3
+  },
+  {
+    "time": "",
+    "amazon": 65,
+    "walmart": 43.9,
+    "bestBuy": 25.6,
+    "target": 22,
+    "ebay": 7.8
+  },
+  {
+    "time": "6:00 PM",
+    "amazon": 65,
+    "walmart": 44.5,
+    "bestBuy": 26.5,
+    "target": 22,
+    "ebay": 6.9
+  },
+  {
+    "time": "",
+    "amazon": 65,
+    "walmart": 47,
+    "bestBuy": 27.2,
+    "target": 23,
+    "ebay": 5.7
+  },
+  {
+    "time": "",
+    "amazon": 65,
+    "walmart": 47.5,
+    "bestBuy": 26.7,
+    "target": 23.3,
+    "ebay": 4.8
+  },
+  {
+    "time": "",
+    "amazon": 65,
+    "walmart": 50,
+    "bestBuy": 25,
+    "target": 22.1,
+    "ebay": 5.5
+  },
+  {
+    "time": "",
+    "amazon": 65,
+    "walmart": 50.2,
+    "bestBuy": 25,
+    "target": 23.8,
+    "ebay": 6
+  },
+  {
+    "time": "",
+    "amazon": 65,
+    "walmart": 52,
+    "bestBuy": 25,
+    "target": 22.3,
+    "ebay": 6.2
+  },
+  {
+    "time": "",
+    "amazon": 65,
+    "walmart": 55,
+    "bestBuy": 25.5,
+    "target": 21.4,
+    "ebay": 5.9
+  },
+  {
+    "time": "",
+    "amazon": 65,
+    "walmart": 57.4,
+    "bestBuy": 26.8,
+    "target": 20,
+    "ebay": 5.8
+  },
+  {
+    "time": "",
+    "amazon": 65.3,
+    "walmart": 57.4,
+    "bestBuy": 26,
+    "target": 18.4,
+    "ebay": 6.7
+  },
+  {
+    "time": "",
+    "amazon": 69.1,
+    "walmart": 59.8,
+    "bestBuy": 25.8,
+    "target": 19.5,
+    "ebay": 6.1
+  },
+  {
+    "time": "",
+    "amazon": 72.2,
+    "walmart": 57.6,
+    "bestBuy": 27.3,
+    "target": 19.5,
+    "ebay": 6.2
+  },
+  {
+    "time": "9:00 PM",
+    "amazon": 74.1,
+    "walmart": 59.1,
+    "bestBuy": 26.3,
+    "target": 19.8,
+    "ebay": 4.7
+  },
+  {
+    "time": "",
+    "amazon": 77.5,
+    "walmart": 60.4,
+    "bestBuy": 27.4,
+    "target": 21,
+    "ebay": 4.9
+  },
+  {
+    "time": "",
+    "amazon": 75.7,
+    "walmart": 59.4,
+    "bestBuy": 27.7,
+    "target": 19.4,
+    "ebay": 6.2
+  },
+  {
+    "time": "",
+    "amazon": 72.6,
+    "walmart": 60.2,
+    "bestBuy": 25.4,
+    "target": 19.9,
+    "ebay": 5.5
+  },
+  {
+    "time": "",
+    "amazon": 69.1,
+    "walmart": 60.3,
+    "bestBuy": 25.1,
+    "target": 19.6,
+    "ebay": 4.7
+  },
+  {
+    "time": "",
+    "amazon": 69.4,
+    "walmart": 60.5,
+    "bestBuy": 25,
+    "target": 21.6,
+    "ebay": 5.6
+  },
+  {
+    "time": "",
+    "amazon": 71.2,
+    "walmart": 58.9,
+    "bestBuy": 25.7,
+    "target": 21,
+    "ebay": 6.1
+  },
+  {
+    "time": "",
+    "amazon": 71.2,
+    "walmart": 58.5,
+    "bestBuy": 26.8,
+    "target": 22,
+    "ebay": 5.8
+  },
+  {
+    "time": "",
+    "amazon": 73.3,
+    "walmart": 60.5,
+    "bestBuy": 27.6,
+    "target": 21.1,
+    "ebay": 4.9
+  },
+  {
+    "time": "",
+    "amazon": 74.7,
+    "walmart": 61.4,
+    "bestBuy": 26.1,
+    "target": 22.3,
+    "ebay": 4.2
+  },
+  {
+    "time": "",
+    "amazon": 72.8,
+    "walmart": 61.3,
+    "bestBuy": 26.6,
+    "target": 23.7,
+    "ebay": 3.2
+  },
+  {
+    "time": "12:00 AM",
+    "amazon": 69.3,
+    "walmart": 60.4,
+    "bestBuy": 25.1,
+    "target": 21.8,
+    "ebay": 2.2
+  },
+  {
+    "time": "",
+    "amazon": 65.6,
+    "walmart": 63,
+    "bestBuy": 26.3,
+    "target": 20.2,
+    "ebay": 2
+  },
+  {
+    "time": "",
+    "amazon": 65.5,
+    "walmart": 64.8,
+    "bestBuy": 25.1,
+    "target": 21.5,
+    "ebay": 2.2
+  },
+  {
+    "time": "",
+    "amazon": 65.4,
+    "walmart": 62.6,
+    "bestBuy": 26.5,
+    "target": 20.8,
+    "ebay": 3.3
+  },
+  {
+    "time": "",
+    "amazon": 68.5,
+    "walmart": 60.8,
+    "bestBuy": 26.1,
+    "target": 20,
+    "ebay": 3.3
+  },
+  {
+    "time": "",
+    "amazon": 66.4,
+    "walmart": 60.4,
+    "bestBuy": 27,
+    "target": 20.9,
+    "ebay": 3.9
+  },
+  {
+    "time": "",
+    "amazon": 65,
+    "walmart": 59.1,
+    "bestBuy": 27.2,
+    "target": 19.9,
+    "ebay": 3.4
+  },
+  {
+    "time": "",
+    "amazon": 65,
+    "walmart": 59.2,
+    "bestBuy": 26.2,
+    "target": 20,
+    "ebay": 2.8
+  },
+  {
+    "time": "",
+    "amazon": 65.8,
+    "walmart": 59.1,
+    "bestBuy": 25,
+    "target": 20.5,
+    "ebay": 3.4
+  },
+  {
+    "time": "",
+    "amazon": 65,
+    "walmart": 61.3,
+    "bestBuy": 25.2,
+    "target": 22.2,
+    "ebay": 3.8
+  },
+  {
+    "time": "",
+    "amazon": 65,
+    "walmart": 64,
+    "bestBuy": 25,
+    "target": 23.4,
+    "ebay": 4.1
+  },
+  {
+    "time": "3:00 AM",
+    "amazon": 66.2,
+    "walmart": 61.3,
+    "bestBuy": 25,
+    "target": 24.1,
+    "ebay": 4.5
+  },
+  {
+    "time": "",
+    "amazon": 65.4,
+    "walmart": 64.1,
+    "bestBuy": 26.9,
+    "target": 23.7,
+    "ebay": 5.7
+  },
+  {
+    "time": "",
+    "amazon": 65,
+    "walmart": 64.9,
+    "bestBuy": 29.1,
+    "target": 22.7,
+    "ebay": 5.9
+  },
+  {
+    "time": "",
+    "amazon": 65,
+    "walmart": 63,
+    "bestBuy": 29.8,
+    "target": 24.3,
+    "ebay": 5.9
+  },
+  {
+    "time": "",
+    "amazon": 65,
+    "walmart": 64.1,
+    "bestBuy": 30.4,
+    "target": 25.2,
+    "ebay": 5
+  },
+  {
+    "time": "",
+    "amazon": 68.8,
+    "walmart": 64.8,
+    "bestBuy": 32.3,
+    "target": 27,
+    "ebay": 4.3
+  },
+  {
+    "time": "",
+    "amazon": 66,
+    "walmart": 65,
+    "bestBuy": 30.4,
+    "target": 26.7,
+    "ebay": 4.3
+  },
+  {
+    "time": "",
+    "amazon": 66.5,
+    "walmart": 62.5,
+    "bestBuy": 32.2,
+    "target": 24.9,
+    "ebay": 4.6
+  },
+  {
+    "time": "",
+    "amazon": 67,
+    "walmart": 65,
+    "bestBuy": 31.5,
+    "target": 26.8,
+    "ebay": 5.4
+  },
+  {
+    "time": "",
+    "amazon": 69.2,
+    "walmart": 65,
+    "bestBuy": 33.1,
+    "target": 25.9,
+    "ebay": 5.7
+  },
+  {
+    "time": "",
+    "amazon": 69.7,
+    "walmart": 63.6,
+    "bestBuy": 34.1,
+    "target": 25.6,
+    "ebay": 4.8
+  },
+  {
+    "time": "",
+    "amazon": 67,
+    "walmart": 65,
+    "bestBuy": 33.8,
+    "target": 25.3,
+    "ebay": 3.7
+  },
+  {
+    "time": "6:00 AM",
+    "amazon": 66.4,
+    "walmart": 65,
+    "bestBuy": 35.3,
+    "target": 25.6,
+    "ebay": 2.3
+  },
+  {
+    "time": "",
+    "amazon": 65,
+    "walmart": 63.9,
+    "bestBuy": 33.8,
+    "target": 27.3,
+    "ebay": 2
+  },
+  {
+    "time": "",
+    "amazon": 67.7,
+    "walmart": 62,
+    "bestBuy": 32.3,
+    "target": 26.8,
+    "ebay": 2
+  },
+  {
+    "time": "",
+    "amazon": 65.2,
+    "walmart": 60.2,
+    "bestBuy": 30.9,
+    "target": 26.4,
+    "ebay": 2.7
+  },
+  {
+    "time": "",
+    "amazon": 67.5,
+    "walmart": 59,
+    "bestBuy": 30.5,
+    "target": 27.1,
+    "ebay": 2.1
+  },
+  {
+    "time": "",
+    "amazon": 68.9,
+    "walmart": 57.3,
+    "bestBuy": 31.8,
+    "target": 28.6,
+    "ebay": 3.2
+  },
+  {
+    "time": "",
+    "amazon": 66,
+    "walmart": 57.2,
+    "bestBuy": 29.6,
+    "target": 30,
+    "ebay": 4.4
+  },
+  {
+    "time": "",
+    "amazon": 65,
+    "walmart": 56.1,
+    "bestBuy": 29.7,
+    "target": 30.8,
+    "ebay": 5.7
+  },
+  {
+    "time": "",
+    "amazon": 67.1,
+    "walmart": 58.9,
+    "bestBuy": 27.9,
+    "target": 29.1,
+    "ebay": 5.4
+  },
+  {
+    "time": "",
+    "amazon": 66,
+    "walmart": 61,
+    "bestBuy": 27.8,
+    "target": 31,
+    "ebay": 5.5
+  },
+  {
+    "time": "",
+    "amazon": 66.6,
+    "walmart": 60.6,
+    "bestBuy": 27.8,
+    "target": 29.4,
+    "ebay": 4.4
+  },
+  {
+    "time": "9:00 AM",
+    "amazon": 65,
+    "walmart": 60.6,
+    "bestBuy": 27.8,
+    "target": 27.5,
+    "ebay": 3.4
+  }
+];

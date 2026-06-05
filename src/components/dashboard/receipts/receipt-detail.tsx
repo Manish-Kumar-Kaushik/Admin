@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ArrowLeft,
   ChevronLeft,
@@ -42,6 +42,11 @@ interface LineItem {
 }
 
 export default function ReceiptDetail() {
+  const [isChartMounted, setIsChartMounted] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => setIsChartMounted(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
   const [zoom, setZoom] = useState(100);
   const [rotation, setRotation] = useState(0);
   const [internalNote, setInternalNote] = useState("");
@@ -755,11 +760,19 @@ export default function ReceiptDetail() {
                   <svg className="absolute inset-0 h-full w-full transform -rotate-90" viewBox="0 0 100 100">
                     <circle cx="50" cy="50" r="40" fill="none" stroke="#F1F5F9" strokeWidth="9" />
                     {/* Matched: 71.4% = stroke-dasharray="179.3 251.3" */}
-                    <circle cx="50" cy="50" r="40" fill="none" stroke="#10B981" strokeWidth="9" strokeDasharray="179.3 251.3" />
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="#10B981" strokeWidth="9" 
+                      className="transition-all duration-1000 ease-out"
+                      strokeDasharray={isChartMounted ? "179.3 251.3" : "0 251.3"} />
                     {/* Low Confidence: 14.3% = stroke-dasharray="35.9 251.3" offset from end of green */}
-                    <circle cx="50" cy="50" r="40" fill="none" stroke="#F59E0B" strokeWidth="9" strokeDasharray="35.9 251.3" strokeDashoffset="-179.3" />
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="#F59E0B" strokeWidth="9" 
+                      className="transition-all duration-1000 ease-out"
+                      strokeDasharray={isChartMounted ? "35.9 251.3" : "0 251.3"} 
+                      strokeDashoffset={isChartMounted ? "-179.3" : "-179.3"} />
                     {/* Unmatched: 14.3% = stroke-dasharray="35.9 251.3" offset from end of orange */}
-                    <circle cx="50" cy="50" r="40" fill="none" stroke="#EF4444" strokeWidth="9" strokeDasharray="35.9 251.3" strokeDashoffset="-215.2" />
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="#EF4444" strokeWidth="9" 
+                      className="transition-all duration-1000 ease-out"
+                      strokeDasharray={isChartMounted ? "35.9 251.3" : "0 251.3"} 
+                      strokeDashoffset={isChartMounted ? "-215.2" : "-215.2"} />
                   </svg>
                   <div className="text-center z-10 leading-tight">
                     <span className="text-lg font-black text-slate-900 block">7</span>

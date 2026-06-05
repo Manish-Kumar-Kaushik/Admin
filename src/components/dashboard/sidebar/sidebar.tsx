@@ -79,7 +79,6 @@ const groups: SidebarGroup[] = [
         icon: Package,
         subItems: [
           { name: "Product List", href: "/dashboard/products" },
-          { name: "Product Mapping", href: "/dashboard/products/mapping" },
           { name: "Product Merge Review", href: "/dashboard/products/product-merge-review" },
         ],
       },
@@ -98,6 +97,7 @@ const groups: SidebarGroup[] = [
         subItems: [
           { name: "Alternative Recommendations", href: "/dashboard/alternatives" },
           { name: "Comparison Review", href: "/dashboard/alternatives/compare" },
+          { name: "Alternative Review", href: "/dashboard/alternatives/review" },
         ],
       },
     ],

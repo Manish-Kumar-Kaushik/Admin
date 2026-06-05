@@ -1,672 +1,685 @@
 "use client";
 
-import React, { useState } from "react";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import React, { useState, useEffect } from "react";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import {
-  Search,
-  Filter,
   RefreshCw,
-  Eye,
-  MoreVertical,
-  HelpCircle,
-  TrendingUp,
-  FileText,
+  PlayCircle,
+  Download,
+  ChevronDown,
+  Filter,
   CheckCircle2,
   XCircle,
-  AlertCircle,
-  ExternalLink,
   ChevronLeft,
   ChevronRight,
-  MoreHorizontal,
-  Bell,
-  ChevronDown,
-  User,
-  Settings,
-  LogOut,
-  Menu
+  MoreVertical,
+  Check,
+  ShieldCheck,
+  ArrowLeftRight,
+  ClipboardList,
+  AlertTriangle,
+  Clock,
+  Eye,
+  Circle
 } from "lucide-react";
-import Link from "next/link";
-import { cn } from "@/lib/utils";
-import { useSidebar } from "@/components/dashboard/sidebar-context";
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip as RechartsTooltip } from "recharts";
 
-// ─── SVG Circular Progress Component ─────────────────────────────────────────
-
-const CircularProgress = ({ score }: { score: number }) => {
-  const radius = 14;
-  const circumference = 2 * Math.PI * radius;
-  const strokeDashoffset = circumference - (score / 100) * circumference;
-
-  let colorClass = "text-emerald-500";
-  if (score < 50) colorClass = "text-red-500";
-  else if (score < 72) colorClass = "text-amber-500";
-  else colorClass = "text-emerald-500";
-
-  return (
-    <div className="relative flex items-center justify-center w-9 h-9 shrink-0">
-      <svg className="w-9 h-9 rotate-[-90deg]">
-        <circle
-          cx="18"
-          cy="18"
-          r={radius}
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2.5"
-          className="text-slate-100"
-        />
-        <circle
-          cx="18"
-          cy="18"
-          r={radius}
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2.5"
-          strokeDasharray={circumference}
-          strokeDashoffset={strokeDashoffset}
-          strokeLinecap="round"
-          className={cn("transition-all duration-1000 ease-out", colorClass)}
-        />
-      </svg>
-      <span className="absolute text-[12px] font-bold text-slate-800">{score}</span>
-    </div>
-  );
-};
-
-
-// ─── Data Mocks ──────────────────────────────────────────────────────────────
-
-const metrics = [
-  {
-    title: "Total Alternatives",
-    value: "12,458",
-    sub: "↑ 8.2% vs yesterday",
-    subColor: "text-emerald-600",
-    icon: FileText,
-    iconColor: "text-blue-500",
-    iconBg: "bg-blue-50",
-  },
-  {
-    title: "Pending Review",
-    value: "1,248",
-    sub: "10.0% of total",
-    subColor: "text-slate-500",
-    icon: AlertCircle,
-    iconColor: "text-amber-500",
-    iconBg: "bg-amber-50",
-  },
-  {
-    title: "Approved",
-    value: "9,856",
-    sub: "79.0% of total",
-    subColor: "text-slate-500",
-    icon: CheckCircle2,
-    iconColor: "text-emerald-500",
-    iconBg: "bg-emerald-50",
-  },
-  {
-    title: "Rejected",
-    value: "1,013",
-    sub: "8.1% of total",
-    subColor: "text-slate-500",
-    icon: XCircle,
-    iconColor: "text-red-500",
-    iconBg: "bg-red-50",
-  },
-  {
-    title: "Needs More Info",
-    value: "341",
-    sub: "2.7% of total",
-    subColor: "text-slate-500",
-    icon: HelpCircle,
-    iconColor: "text-indigo-500",
-    iconBg: "bg-indigo-50",
-  },
-];
-
-const mockRows = [
+const queueData = [
   {
     id: 1,
-    original: { title: "Sony WH-1000XM5 Wireless Headphones", asin: "B09XS7JWHH", img: "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=64&q=80" },
-    alt: { title: "Bose QuietComfort Ultra Headphones", asin: "B0BLSKDVJY", img: "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=64&q=80" },
-    type: "Better for slightly more",
-    typeColor: "bg-blue-50 text-blue-700",
-    priceDiff: "+$30.00",
-    pctDiff: "+18%",
-    isPositiveDiff: true,
-    origScore: 72,
-    altScore: 84,
-    confScore: 92,
-    confLabel: "High",
-    affiliate: "Amazon",
-    affStatus: "Active",
-    status: "Pending Review",
-    statusColor: "bg-amber-50 text-amber-700 border-amber-200",
+    original: { name: "Sony WH-1000XM5", category: "Headphones" },
+    alternative: { name: "Bose QuietComfort Ultra", category: "Headphones" },
+    type: "Best similar price",
+    scoreGap: "+12",
+    priceDiff: "-$49 (-7%)",
+    priceNegative: true,
+    confidence: "92%",
+    affiliate: "Active",
+    status: "Pending"
   },
   {
     id: 2,
-    original: { title: "Keurig K-Elite Coffee Maker", asin: "B07VY76Z19", img: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba1?w=64&q=80" },
-    alt: { title: "Ninja Hot & Iced Coffee Maker", asin: "B09D31DTZ7", img: "https://images.unsplash.com/photo-1520201163981-8cc95007dd2a?w=64&q=80" },
-    type: "Best similar price",
-    typeColor: "bg-emerald-50 text-emerald-700",
-    priceDiff: "+$4.99",
-    pctDiff: "+4%",
-    isPositiveDiff: true,
-    origScore: 65,
-    altScore: 74,
-    confScore: 86,
-    confLabel: "High",
-    affiliate: "Amazon",
-    affStatus: "Active",
-    status: "Approved",
-    statusColor: "bg-emerald-50 text-emerald-700 border-emerald-200",
+    original: { name: "Ninja Foodi 6.5Qt", category: "Air Fryer" },
+    alternative: { name: "COSORI Pro II 5.8Qt", category: "Air Fryer" },
+    type: "Cheaper but good enough",
+    scoreGap: "+8",
+    priceDiff: "-$30 (-14%)",
+    priceNegative: true,
+    confidence: "78%",
+    affiliate: "Active",
+    status: "Needs Review"
   },
   {
     id: 3,
-    original: { title: "Optimum Nutrition Gold Standard Whey", asin: "B000QST1R6", img: "https://images.unsplash.com/photo-1579722820308-d74e571900a9?w=64&q=80" },
-    alt: { title: "Dymatize ISO100 Hydrolyzed Whey", asin: "B00E97M5V2", img: "https://images.unsplash.com/photo-1593095948071-474c5cc2989d?w=64&q=80" },
-    type: "Cheaper but good enough",
-    typeColor: "bg-orange-50 text-orange-700",
-    priceDiff: "-$15.00",
-    pctDiff: "-21%",
-    isPositiveDiff: false,
-    origScore: 68,
-    altScore: 64,
-    confScore: 75,
-    confLabel: "Medium",
-    affiliate: "Amazon",
-    affStatus: "Active",
-    status: "Pending Review",
-    statusColor: "bg-amber-50 text-amber-700 border-amber-200",
+    original: { name: "LG 27GP850-B 27\"", category: "Monitor" },
+    alternative: { name: "Dell G2724D 27\"", category: "Monitor" },
+    type: "Best similar price",
+    scoreGap: "+9",
+    priceDiff: "+$20 (+6%)",
+    priceNegative: false,
+    confidence: "81%",
+    affiliate: "Active",
+    status: "Pending"
   },
   {
     id: 4,
-    original: { title: "iRobot Roomba j7+ Robot Vacuum", asin: "B086XGQR6P", img: "https://images.unsplash.com/photo-1589923188900-85dae523342b?w=64&q=80" },
-    alt: { title: "Roborock Q5+ Robot Vacuum", asin: "B09ZKGKPQD", img: "https://images.unsplash.com/photo-1518640467707-6811f4a6ab73?w=64&q=80" },
+    original: { name: "Canon EOS R50", category: "Camera" },
+    alternative: { name: "Sony ZV-E10", category: "Camera" },
     type: "Better for slightly more",
-    typeColor: "bg-blue-50 text-blue-700",
-    priceDiff: "+$150.00",
-    pctDiff: "+28%",
-    isPositiveDiff: true,
-    origScore: 70,
-    altScore: 85,
-    confScore: 90,
-    confLabel: "High",
-    affiliate: "Amazon",
-    affStatus: "Active",
-    status: "Approved",
-    statusColor: "bg-emerald-50 text-emerald-700 border-emerald-200",
+    scoreGap: "+14",
+    priceDiff: "+$100 (+18%)",
+    priceNegative: false,
+    confidence: "89%",
+    affiliate: "Active",
+    status: "Pending"
   },
   {
     id: 5,
-    original: { title: "Fitbit Charge 5 Fitness Tracker", asin: "B09B2DFB55", img: "https://images.unsplash.com/photo-1575311373937-040b8e1fd5b0?w=64&q=80" },
-    alt: { title: "Garmin Vivosmart 5 Fitness Tracker", asin: "B09KKP7VJX", img: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=64&q=80" },
-    type: "Avoid and replace",
-    typeColor: "bg-red-50 text-red-700",
-    priceDiff: "+$20.00",
-    pctDiff: "+25%",
-    isPositiveDiff: true,
-    origScore: 48,
-    altScore: 72,
-    confScore: 88,
-    confLabel: "High",
-    affiliate: "Amazon",
-    affStatus: "Active",
-    status: "Rejected",
-    statusColor: "bg-red-50 text-red-700 border-red-200",
+    original: { name: "iRobot Roomba j7", category: "Robot Vacuum" },
+    alternative: { name: "Roborock Q5+", category: "Robot Vacuum" },
+    type: "Better for slightly more",
+    scoreGap: "+13",
+    priceDiff: "+$120 (+15%)",
+    priceNegative: false,
+    confidence: "86%",
+    affiliate: "Non-affiliate only",
+    status: "Needs Review"
   },
   {
     id: 6,
-    original: { title: "Intel Core i5-12400F Desktop Processor", asin: "B09NPHHSM6", img: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=64&q=80" },
-    alt: { title: "Intel Core i5-13400F Desktop Processor", asin: "B0BQ6K4BZG", img: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=64&q=80" },
+    original: { name: "Razer DeathAdder V3", category: "Gaming Mouse" },
+    alternative: { name: "Logitech G Pro X Superlight 2", category: "Gaming Mouse" },
     type: "Premium upgrade",
-    typeColor: "bg-purple-50 text-purple-700",
-    priceDiff: "+$40.00",
-    pctDiff: "+15%",
-    isPositiveDiff: true,
-    origScore: 66,
-    altScore: 83,
-    confScore: 80,
-    confLabel: "High",
-    affiliate: "Newegg",
-    affStatus: "Active",
-    status: "Pending Review",
-    statusColor: "bg-amber-50 text-amber-700 border-amber-200",
-  },
-  {
-    id: 7,
-    original: { title: "Samsung T7 1TB Portable SSD", asin: "B0874XN4D8", img: "https://images.unsplash.com/photo-1621259182978-fbf93132d53d?w=64&q=80" },
-    alt: { title: "Crucial X8 1TB Portable SSD", asin: "B07YFFX5MD", img: "https://images.unsplash.com/photo-1621259182978-fbf93132d53d?w=64&q=80" },
-    type: "Budget pick",
-    typeColor: "bg-teal-50 text-teal-700",
-    priceDiff: "-$30.00",
-    pctDiff: "-25%",
-    isPositiveDiff: false,
-    origScore: 74,
-    altScore: 66,
-    confScore: 72,
-    confLabel: "Medium",
-    affiliate: "Amazon",
-    affStatus: "Active",
-    status: "Needs More Info",
-    statusColor: "bg-indigo-50 text-indigo-700 border-indigo-200",
-  },
-  {
-    id: 8,
-    original: { title: "Logitech G Pro X Superlight Mouse", asin: "B08MVQ6G49", img: "https://images.unsplash.com/photo-1527814050087-37938154799f?w=64&q=80" },
-    alt: { title: "Razer DeathAdder V3 Pro Wireless", asin: "B0BYP9LTKM", img: "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=64&q=80" },
-    type: "Best similar price",
-    typeColor: "bg-emerald-50 text-emerald-700",
-    priceDiff: "+$5.00",
-    pctDiff: "+5%",
-    isPositiveDiff: true,
-    origScore: 78,
-    altScore: 82,
-    confScore: 78,
-    confLabel: "High",
-    affiliate: "Amazon",
-    affStatus: "Active",
-    status: "Approved",
-    statusColor: "bg-emerald-50 text-emerald-700 border-emerald-200",
-  },
+    scoreGap: "+16",
+    priceDiff: "+$30 (+9%)",
+    priceNegative: false,
+    confidence: "93%",
+    affiliate: "Missing",
+    status: "Rejected"
+  }
+];
+
+const breakdownData = [
+  { name: "Best similar price", value: 42, percentage: "32.8%", color: "#3B82F6" },
+  { name: "Better for slightly more", value: 28, percentage: "21.9%", color: "#22C55E" },
+  { name: "Cheaper but good enough", value: 25, percentage: "19.5%", color: "#F59E0B" },
+  { name: "Premium upgrade", value: 18, percentage: "14.1%", color: "#A855F7" },
+  { name: "Budget pick", value: 15, percentage: "11.7%", color: "#06B6D4" }
 ];
 
 export default function AlternativeReview() {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const dropdownRef = React.useRef<HTMLDivElement>(null);
-  const { toggle } = useSidebar();
+  const [isChartMounted, setIsChartMounted] = useState(false);
 
-  React.useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsDropdownOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+  useEffect(() => {
+    const timer = setTimeout(() => setIsChartMounted(true), 100);
+    return () => clearTimeout(timer);
   }, []);
 
+  const getStatusStyle = (status: string) => {
+    switch (status) {
+      case "Pending": return "bg-amber-50 text-amber-700 border-amber-200";
+      case "Needs Review": return "bg-amber-50 text-amber-700 border-amber-200";
+      case "Approved": return "bg-emerald-50 text-emerald-700 border-emerald-200";
+      case "Rejected": return "bg-rose-50 text-rose-700 border-rose-200";
+      default: return "bg-slate-50 text-slate-700 border-slate-200";
+    }
+  };
+
+  const getAffiliateStyle = (status: string) => {
+    switch (status) {
+      case "Active": return "text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full font-semibold";
+      case "Missing": return "text-rose-600 bg-rose-50 px-2 py-0.5 rounded-full font-semibold";
+      case "Non-affiliate only": return "text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full font-semibold";
+      default: return "text-slate-700";
+    }
+  };
+
   return (
-    <div className="flex flex-col min-h-screen bg-slate-50 font-sans">
-      {/* ── Full Width Header ── */}
-      <header className="bg-white border-b border-slate-200 px-4 md:px-8 h-14 flex items-center justify-between shrink-0">
-        <div className="flex items-center gap-2">
-          {/* Sidebar Toggle Hamburger */}
-          <button
-            onClick={toggle}
-            className="p-1.5 mr-2 rounded-lg text-slate-500 hover:bg-slate-100 hover:text-slate-800 transition-colors shrink-0 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
-            aria-label="Toggle Sidebar"
-          >
-            <Menu className="w-5 h-5" />
-          </button>
-          
-          <div className="flex items-center gap-2 text-[13px] text-slate-500">
-            <span>AI Review</span>
-            <ChevronRight className="w-3.5 h-3.5" />
-            <span className="font-semibold text-slate-900">Alternatives Review</span>
-          </div>
-        </div>
-        
-        <div className="flex-none flex items-center gap-3 md:gap-5 relative" ref={dropdownRef}>
-          <button className="flex items-center gap-1.5 text-[13px] text-slate-600 hover:text-slate-900 font-medium transition-colors mr-2">
-            <HelpCircle className="w-4 h-4" />
-            <span>Help</span>
-          </button>
+    <div className="w-full bg-slate-50 font-sans text-slate-900 flex flex-col">
+      {/* Main Container */}
+      <div className="flex-1 w-full p-4 sm:p-6 flex flex-col gap-4 min-w-0">
 
-          {/* Notification Bell (Same as global header) */}
-          <button
-            className="relative w-8 h-8 flex items-center justify-center border border-slate-200 bg-white hover:border-slate-300 rounded-full text-slate-500 hover:text-slate-800 shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue-500/20"
-            aria-label="View notifications"
-          >
-            <Bell className="w-4 h-4" />
-            <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 bg-[#EF4444] border-2 border-white rounded-full flex items-center justify-center text-[9px] text-white font-bold leading-none shadow-sm">
-              5
-            </span>
-          </button>
-
-          {/* User Profile (Same as global header, but with dropdown) */}
-          <div 
-            className="flex items-center gap-2 cursor-pointer select-none"
-            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-          >
-            <img
-              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80"
-              alt="Admin Avatar"
-              className="w-8 h-8 rounded-full object-cover shadow-sm border border-slate-200"
-            />
-            <div className="hidden lg:flex flex-col leading-none">
-              <span className="text-[12px] font-bold text-slate-800">Admin User</span>
-              <span className="text-[10px] text-slate-400 mt-0.5">Super Admin</span>
-            </div>
-            <ChevronDown className="w-3 h-3 text-slate-500 ml-1 hidden lg:block" />
-          </div>
-
-          {/* Admin User Dropdown Menu */}
-          {isDropdownOpen && (
-            <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-md shadow-lg border border-slate-200 py-1 z-50">
-              <div className="px-4 py-2 border-b border-slate-100">
-                <p className="text-sm font-semibold text-slate-800">Admin User</p>
-                <p className="text-xs text-slate-500">admin@buywise.ai</p>
-              </div>
-              <button className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2 transition-colors">
-                <User className="w-4 h-4 text-slate-400" />
-                Profile
-              </button>
-              <button className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2 transition-colors">
-                <Settings className="w-4 h-4 text-slate-400" />
-                Settings
-              </button>
-              <div className="h-px bg-slate-100 my-1"></div>
-              <button className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2 transition-colors">
-                <LogOut className="w-4 h-4 text-red-400" />
-                Logout
-              </button>
-            </div>
-          )}
-        </div>
-      </header>
-
-      {/* ── Main Container ── */}
-      <main className="w-full px-4 md:px-6 py-6 flex-1 flex flex-col gap-6 overflow-x-hidden min-w-0">
-
-        {/* ── Title Area ── */}
-        <div className="flex flex-col gap-6 mb-2">
-
-          {/* Title & Actions Row */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mt-2">
-            <div>
-              <h1 className="text-[26px] font-bold text-slate-900 tracking-tight leading-none mb-1.5">Alternatives Review</h1>
-              <p className="text-[14px] text-slate-500">
-                Review and approve alternative product recommendations generated by the AI.
-              </p>
-            </div>
-            <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-              <div className="text-[12px] text-slate-500 font-medium whitespace-nowrap">
-                Last updated: May 18, 2024 10:45 AM
-              </div>
-              <div className="flex items-center gap-3">
-                <Button variant="outline" className="h-9 px-4 text-[13px] font-semibold bg-white border-slate-200 text-slate-700 hover:bg-slate-50 shadow-sm w-full sm:w-auto">
-                  <ExternalLink className="w-4 h-4 mr-2" />
-                  Export Report
-                </Button>
-                <Button className="h-9 px-4 text-[13px] font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-sm w-full sm:w-auto">
-                  <RefreshCw className="w-4 h-4 mr-2" />
-                  Refresh
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* ── Metrics Grid ── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4">
-          {metrics.map((m, i) => (
-            <Card key={i} className="bg-white border-slate-200 rounded-xl shadow-sm p-4 flex items-start gap-4">
-              <div className={cn("w-10 h-10 rounded-lg flex items-center justify-center shrink-0", m.iconBg)}>
-                <m.icon className={cn("w-5 h-5", m.iconColor)} />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-xs font-semibold text-slate-500 mb-1">{m.title}</p>
-                <div className="flex items-end gap-2">
-                  <span className="text-2xl font-bold text-slate-900 leading-none tracking-tight">
-                    {m.value}
-                  </span>
-                </div>
-                <p className={cn("text-[11px] font-medium mt-1.5", m.subColor)}>
-                  {m.sub}
-                </p>
-              </div>
-            </Card>
-          ))}
-        </div>
-
-        {/* ── Table Section ── */}
-        <Card className="bg-white border-slate-200 rounded-xl shadow-sm flex flex-col flex-1 overflow-hidden min-h-0">
-
-          {/* Filters Bar */}
-          <div className="p-4 border-b border-slate-200 flex flex-col xl:flex-row xl:items-end gap-4 shrink-0 bg-white">
-            <div className="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-              {/* Search */}
-              <div className="flex flex-col gap-1.5">
-                <label className="text-[11px] font-semibold text-slate-600">Search Products</label>
-                <div className="relative">
-                  <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                  <input
-                    type="text"
-                    placeholder="Search by product name, ASIN, SKU..."
-                    className="w-full h-9 pl-9 pr-3 text-sm border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
-                  />
-                </div>
-              </div>
-
-              {/* Alternative Type */}
-              <div className="flex flex-col gap-1.5">
-                <label className="text-[11px] font-semibold text-slate-600">Alternative Type</label>
-                <select className="w-full h-9 px-3 text-sm border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-slate-700 appearance-none cursor-pointer">
-                  <option>All Types</option>
-                  <option>Better for slightly more</option>
-                  <option>Best similar price</option>
-                </select>
-              </div>
-
-              {/* Status */}
-              <div className="flex flex-col gap-1.5">
-                <label className="text-[11px] font-semibold text-slate-600">Status</label>
-                <select className="w-full h-9 px-3 text-sm border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-slate-700 appearance-none cursor-pointer">
-                  <option>All Status</option>
-                  <option>Pending Review</option>
-                  <option>Approved</option>
-                  <option>Rejected</option>
-                </select>
-              </div>
-
-              {/* Affiliate Status */}
-              <div className="flex flex-col gap-1.5">
-                <label className="text-[11px] font-semibold text-slate-600">Affiliate Status</label>
-                <select className="w-full h-9 px-3 text-sm border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-slate-700 appearance-none cursor-pointer">
-                  <option>All Affiliate Status</option>
-                  <option>Active</option>
-                </select>
-              </div>
-
-              {/* Category */}
-              <div className="flex flex-col gap-1.5">
-                <label className="text-[11px] font-semibold text-slate-600">Category</label>
-                <select className="w-full h-9 px-3 text-sm border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-slate-700 appearance-none cursor-pointer">
-                  <option>All Categories</option>
-                  <option>Electronics</option>
-                </select>
-              </div>
-            </div>
-
-            <Button variant="outline" className="h-9 px-4 text-[13px] font-semibold bg-white border-slate-200 text-slate-700 hover:bg-slate-50 shrink-0 w-full xl:w-auto shadow-sm">
-              <Filter className="w-4 h-4 mr-2" />
-              Filters
-            </Button>
-          </div>
-
-          {/* Table Container - Horizontal scroll for mobile */}
-          <div className="flex-1 overflow-x-auto overflow-y-auto min-h-0 bg-white">
-            <Table className="w-full text-sm">
-              <TableHeader className="bg-white sticky top-0 z-10 shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
-                <TableRow className="border-b border-slate-200 hover:bg-transparent">
-                  <TableHead className="font-semibold text-slate-600 h-11 px-4 whitespace-nowrap min-w-[240px]">Original Product</TableHead>
-                  <TableHead className="font-semibold text-slate-600 h-11 px-4 whitespace-nowrap min-w-[240px]">Recommended Alternative</TableHead>
-                  <TableHead className="font-semibold text-slate-600 h-11 px-4 whitespace-nowrap text-center">Alternative Type</TableHead>
-                  <TableHead className="font-semibold text-slate-600 h-11 px-4 whitespace-nowrap text-center">Price Difference</TableHead>
-                  <TableHead className="font-semibold text-slate-600 h-11 px-4 whitespace-nowrap text-center">Original Score</TableHead>
-                  <TableHead className="font-semibold text-slate-600 h-11 px-4 whitespace-nowrap text-center">Alternative Score</TableHead>
-                  <TableHead className="font-semibold text-slate-600 h-11 px-4 whitespace-nowrap text-center">Confidence</TableHead>
-                  <TableHead className="font-semibold text-slate-600 h-11 px-4 whitespace-nowrap hidden lg:table-cell">Affiliate Status</TableHead>
-                  <TableHead className="font-semibold text-slate-600 h-11 px-4 whitespace-nowrap text-center">Status</TableHead>
-                  <TableHead className="font-semibold text-slate-600 h-11 px-4 whitespace-nowrap text-center">Action</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {mockRows.map((row) => (
-                  <TableRow key={row.id} className="border-b border-slate-100 hover:bg-slate-50/50 transition-colors group">
-                    {/* Original Product */}
-                    <TableCell className="px-4 py-3 align-top">
-                      <div className="flex items-center gap-3">
-                        <div className="w-[52px] h-[52px] shrink-0 bg-white border border-slate-200 rounded-md flex items-center justify-center overflow-hidden p-1">
-                          <img src={row.original.img} alt="" className="w-full h-full object-contain mix-blend-multiply" />
-                        </div>
-                        <div className="flex flex-col gap-0.5 min-w-0">
-                          <span className="text-[13px] font-bold text-slate-900 truncate" title={row.original.title}>
-                            {row.original.title}
-                          </span>
-                          <span className="text-[11px] text-slate-500 font-medium">
-                            ASIN: {row.original.asin}
-                          </span>
-                        </div>
-                      </div>
-                    </TableCell>
-
-                    {/* Alternative Product */}
-                    <TableCell className="px-4 py-3 align-top border-r border-slate-50/50">
-                      <div className="flex items-center gap-3">
-                        <div className="w-[52px] h-[52px] shrink-0 bg-white border border-slate-200 rounded-md flex items-center justify-center overflow-hidden p-1">
-                          <img src={row.alt.img} alt="" className="w-full h-full object-contain mix-blend-multiply" />
-                        </div>
-                        <div className="flex flex-col gap-0.5 min-w-0">
-                          <span className="text-[13px] font-bold text-slate-900 truncate" title={row.alt.title}>
-                            {row.alt.title}
-                          </span>
-                          <span className="text-[11px] text-slate-500 font-medium">
-                            ASIN: {row.alt.asin}
-                          </span>
-                        </div>
-                      </div>
-                    </TableCell>
-
-                    {/* Alternative Type */}
-                    <TableCell className="px-4 py-3 align-middle text-center whitespace-nowrap">
-                      <span className={cn("inline-flex items-center justify-center px-2 py-1 rounded text-[11px] font-semibold leading-none", row.typeColor)}>
-                        {row.type}
-                      </span>
-                    </TableCell>
-
-                    {/* Price Difference */}
-                    <TableCell className="px-4 py-3 align-middle text-center whitespace-nowrap">
-                      <div className="flex flex-col items-center gap-0.5">
-                        <span className={cn("text-sm font-bold", row.isPositiveDiff ? "text-red-600" : "text-emerald-600")}>
-                          {row.priceDiff}
-                        </span>
-                        <span className={cn("text-[11px] font-medium", row.isPositiveDiff ? "text-red-500" : "text-emerald-500")}>
-                          ({row.pctDiff})
-                        </span>
-                      </div>
-                    </TableCell>
-
-                    {/* Original Score */}
-                    <TableCell className="px-4 py-3 align-middle">
-                      <div className="flex justify-center">
-                        <CircularProgress score={row.origScore} />
-                      </div>
-                    </TableCell>
-
-                    {/* Alternative Score */}
-                    <TableCell className="px-4 py-3 align-middle">
-                      <div className="flex justify-center">
-                        <CircularProgress score={row.altScore} />
-                      </div>
-                    </TableCell>
-
-                    {/* Confidence */}
-                    <TableCell className="px-4 py-3 align-middle text-center whitespace-nowrap">
-                      <div className="flex flex-col items-center gap-0.5">
-                        <span className="text-sm font-bold text-slate-900">{row.confScore}%</span>
-                        <span className={cn("text-[11px] font-semibold",
-                          row.confLabel === "High" ? "text-emerald-600" :
-                            row.confLabel === "Medium" ? "text-amber-600" : "text-red-600"
-                        )}>
-                          {row.confLabel}
-                        </span>
-                      </div>
-                    </TableCell>
-
-                    {/* Affiliate Status */}
-                    <TableCell className="px-4 py-3 align-middle hidden lg:table-cell whitespace-nowrap">
-                      <div className="flex flex-col gap-0.5">
-                        <div className="flex items-center gap-1.5">
-                          <div className="w-4 h-4 bg-slate-900 text-white rounded-[3px] flex items-center justify-center text-[9px] font-bold">a</div>
-                          <span className="text-[12px] font-bold text-slate-800">{row.affiliate}</span>
-                        </div>
-                        <span className="text-[11px] text-emerald-600 font-semibold pl-5.5">Active</span>
-                      </div>
-                    </TableCell>
-
-                    {/* Status */}
-                    <TableCell className="px-4 py-3 align-middle text-center whitespace-nowrap">
-                      <span className={cn("inline-flex items-center justify-center px-2.5 py-1 rounded-md text-[11px] font-bold leading-none border", row.statusColor)}>
-                        {row.status}
-                      </span>
-                    </TableCell>
-
-                    {/* Action */}
-                    <TableCell className="px-4 py-3 align-middle text-center">
-                      <div className="flex items-center justify-center gap-1.5">
-                        <Link href="/dashboard/alternatives/review/ALT-2024-0518001" className="inline-flex items-center justify-center font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed w-7 h-7 text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors border border-slate-200 bg-white rounded">
-                          <Eye className="w-3.5 h-3.5" />
-                        </Link>
-                        <Button variant="ghost" size="icon" className="w-7 h-7 text-slate-400 hover:text-slate-800 hover:bg-slate-100 transition-colors hidden sm:flex border border-slate-200 bg-white rounded">
-                          <MoreVertical className="w-3.5 h-3.5" />
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-
-          {/* Footer Pagination */}
-          <div className="p-4 border-t border-slate-200 bg-slate-50/50 flex flex-col sm:flex-row items-center justify-between gap-4 shrink-0">
-            <p className="text-xs text-slate-500 font-medium">
-              Showing 1 to 20 of 12,458 results
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-2xl font-bold tracking-tight text-slate-950">Comparison Review</h1>
+            <p className="text-sm text-slate-500 mt-1">
+              Review side-by-side alternative comparisons, validate trade-offs, and approve recommendations before publishing.
             </p>
-            <div className="flex items-center gap-2">
-              <div className="flex items-center gap-2 mr-4 hidden md:flex">
-                <span className="text-xs text-slate-500">Rows per page:</span>
-                <select className="h-8 px-2 text-xs font-semibold border border-slate-200 rounded bg-white text-slate-700 outline-none">
-                  <option>20</option>
-                  <option>50</option>
-                  <option>100</option>
-                </select>
+          </div>
+          <div className="flex flex-row items-center gap-1.5 sm:gap-3 overflow-x-auto pb-1 sm:pb-0 hide-scrollbar mt-1 md:mt-0">
+            <button className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-2 bg-white border border-slate-200 text-slate-700 rounded-lg text-xs sm:text-sm font-semibold hover:bg-slate-50 transition-colors shadow-sm whitespace-nowrap shrink-0">
+              <RefreshCw className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> Refresh
+            </button>
+            <button className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-2 bg-white border border-slate-200 text-blue-600 rounded-lg text-xs sm:text-sm font-semibold hover:bg-slate-50 transition-colors shadow-sm whitespace-nowrap shrink-0">
+              <PlayCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> Run Recheck
+            </button>
+            <button className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 bg-blue-600 text-white rounded-lg text-xs sm:text-sm font-semibold hover:bg-blue-700 transition-colors shadow-sm whitespace-nowrap shrink-0">
+              <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> Export Review
+            </button>
+          </div>
+        </div>
+
+        {/* Top KPI Row */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3 sm:gap-4">
+          <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm flex items-center gap-4 min-w-0">
+            <div className="h-10 w-10 rounded-full border border-amber-200 bg-amber-50 text-amber-500 flex items-center justify-center shrink-0">
+              <ClipboardList className="w-5 h-5" />
+            </div>
+            <div className="min-w-0">
+              <span className="text-xs font-semibold text-slate-500 block truncate">Pending Comparison Reviews</span>
+              <span className="text-2xl font-black text-slate-950 block mt-0.5">128</span>
+              <span className="text-[10px] font-semibold text-amber-600 flex items-center mt-1">
+                ↗ 12 vs last 7 days
+              </span>
+            </div>
+          </div>
+          <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm flex items-center gap-4 min-w-0">
+            <div className="h-10 w-10 rounded-full border border-emerald-200 bg-emerald-50 text-emerald-500 flex items-center justify-center shrink-0">
+              <CheckCircle2 className="w-5 h-5" />
+            </div>
+            <div className="min-w-0">
+              <span className="text-xs font-semibold text-slate-500 block truncate">Approved Today</span>
+              <span className="text-2xl font-black text-slate-950 block mt-0.5">36</span>
+              <span className="text-[10px] font-semibold text-emerald-600 flex items-center mt-1">
+                ↗ 8 vs yesterday
+              </span>
+            </div>
+          </div>
+          <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm flex items-center gap-4 min-w-0">
+            <div className="h-10 w-10 rounded-full border border-orange-200 bg-orange-50 text-orange-500 flex items-center justify-center shrink-0">
+              <AlertTriangle className="w-5 h-5" />
+            </div>
+            <div className="min-w-0">
+              <span className="text-xs font-semibold text-slate-500 block truncate">Needs Evidence</span>
+              <span className="text-2xl font-black text-slate-950 block mt-0.5">22</span>
+              <span className="text-[10px] font-semibold text-orange-600 flex items-center mt-1">
+                ↗ 5 vs last 7 days
+              </span>
+            </div>
+          </div>
+          <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm flex items-center gap-4 min-w-0">
+            <div className="h-10 w-10 rounded-full border border-emerald-200 bg-emerald-50 text-emerald-500 flex items-center justify-center shrink-0">
+              <ShieldCheck className="w-5 h-5" />
+            </div>
+            <div className="min-w-0">
+              <span className="text-xs font-semibold text-slate-500 block truncate">High Confidence</span>
+              <span className="text-2xl font-black text-slate-950 block mt-0.5">74%</span>
+              <span className="text-[10px] font-semibold text-emerald-600 flex items-center mt-1">
+                ↗ 6pp vs last 7 days
+              </span>
+            </div>
+          </div>
+          <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm flex items-center gap-4 min-w-0">
+            <div className="h-10 w-10 rounded-full border border-rose-200 bg-rose-50 text-rose-500 flex items-center justify-center shrink-0">
+              <XCircle className="w-5 h-5" />
+            </div>
+            <div className="min-w-0">
+              <span className="text-xs font-semibold text-slate-500 block truncate">Rejected Today</span>
+              <span className="text-2xl font-black text-slate-950 block mt-0.5">6</span>
+              <span className="text-[10px] font-semibold text-rose-600 flex items-center mt-1">
+                ↗ 2 vs yesterday
+              </span>
+            </div>
+          </div>
+          <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm flex items-center gap-4 min-w-0">
+            <div className="h-10 w-10 rounded-full border border-blue-200 bg-blue-50 text-blue-500 flex items-center justify-center shrink-0">
+              <Clock className="w-5 h-5" />
+            </div>
+            <div className="min-w-0">
+              <span className="text-xs font-semibold text-slate-500 block truncate">Avg. Review Time</span>
+              <span className="text-2xl font-black text-slate-950 block mt-0.5">18m 24s</span>
+              <span className="text-[10px] font-semibold text-emerald-600 flex items-center mt-1">
+                ↘ 2m vs last 7 days
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Middle Section: Queue & Comparison */}
+        <div className="grid grid-cols-1 2xl:grid-cols-[1fr_500px] gap-3 sm:gap-4 min-w-0">
+
+          {/* Comparison Review Queue */}
+          <div className="bg-white rounded-xl border border-slate-200 shadow-sm flex flex-col min-w-0">
+            <div className="p-4 border-b border-slate-100 flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <h2 className="text-sm font-bold text-slate-950">Comparison Review Queue</h2>
+                <span className="bg-blue-50 text-blue-600 px-2.5 py-0.5 rounded-full text-[10px] font-bold">128 total</span>
               </div>
-              <div className="flex items-center gap-1">
-                <Button variant="outline" size="icon" className="w-8 h-8 text-slate-400 border-slate-200 bg-white" disabled>
-                  <ChevronLeft className="w-4 h-4" />
-                </Button>
-                <Button variant="outline" size="icon" className="w-8 h-8 font-bold bg-blue-600 text-white border-blue-600 hover:bg-blue-700 hover:text-white">
-                  1
-                </Button>
-                <Button variant="outline" size="icon" className="w-8 h-8 font-medium text-slate-600 border-slate-200 bg-white hover:bg-slate-50">
-                  2
-                </Button>
-                <Button variant="outline" size="icon" className="w-8 h-8 font-medium text-slate-600 border-slate-200 bg-white hover:bg-slate-50 hidden sm:flex">
-                  3
-                </Button>
-                <span className="w-8 text-center text-slate-400 text-xs hidden sm:block">...</span>
-                <Button variant="outline" size="icon" className="w-8 h-8 font-medium text-slate-600 border-slate-200 bg-white hover:bg-slate-50 hidden sm:flex">
-                  623
-                </Button>
-                <Button variant="outline" size="icon" className="w-8 h-8 text-slate-600 border-slate-200 bg-white hover:bg-slate-50">
-                  <ChevronRight className="w-4 h-4" />
-                </Button>
+              <button className="flex items-center gap-2 text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">
+                <Filter className="w-3.5 h-3.5" /> Filters
+              </button>
+            </div>
+            <div className="overflow-x-auto flex-1">
+              <table className="w-full text-left whitespace-nowrap min-w-[800px]">
+                <thead>
+                  <tr className="border-b border-slate-100">
+                    <th className="px-4 py-5 text-[11px] font-bold text-slate-500 w-8 text-center"><div className="w-3.5 h-3.5 border border-slate-300 rounded mx-auto"></div></th>
+                    <th className="px-4 py-5 text-[11px] font-bold text-slate-500">Original Product</th>
+                    <th className="px-4 py-5 text-[11px] font-bold text-slate-500">Recommended Alternative</th>
+                    <th className="px-4 py-5 text-[11px] font-bold text-slate-500">Alternative Type</th>
+                    <th className="px-4 py-5 text-[11px] font-bold text-slate-500 text-right">Score Gap ⓘ</th>
+                    <th className="px-4 py-5 text-[11px] font-bold text-slate-500 text-right">Price Difference</th>
+                    <th className="px-4 py-5 text-[11px] font-bold text-slate-500 text-right">Confidence ⓘ</th>
+                    <th className="px-4 py-5 text-[11px] font-bold text-slate-500 text-center">Affiliate Status</th>
+                    <th className="px-4 py-5 text-[11px] font-bold text-slate-500 text-center">Status</th>
+                    <th className="px-4 py-5 text-[11px] font-bold text-slate-500 text-center">Action</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-50">
+                  {queueData.map((item) => (
+                    <tr key={item.id} className="hover:bg-slate-50/50 group cursor-pointer">
+                      <td className="px-4 py-5 text-center">
+                        <div className="w-3.5 h-3.5 border border-slate-300 rounded mx-auto cursor-pointer"></div>
+                      </td>
+                      <td className="px-4 py-5">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center shrink-0 overflow-hidden">
+                            <div className="w-6 h-6 bg-slate-300 rounded-sm"></div> {/* Mock image */}
+                          </div>
+                          <div>
+                            <p className="text-[13px] font-semibold text-slate-900">{item.original.name}</p>
+                            <p className="text-[11px] text-slate-500">{item.original.category}</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-4 py-5">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center shrink-0 overflow-hidden">
+                            <div className="w-6 h-6 bg-slate-300 rounded-sm"></div> {/* Mock image */}
+                          </div>
+                          <div>
+                            <p className="text-[13px] font-semibold text-slate-900">{item.alternative.name}</p>
+                            <p className="text-[11px] text-slate-500">{item.alternative.category}</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-4 py-5">
+                        <span className="text-[12px] font-medium text-slate-700">
+                          {item.type}
+                        </span>
+                      </td>
+                      <td className="px-4 py-5 text-right">
+                        <span className="text-[13px] font-bold text-emerald-500 block">{item.scoreGap}</span>
+                      </td>
+                      <td className="px-4 py-5 text-right">
+                        <span className={`text-[13px] font-bold block ${item.priceNegative ? 'text-emerald-500' : 'text-rose-500'}`}>
+                          {item.priceDiff}
+                        </span>
+                      </td>
+                      <td className="px-4 py-5 text-right">
+                        <span className="text-[13px] font-bold text-emerald-500">
+                          {item.confidence}
+                        </span>
+                      </td>
+                      <td className="px-4 py-5 text-center">
+                        <span className={`text-[10px] ${getAffiliateStyle(item.affiliate)}`}>{item.affiliate}</span>
+                      </td>
+                      <td className="px-4 py-5 text-center">
+                        <span className={`px-2.5 py-0.5 border rounded-full text-[11px] font-bold ${getStatusStyle(item.status)}`}>
+                          {item.status}
+                        </span>
+                      </td>
+                      <td className="px-4 py-5 text-center">
+                        <div className="flex items-center justify-center gap-2 text-slate-400">
+                          <button className="hover:text-slate-600 transition-colors"><Eye className="w-4 h-4" /></button>
+                          <button className="hover:text-slate-600 transition-colors"><MoreVertical className="w-4 h-4" /></button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="p-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <span className="text-xs text-slate-500 font-medium text-center sm:text-left">Showing 1 to 6 of 128 entries</span>
+              <div className="flex flex-col sm:flex-row items-center gap-4">
+                <div className="flex flex-wrap items-center justify-center gap-1">
+                  <button className="w-7 h-7 flex items-center justify-center rounded border border-slate-200 text-slate-400 hover:text-slate-600 hover:bg-slate-50">
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                  <button className="w-7 h-7 flex items-center justify-center rounded bg-blue-600 text-white text-xs font-bold">1</button>
+                  <button className="w-7 h-7 flex items-center justify-center rounded hover:bg-slate-50 text-slate-700 text-xs font-bold">2</button>
+                  <button className="w-7 h-7 flex items-center justify-center rounded hover:bg-slate-50 text-slate-700 text-xs font-bold">3</button>
+                  <button className="w-7 h-7 flex items-center justify-center rounded hover:bg-slate-50 text-slate-700 text-xs font-bold">4</button>
+                  <button className="w-7 h-7 flex items-center justify-center rounded hover:bg-slate-50 text-slate-700 text-xs font-bold">5</button>
+                  <span className="text-slate-400 px-1 text-xs">...</span>
+                  <button className="w-7 h-7 flex items-center justify-center rounded hover:bg-slate-50 text-slate-700 text-xs font-bold">22</button>
+                  <button className="w-7 h-7 flex items-center justify-center rounded border border-slate-200 text-slate-600 hover:bg-slate-50">
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+                <div className="flex items-center gap-2">
+                  <select className="bg-white border border-slate-200 text-slate-700 text-xs font-semibold rounded-md px-2 py-1 outline-none">
+                    <option>10 / page</option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>
-        </Card>
-      </main>
+
+          {/* Side-by-Side Comparison Module */}
+          <div className="bg-white rounded-xl border border-slate-200 p-5 lg:p-6 shadow-sm flex flex-col min-w-0 relative">
+            <div className="flex items-center gap-3 mb-6">
+              <h2 className="text-sm font-bold text-slate-950">Side-by-Side Comparison</h2>
+              <span className="bg-blue-50 text-blue-600 px-2 py-0.5 rounded text-[10px] font-bold">#CR-2024-04218</span>
+            </div>
+
+            <div className="flex flex-col lg:flex-row items-stretch justify-center relative min-h-[300px] gap-6">
+
+              {/* Original Card */}
+              <div className="flex-1 flex flex-col">
+                <div className="text-center mb-4">
+                  <span className="text-[11px] font-bold text-blue-600">Original Product</span>
+                </div>
+
+                <div className="border border-slate-200 rounded-xl p-5 flex-1 bg-white relative">
+                  <div className="flex flex-col items-center mb-6">
+                    <div className="w-20 h-20 rounded-xl bg-slate-100 flex items-center justify-center mb-3">
+                      <div className="w-12 h-12 bg-slate-800 rounded-full"></div> {/* Mock headphone */}
+                    </div>
+                    <h3 className="text-sm font-bold text-blue-600 text-center leading-tight mb-1">Sony WH-1000XM5<br />Headphones</h3>
+                    <p className="text-[11px] text-slate-500">Over-Ear Headphones</p>
+                  </div>
+
+                  <div className="space-y-3 mb-6">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-medium text-slate-500">Current Price</span>
+                      <span className="font-bold text-slate-950">$349.99</span>
+                    </div>
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-medium text-slate-500">AI Buy Score</span>
+                      <span className="font-bold text-emerald-500">88</span>
+                    </div>
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-medium text-slate-500">Review Trust</span>
+                      <span className="font-bold text-emerald-500">92%</span>
+                    </div>
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-medium text-slate-500">Value Score</span>
+                      <span className="font-bold text-emerald-500">84</span>
+                    </div>
+                  </div>
+
+                  <div className="border-t border-slate-100 pt-4">
+                    <h4 className="text-[11px] font-bold text-slate-950 mb-2">Why it may be better</h4>
+                    <ul className="space-y-1.5 text-[11px] font-medium text-slate-700">
+                      <li className="flex items-start gap-1.5">
+                        <Check className="w-3.5 h-3.5 text-emerald-500 mt-0.5 shrink-0" /> Industry-leading noise cancellation
+                      </li>
+                      <li className="flex items-start gap-1.5">
+                        <Check className="w-3.5 h-3.5 text-emerald-500 mt-0.5 shrink-0" /> Superior call quality
+                      </li>
+                      <li className="flex items-start gap-1.5">
+                        <Check className="w-3.5 h-3.5 text-emerald-500 mt-0.5 shrink-0" /> Premium build quality
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="mt-4">
+                    <h4 className="text-[11px] font-bold text-slate-950 mb-2">Trade-offs</h4>
+                    <ul className="space-y-1.5 text-[11px] font-medium text-slate-700">
+                      <li className="flex items-start gap-1.5">
+                        <span className="text-orange-500 font-bold mt-0.5 shrink-0">-</span> Higher price
+                      </li>
+                      <li className="flex items-start gap-1.5">
+                        <span className="text-transparent font-bold mt-0.5 shrink-0">-</span> Slightly heavier (250g)
+                      </li>
+                      <li className="flex items-start gap-1.5">
+                        <span className="text-orange-500 font-bold mt-0.5 shrink-0">-</span> No foldable design
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Center Arrow */}
+              <div className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white border border-slate-200 rounded-full items-center justify-center shadow-sm">
+                <ArrowLeftRight className="w-5 h-5 text-blue-600" />
+              </div>
+
+              {/* Alternative Card */}
+              <div className="flex-1 flex flex-col">
+                <div className="text-center mb-4">
+                  <span className="text-[11px] font-bold text-emerald-500">Recommended Alternative</span>
+                </div>
+
+                <div className="border border-emerald-100 rounded-xl p-5 flex-1 bg-white relative">
+                  <div className="flex flex-col items-center mb-6">
+                    <div className="w-20 h-20 rounded-xl bg-slate-100 flex items-center justify-center mb-3">
+                      <div className="w-12 h-12 bg-slate-800 rounded-full"></div> {/* Mock headphone */}
+                    </div>
+                    <h3 className="text-sm font-bold text-blue-600 text-center leading-tight mb-1">Bose QuietComfort Ultra<br />Headphones</h3>
+                    <p className="text-[11px] text-slate-500">Over-Ear Headphones</p>
+                  </div>
+
+                  <div className="space-y-3 mb-6">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-medium text-slate-500">Current Price</span>
+                      <span className="font-bold text-slate-950">$299.99</span>
+                    </div>
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-medium text-slate-500">AI Buy Score</span>
+                      <span className="w-7 h-7 rounded-full border border-emerald-500 text-emerald-500 flex items-center justify-center font-bold text-[11px]">100</span>
+                    </div>
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-medium text-slate-500">Review Trust</span>
+                      <span className="font-bold text-emerald-500">94%</span>
+                    </div>
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-medium text-slate-500">Value Score</span>
+                      <span className="font-bold text-emerald-500">92</span>
+                    </div>
+                  </div>
+
+                  <div className="border-t border-slate-100 pt-4">
+                    <h4 className="text-[11px] font-bold text-slate-950 mb-2">Why it may be better</h4>
+                    <ul className="space-y-1.5 text-[11px] font-medium text-slate-700">
+                      <li className="flex items-start gap-1.5">
+                        <Check className="w-3.5 h-3.5 text-emerald-500 mt-0.5 shrink-0" /> More comfortable for long use
+                      </li>
+                      <li className="flex items-start gap-1.5">
+                        <Check className="w-3.5 h-3.5 text-emerald-500 mt-0.5 shrink-0" /> Better battery life (24h vs 20h)
+                      </li>
+                      <li className="flex items-start gap-1.5">
+                        <Check className="w-3.5 h-3.5 text-emerald-500 mt-0.5 shrink-0" /> Richer, more balanced sound
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="mt-4">
+                    <h4 className="text-[11px] font-bold text-slate-950 mb-2">Trade-offs</h4>
+                    <ul className="space-y-1.5 text-[11px] font-medium text-slate-700">
+                      <li className="flex items-start gap-1.5">
+                        <span className="text-orange-500 font-bold mt-0.5 shrink-0">-</span> Slightly less effective ANC in loud<br />environments
+                      </li>
+                      <li className="flex items-start gap-1.5">
+                        <span className="text-orange-500 font-bold mt-0.5 shrink-0">-</span> Plastic build vs metal accents
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Section: 3 Cols */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4 min-w-0">
+
+          {/* Comparison Type Breakdown */}
+          <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm flex flex-col min-w-0">
+            <h2 className="text-sm font-bold text-slate-950 mb-4">Comparison Type Breakdown</h2>
+            <div className="flex-1 flex flex-col sm:flex-row items-center justify-center relative min-h-[220px] gap-6 sm:gap-0 py-4 sm:py-0">
+              <div className="relative w-[180px] h-[180px] sm:absolute sm:inset-0 sm:w-[45%] sm:h-full sm:flex sm:items-center sm:justify-start">
+                {isChartMounted && (
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Pie
+                        data={breakdownData}
+                        cx="50%"
+                        cy="50%"
+                        innerRadius="55%"
+                        outerRadius="80%"
+                        stroke="none"
+                        dataKey="value"
+                        isAnimationActive={true}
+                        animationBegin={0}
+                        animationDuration={1500}
+                        animationEasing="ease-out"
+                      >
+                        {breakdownData.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={entry.color} />
+                        ))}
+                      </Pie>
+                      <RechartsTooltip
+                        contentStyle={{ borderRadius: '8px', border: '1px solid #E2E8F0', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)', fontSize: '12px', fontWeight: 600 }}
+                        itemStyle={{ color: '#0F172A' }}
+                      />
+                    </PieChart>
+                  </ResponsiveContainer>
+                )}
+                {/* Center text */}
+                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none">
+                  <span className="block text-2xl font-black text-slate-900 leading-none">128</span>
+                  <span className="block text-[11px] font-medium text-slate-500 mt-0.5">Total</span>
+                </div>
+              </div>
+
+              {/* Custom Legend */}
+              <div className="w-full sm:w-[55%] sm:ml-auto sm:pl-2 flex flex-col gap-3 justify-center z-10">
+                {breakdownData.map((item, index) => (
+                  <div key={index} className="flex items-center justify-between group">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <div className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: item.color }}></div>
+                      <span className="text-[11px] font-semibold text-slate-700 truncate group-hover:text-slate-950 transition-colors">{item.name}</span>
+                    </div>
+                    <div className="flex items-center justify-end gap-1.5 shrink-0 ml-2">
+                      <span className="text-[11px] font-bold text-slate-900 w-5 text-right">{item.value}</span>
+                      <span className="text-[10px] text-slate-500 font-medium w-10 text-right">({item.percentage})</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Review Checklist */}
+          <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm flex flex-col min-w-0">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-sm font-bold text-slate-950">Review Checklist</h2>
+              <ClipboardList className="w-4 h-4 text-slate-400" />
+            </div>
+            <div className="flex-1 flex flex-col gap-4">
+              <div className="flex items-start gap-3">
+                <div className="w-5 h-5 rounded-full bg-blue-500 text-white flex items-center justify-center shrink-0 mt-0.5">
+                  <Check className="w-3 h-3" />
+                </div>
+                <span className="text-[13px] font-semibold text-slate-900 leading-snug mt-0.5">Verify score gap meets minimum threshold</span>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-5 h-5 rounded-full bg-blue-500 text-white flex items-center justify-center shrink-0 mt-0.5">
+                  <Check className="w-3 h-3" />
+                </div>
+                <span className="text-[13px] font-semibold text-slate-900 leading-snug mt-0.5">Confirm price difference is accurate</span>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-5 h-5 rounded-full bg-blue-500 text-white flex items-center justify-center shrink-0 mt-0.5">
+                  <Check className="w-3 h-3" />
+                </div>
+                <span className="text-[13px] font-semibold text-slate-900 leading-snug mt-0.5">Validate review trust is sufficient (≥ 70%)</span>
+              </div>
+              <div className="flex items-start gap-3 opacity-60">
+                <Circle className="w-5 h-5 text-slate-300 shrink-0 mt-0.5" />
+                <span className="text-[13px] font-medium text-slate-600 leading-snug mt-0.5">Check affiliate link status</span>
+              </div>
+              <div className="flex items-start gap-3 opacity-60">
+                <Circle className="w-5 h-5 text-slate-300 shrink-0 mt-0.5" />
+                <span className="text-[13px] font-medium text-slate-600 leading-snug mt-0.5">Confirm user-fit trade-offs are clear</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Recent Decisions */}
+          <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm flex flex-col min-w-0">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-sm font-bold text-slate-950">Recent Decisions</h2>
+              <button className="text-xs font-bold text-blue-600 hover:text-blue-700">View all</button>
+            </div>
+            <div className="flex-1 flex flex-col gap-4">
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex items-start gap-3">
+                  <div className="mt-0.5 shrink-0 flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                    <span className="text-[11px] font-bold text-emerald-500 w-[55px]">Approved</span>
+                  </div>
+                  <p className="text-[11px] font-semibold text-slate-700 leading-tight mt-0.5">Sony WH-1000XM5 → Bose QuietComfort Ultra</p>
+                </div>
+                <div className="text-right shrink-0">
+                  <p className="text-[10px] font-medium text-slate-500">May 18, 2024 10:43 AM</p>
+                  <p className="text-[10px] font-medium text-slate-400">by Admin User</p>
+                </div>
+              </div>
+
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex items-start gap-3">
+                  <div className="mt-0.5 shrink-0 flex items-center gap-1.5">
+                    <XCircle className="w-4 h-4 text-rose-500" />
+                    <span className="text-[11px] font-bold text-rose-500 w-[55px]">Rejected</span>
+                  </div>
+                  <p className="text-[11px] font-semibold text-slate-700 leading-tight mt-0.5">Razer DeathAdder V3 → Logitech G Pro X Superlight 2</p>
+                </div>
+                <div className="text-right shrink-0">
+                  <p className="text-[10px] font-medium text-slate-500">May 18, 2024 9:15 AM</p>
+                  <p className="text-[10px] font-medium text-slate-400">by Sarah Johnson</p>
+                </div>
+              </div>
+
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex items-start gap-3">
+                  <div className="mt-0.5 shrink-0 flex items-center gap-1.5">
+                    <Clock className="w-4 h-4 text-orange-500" />
+                    <span className="text-[11px] font-bold text-orange-500 w-[55px]">Needs Review</span>
+                  </div>
+                  <p className="text-[11px] font-semibold text-slate-700 leading-tight mt-0.5">Ninja Foodi 6.5Qt → COSORI Pro II 5.8Qt</p>
+                </div>
+                <div className="text-right shrink-0">
+                  <p className="text-[10px] font-medium text-slate-500">May 18, 2024 8:32 AM</p>
+                  <p className="text-[10px] font-medium text-slate-400">by Michael Chen</p>
+                </div>
+              </div>
+
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex items-start gap-3">
+                  <div className="mt-0.5 shrink-0 flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                    <span className="text-[11px] font-bold text-emerald-500 w-[55px]">Approved</span>
+                  </div>
+                  <p className="text-[11px] font-semibold text-slate-700 leading-tight mt-0.5">LG 27GP850-B → Dell G2724D</p>
+                </div>
+                <div className="text-right shrink-0">
+                  <p className="text-[10px] font-medium text-slate-500">May 17, 2024 6:47 PM</p>
+                  <p className="text-[10px] font-medium text-slate-400">by Admin User</p>
+                </div>
+              </div>
+
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex items-start gap-3">
+                  <div className="mt-0.5 shrink-0 flex items-center gap-1.5">
+                    <ClipboardList className="w-4 h-4 text-amber-500" />
+                    <span className="text-[11px] font-bold text-amber-500 w-[55px]">Pending</span>
+                  </div>
+                  <p className="text-[11px] font-semibold text-slate-700 leading-tight mt-0.5">Canon EOS R50 → Sony ZV-E10</p>
+                </div>
+                <div className="text-right shrink-0">
+                  <p className="text-[10px] font-medium text-slate-500">May 17, 2024 5:21 PM</p>
+                  <p className="text-[10px] font-medium text-slate-400">by Emily Davis</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
     </div>
   );
 }

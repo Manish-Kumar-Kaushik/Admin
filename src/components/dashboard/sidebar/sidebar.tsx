@@ -135,9 +135,9 @@ const groups: SidebarGroup[] = [
         name: "YouTube Reviewer Trust",
         icon: Youtube,
         subItems: [
-          { name: "Channel Queue", href: "/dashboard/youtube-trust" },
+          { name: "Youtube Reviewer Trust ", href: "/dashboard/youtube-trust" },
           { name: "Video Evidence", href: "/dashboard/youtube-trust/evidence" },
-          { name: "Blocked Channels", href: "/dashboard/youtube-trust/blocked" },
+          { name: "Channel Queue", href: "/dashboard/youtube-trust/blocked" },
         ],
       },
       {
@@ -145,7 +145,6 @@ const groups: SidebarGroup[] = [
         icon: ShieldAlert,
         subItems: [
           { name: "Safety Queue", href: "/dashboard/safety" },
-          { name: "Ingredient Review", href: "/dashboard/safety/ingredients" },
           { name: "Sensitive Claim Review", href: "/dashboard/safety/claims" },
           { name: "Disclaimer Review", href: "/dashboard/safety/disclaimers" },
         ],
